@@ -1,0 +1,2 @@
+# Verification-Approach-for-Solidity-based-Smart-Contracts-using-FSM
+In this work, we consider both the correctness verification  and the vulnerabilities detection by applying formal verification in order to detect the mistakes, which makes smart contracts more secure. The approach is based on  the finite state machine (FSM) to model the smart contracts behaviors and the defined security properties that should be verified. 
