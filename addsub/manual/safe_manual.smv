@@ -1,0 +1,65 @@
+MODULE main
+
+VAR
+
+V_a:unsigned word[3];
+V_b:unsigned word[3];
+c: unsigned word[3];
+
+_current_state:{invoke,addition,subtraction,function_add,function_sub,ifcondition,a1,a2,s1,s2};
+v:{1,2};
+
+ASSIGN
+
+init(_current_state):=invoke;
+next(_current_state):=case
+(_current_state=invoke): {function_add,function_sub};
+(_current_state=function_add):ifcondition;
+(_current_state=ifcondition & c + V_a >=V_a) & (v=1):a1;
+(_current_state=ifcondition & V_b <= c) & (v=2):s1;
+(_current_state=ifcondition & c + V_a < V_a )& (v=1):a2;
+(_current_state=ifcondition & V_b > c) & (v=2):s2;
+(_current_state=a1):addition;
+(_current_state=addition):invoke;
+
+(_current_state=a2):invoke;
+(_current_state=function_sub):ifcondition;
+(_current_state=s1):subtraction;
+(_current_state=subtraction):invoke;
+(_current_state=s2):invoke;
+
+TRUE:_current_state;
+esac;
+
+init(V_a):=0ud3_5;
+next(V_a):=V_a;
+
+
+init(V_b):=0ud3_2;
+next(V_b):=V_b;
+
+
+init(c):=0ud3_2;
+next(c):=case
+(_current_state=addition):  c + V_a;
+(_current_state=subtraction): c - V_b;
+!((_current_state=addition)) & ! ((_current_state=subtraction)): c;
+esac;
+
+init(v):=1;
+next(v):=case
+(_current_state=function_add):  1;
+(_current_state=function_sub):  2;
+!((_current_state=function_add)) & ! ((_current_state=function_sub)): v;
+esac;
+
+
+CTLSPEC NAME Overflow_Vulnerability :=AG ((_current_state = function_add ) & (c < V_a) -> AF( _current_state = addition))   
+CTLSPEC NAME Overflow_Vulnerability_1 :=AG ((_current_state = function_add) & (c + V_a < V_a) -> E [ (_current_state = function_add) U (_current_state = addition) ])  
+
+--Spec_8 check underflow vulnerability
+CTLSPEC NAME Underflow_Vulnerability := AG ((_current_state = function_sub) & (V_b > c ) -> AF (_current_state = subtraction))   
+CTLSPEC NAME Underflow_Vulnerability_1 :=AG ((_current_state = function_sub) & (V_b > c) -> E [ (_current_state = function_sub) U (_current_state= subtraction) ])
+
+
+

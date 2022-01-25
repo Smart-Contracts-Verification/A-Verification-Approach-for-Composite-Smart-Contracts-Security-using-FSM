@@ -1,0 +1,130 @@
+model goldgame
+
+	port type syncPort
+	
+
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+
+
+atomic type Goldgame
+
+
+data bool responseHash
+data bool question
+data bool _responseHash
+data bool _question
+data bool _response
+data int msgvalue= 3
+	
+export port syncPort Start
+export port syncPort Start1
+export port syncPort Start2
+export port syncPort Start3
+export port syncPort Start4
+export port syncPort Start5
+export port syncPort Start6
+export port syncPort Start7
+
+export port syncPort Stop
+export port syncPort Stop1
+export port syncPort Stop2
+
+
+export port syncPort New
+export port syncPort New1
+export port syncPort New2
+export port syncPort New3
+
+
+export port syncPort Try
+export port syncPort Try1
+export port syncPort Try2
+export port syncPort Try3
+export port syncPort Try4
+export port syncPort Try5
+export port syncPort Try6
+export port syncPort Try7
+export port syncPort Try8
+export port syncPort Try9
+export port syncPort Try10
+
+
+  place    invoke, Start_Function, Public, ifcondition, responceEqual0X0, responceDEqual0X0, hashing, questionEqual_questionS, Stop_Function, sending_Ether_transfer, New_Function, responseHashEqual_responseHash, questionEqual_questionN, Try_Function, requirecondition, addressEqualtxorigin, addressDEqualtxorigin, t1, t2  
+
+initial to invoke 
+  
+on Start from invoke to Start_Function do {responseHash = 0; question = 1;}
+on Start1 from Start_Function to ifcondition
+on Start2 from ifcondition to responceEqual0X0 provided (responseHash == 0)
+on Start3 from ifcondition to responceDEqual0X0 provided (responseHash != 0)
+on Start4 from responceDEqual0X0 to invoke
+on Start5 from responceEqual0X0 to hashing do { responseHash = 1; question = _question;}
+on Start6 from hashing to questionEqual_questionS
+on Start7 from questionEqual_questionS to invoke
+
+on Stop from invoke to Stop_Function
+on Stop1 from Stop_Function to sending_Ether_transfer
+on Stop2 from sending_Ether_transfer to invoke
+
+on New from invoke to New_Function
+on New1 from New_Function to questionEqual_questionN do {  question = _question;}
+on New2 from questionEqual_questionN to responseHashEqual_responseHash do { responseHash =_responseHash;}
+on New3 from responseHashEqual_responseHash to invoke
+
+
+on Try from invoke to Try_Function
+on Try1 from Try_Function to requirecondition
+on Try2 from requirecondition  to addressEqualtxorigin 
+on Try3 from requirecondition to addressDEqualtxorigin
+on Try4 from addressDEqualtxorigin to invoke
+on Try5 from addressEqualtxorigin to ifcondition 
+on Try6 from ifcondition to t1 provided ( responseHash == _response && msgvalue > 1 )
+on Try7 from ifcondition to t2 provided ( responseHash != _response || msgvalue <= 1 )
+on Try8 from t1 to sending_Ether_transfer
+on Try9 from sending_Ether_transfer to invoke
+on Try10 from t2 to invoke
+
+
+end
+
+
+compound type globModel
+
+  component Goldgame  BAUC
+  
+
+connector SINGLE BAUC_Start( BAUC.Start)
+connector SINGLE BAUC_Start1( BAUC.Start1)
+connector SINGLE BAUC_Start2( BAUC.Start2)
+connector SINGLE BAUC_Start3( BAUC.Start3)
+connector SINGLE BAUC_Start4( BAUC.Start4)
+connector SINGLE BAUC_Start5( BAUC.Start5)
+connector SINGLE BAUC_Start6( BAUC.Start6)
+connector SINGLE BAUC_Start7( BAUC.Start7)
+connector SINGLE BAUC_Stop( BAUC.Stop)
+connector SINGLE BAUC_Stop1( BAUC.Stop1)
+connector SINGLE BAUC_Stop2( BAUC.Stop2)
+connector SINGLE BAUC_New( BAUC.New)
+connector SINGLE BAUC_New1( BAUC.New1)
+connector SINGLE BAUC_New2( BAUC.New2)
+connector SINGLE BAUC_New3( BAUC.New3)
+connector SINGLE BAUC_Try( BAUC.Try)
+connector SINGLE BAUC_Try1( BAUC.Try1)
+connector SINGLE BAUC_Try2( BAUC.Try2)
+connector SINGLE BAUC_Try3( BAUC.Try3)
+connector SINGLE BAUC_Try4( BAUC.Try4)
+connector SINGLE BAUC_Try5( BAUC.Try5)
+connector SINGLE BAUC_Try6( BAUC.Try6)
+connector SINGLE BAUC_Try7( BAUC.Try7)
+connector SINGLE BAUC_Try8( BAUC.Try8)
+connector SINGLE BAUC_Try9( BAUC.Try9)
+connector SINGLE BAUC_Try10( BAUC.Try10)
+
+
+   end
+
+component globModel Root
+ end

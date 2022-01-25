@@ -1,0 +1,108 @@
+MODULE main
+
+VAR
+
+responseHash		:		boolean;
+question		:		boolean;
+_responseHash		:		boolean;
+_question		:		boolean;
+_response		:		boolean;
+msgvalue		:		unsigned word[3];
+v			:		{1,2,3,4};
+_current_state:	{invoke,function_start, public, ifcondition, responceEqual0X0, responceDF0X0, hashing, set_input_question, function_stop, sending_Ether_transfer, function_new, set_input_responsehash, set_input_questionN,function_try, requirecondition, txorigin, DFtxorigin, t1, t2};
+
+
+ASSIGN
+
+init(_current_state):=invoke;
+next(_current_state):=case
+
+(_current_state=invoke)  :{function_start,function_try, function_new,function_stop};
+(_current_state=function_stop)& (v= 3) :public;
+(_current_state=sending_Ether_transfer) & (v= 3):invoke;
+(_current_state=function_start) & (v= 1):public;
+(_current_state=public):{ifcondition,requirecondition,sending_Ether_transfer,set_input_questionN};
+(_current_state=ifcondition) & (responseHash = FALSE) & (v= 1): responceEqual0X0;
+(_current_state=ifcondition) & (responseHash != FALSE)& (v= 1): responceDF0X0;
+(_current_state=responceEqual0X0)& (v= 1):hashing;
+(_current_state=hashing)& (v= 1):set_input_question;
+(_current_state=set_input_question)& (v= 1):invoke;
+(_current_state=responceDF0X0)& (v= 1):invoke;
+(_current_state=function_try) & (v= 2):public;
+(_current_state=requirecondition) & (v= 2):{txorigin,DFtxorigin};
+(_current_state=txorigin) & (v= 2):ifcondition;
+(_current_state=DFtxorigin) & (v= 2):invoke;
+(_current_state=ifcondition) & (msgvalue>= 0ud3_1) & (responseHash=_response)& (v= 2): t1;
+(_current_state=ifcondition) & (msgvalue< 0ud3_1) | (responseHash !=_response)& (v= 2): t2;
+(_current_state=t1)& (v= 2):sending_Ether_transfer;
+(_current_state=sending_Ether_transfer)& (v= 2):invoke;
+(_current_state=t2) & (v= 2):invoke;
+(_current_state=function_new) & (v= 4):public;
+(_current_state=set_input_questionN)& (v= 4):set_input_responsehash;
+(_current_state=set_input_responsehash)& (v= 4):invoke;
+
+TRUE : _current_state;
+
+esac;
+
+init(responseHash):=FALSE;
+next(responseHash):=case
+(_current_state=hashing): TRUE;
+(_current_state=set_input_responsehash): _responseHash;
+!(_current_state=hashing) & !(_current_state=set_input_responsehash):responseHash;
+esac;
+
+
+init(question):=FALSE;
+next(question):=case
+(_current_state=set_input_question): _question;
+(_current_state=set_input_questionN): _question;
+!(_current_state=set_input_question) & !(_current_state=set_input_questionN) :question;
+esac;
+
+
+init(_responseHash):=FALSE;
+next(_responseHash):=case
+(_current_state=set_input_responsehash): TRUE;
+!(_current_state=set_input_responsehash):_responseHash;
+esac;
+
+
+init(_question):=FALSE;
+next(_question):=case
+(_current_state=function_start): TRUE;
+(_current_state=function_new): TRUE;
+!(_current_state=function_start) &!(_current_state=function_new) :_question;
+esac;
+
+init(_response):=TRUE;
+next(_response):=case
+TRUE:_response;
+esac;
+
+
+init(msgvalue):=0ud3_2;
+next(msgvalue):=case
+TRUE:msgvalue;
+esac;
+
+init(v):=1;
+next(v):=case
+(_current_state=function_start): 1;
+(_current_state=function_new): 4;
+(_current_state=function_stop): 3;
+(_current_state=function_try): 2;
+!(_current_state=function_start) &!(_current_state=function_new)&!(_current_state=function_stop)&!(_current_state=function_try) :v;
+esac;
+
+
+
+
+--Spec_4 check tx.origin vulnerability
+CTLSPEC NAME txorigin_Vulnerability := EG(((_current_state = requirecondition) |(_current_state = ifcondition))->  EX(_current_state = txorigin))
+
+
+
+--Spec_6 check user-defined Spec
+CTLSPEC NAME user_spec :=AG(_current_state= txorigin -> AX( _current_state= sending_Ether_transfer))
+

@@ -1,0 +1,383 @@
+MODULE BAUC(active_interaction)
+
+	VAR
+		NuPcreateFlights		:		boolean;
+		NuPc1		:		boolean;
+		NuPc2counterPlus1		:		boolean;
+		NuPc3		:		boolean;
+		NuPSearchflightPRICE		:		boolean;
+		NuPs1		:		boolean;
+		NuPs2		:		boolean;
+		NuPs3		:		boolean;
+		NuPs4		:		boolean;
+		NuPs5		:		boolean;
+		NuPs6		:		boolean;
+		NuPs7		:		boolean;
+		NuPs8		:		boolean;
+		NuPs9		:		boolean;
+		NuPs10		:		boolean;
+		NuPs11		:		boolean;
+		NuPs12		:		boolean;
+		NuPs13		:		boolean;
+		NuPs14		:		boolean;
+		NuPs15		:		boolean;
+		NuPs16		:		boolean;
+		NuPs17		:		boolean;
+		NuPs18		:		boolean;
+		NuPs19		:		boolean;
+		NuPs20		:		boolean;
+		NuPs21		:		boolean;
+		NuPgetFlightbyID		:		boolean;
+		NuPg1		:		boolean;
+		NuPg2		:		boolean;
+		NuPg3		:		boolean;
+		NuPg4		:		boolean;
+		NuPg5		:		boolean;
+		NuPg6		:		boolean;
+		NuPg7		:		boolean;
+		NuPg8		:		boolean;
+		NuPg9		:		boolean;
+		NuPg10		:		boolean;
+		NuPg11		:		boolean;
+		NuPg12		:		boolean;
+		NuPg13		:		boolean;
+		NuPg14		:		boolean;
+		NuPBookFLIGHT		:		boolean;
+		NuPb1		:		boolean;
+		NuPb2		:		boolean;
+		NuPb3		:		boolean;
+		NuPb4		:		boolean;
+		NuPb5		:		boolean;
+		NuPb6		:		boolean;
+		NuPb7		:		boolean;
+		NuPb8		:		boolean;
+		NuPb9		:		boolean;
+		NuPb10		:		boolean;
+		NuPb11		:		boolean;
+		NuPb12		:		boolean;
+		NuPb13		:		boolean;
+		NuPb14		:		boolean;
+		NuVcounter		:		unsigned word[3];
+		NuVTotal_Price		:		unsigned word[3];
+		NuVi		:		unsigned word[3];
+		NuVj		:		unsigned word[3];
+		NuVk		:		unsigned word[3];
+		NuVFlight_Price0		:		unsigned word[3];
+		NuVFlight_Price		:		unsigned word[3];
+		NuVFlight_status		:		unsigned word[3];
+		NuVPmin		:		unsigned word[3];
+		NuVid		:		unsigned word[3];
+		NuVidInput		:		unsigned word[3];
+		Nuplace		:		{NuSinvoke, NuSfunctioncreateFlights, NuSAddFlight, NuSaddition, NuSfunctionSearchflightPRICE, NuSrequirecondition, NuSPriceAccepted, NuSPriceRejected, NuSinitialPminFlights, NuSloop, NuSloopcondition, NuSloopincrement, NuSifcondition, NuSfilghtFound, NuSflightNotFound, NuSsetPminflight, NuSPrice_GT_Pmin, NuSElse, NuSrevert, NuSreturn, NuSfunctiongetFlightbyID, NuSIdAccepted, NuSIdRejected, NuSIdFound, NuSIdNotFound, NuSfunctionBookFLIGHT, NuSIdA, NuSIdR, NuSIdF, NuSIdNotF, NuSflightbooked};
+
+
+	INIT
+		( (NuVcounter) = (0ud3_1) ) &
+		( (NuVTotal_Price) = (0ud3_5) ) &
+		( (NuVi) = (0ud3_0) ) &
+		( (NuVj) = (0ud3_0) ) &
+		( (NuVk) = (0ud3_0) ) &
+		( (NuVFlight_Price0) = (0ud3_2) ) &
+		( (NuVFlight_Price) = (0ud3_0) ) &
+		( (NuVFlight_status) = (0ud3_1) ) &
+		( (NuVidInput) = (0ud3_2) ) &
+		( (NuVPmin) = (0ud3_0) ) &
+		( (NuVid) = (0ud3_1) ) &
+		( (Nuplace) = (NuSinvoke) );
+
+	INVAR
+		( (NuPb8) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (( (NuVidInput) = (NuVid) )) & (( (NuVFlight_status) = (0ud3_1) )) )) )) ) &
+		( (NuPb9) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (( (NuVidInput) != (NuVid) )) | (( (NuVFlight_status) != (0ud3_1) )) )) )) ) &
+		( (NuPb6) <-> (( (( (Nuplace) = (NuSloop) )) & (( (NuVk) <= (NuVcounter) )) )) ) &
+		( (NuPb7) <-> (( (Nuplace) = (NuSloopcondition) )) ) &
+		( (NuPb4) <-> (( (Nuplace) = (NuSIdR) )) ) &
+		( (NuPb5) <-> (( (Nuplace) = (NuSIdA) )) ) &
+		( (NuPb2) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVidInput) > (0ud3_0) )) )) ) &
+		( (NuPb3) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVidInput) <= (0ud3_0) )) )) ) &
+		( (NuPb1) <-> (( (Nuplace) = (NuSfunctionBookFLIGHT) )) ) &
+		( (NuPgetFlightbyID) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPg10) <-> (( (Nuplace) = (NuSIdNotFound) )) ) &
+		( (NuPg11) <-> (( (Nuplace) = (NuSloopincrement) )) ) &
+		( (NuPs10) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVFlight_Price) > (NuVPmin) )) )) ) &
+		( (NuPs11) <-> (( (Nuplace) = (NuSfilghtFound) )) ) &
+		( (NuPs14) <-> (( (Nuplace) = (NuSsetPminflight) )) ) &
+		( (NuPs15) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVTotal_Price) >= (NuVPmin) )) )) ) &
+		( (NuPs12) <-> (( (Nuplace) = (NuSflightNotFound) )) ) &
+		( (NuPs13) <-> (( (Nuplace) = (NuSloopincrement) )) ) &
+		( (NuPg14) <-> (( (( (Nuplace) = (NuSloop) )) & (( (NuVj) > (NuVcounter) )) )) ) &
+		( (NuPg12) <-> (( (Nuplace) = (NuSIdFound) )) ) &
+		( (NuPg13) <-> (( (Nuplace) = (NuSreturn) )) ) &
+		( (NuPc2counterPlus1) <-> (( (Nuplace) = (NuSAddFlight) )) ) &
+		( (NuPs18) <-> (( (Nuplace) = (NuSreturn) )) ) &
+		( (NuPs19) <-> (( (Nuplace) = (NuSElse) )) ) &
+		( (NuPs16) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVTotal_Price) < (NuVPmin) )) )) ) &
+		( (NuPs17) <-> (( (Nuplace) = (NuSPrice_GT_Pmin) )) ) &
+		( (NuPs21) <-> (( (( (Nuplace) = (NuSloop) )) & (( (NuVi) > (NuVcounter) )) )) ) &
+		( (NuPs20) <-> (( (Nuplace) = (NuSrevert) )) ) &
+		( (NuPBookFLIGHT) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPb11) <-> (( (Nuplace) = (NuSloopincrement) )) ) &
+		( (NuPb12) <-> (( (Nuplace) = (NuSIdF) )) ) &
+		( (NuPb10) <-> (( (Nuplace) = (NuSIdNotF) )) ) &
+		( (NuPb13) <-> (( (Nuplace) = (NuSflightbooked) )) ) &
+		( (NuPb14) <-> (( (( (Nuplace) = (NuSloop) )) & (( (NuVk) > (NuVcounter) )) )) ) &
+		( (NuPcreateFlights) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPg9) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVidInput) != (NuVid) )) )) ) &
+		( (NuPc3) <-> (( (Nuplace) = (NuSaddition) )) ) &
+		( (NuPg7) <-> (( (Nuplace) = (NuSloopcondition) )) ) &
+		( (NuPg8) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVidInput) = (NuVid) )) )) ) &
+		( (NuPc1) <-> (( (Nuplace) = (NuSfunctioncreateFlights) )) ) &
+		( (NuPg5) <-> (( (Nuplace) = (NuSIdAccepted) )) ) &
+		( (NuPg6) <-> (( (( (Nuplace) = (NuSloop) )) & (( (NuVj) <= (NuVcounter) )) )) ) &
+		( (NuPg3) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVid) <= (0ud3_0) )) )) ) &
+		( (NuPSearchflightPRICE) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPg4) <-> (( (Nuplace) = (NuSIdRejected) )) ) &
+		( (NuPg1) <-> (( (Nuplace) = (NuSfunctiongetFlightbyID) )) ) &
+		( (NuPg2) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVid) > (0ud3_0) )) )) ) &
+		( (NuPs9) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVFlight_Price) <= (NuVPmin) )) )) ) &
+		( (NuPs7) <-> (( (( (Nuplace) = (NuSloop) )) & (( (NuVi) <= (NuVcounter) )) )) ) &
+		( (NuPs8) <-> (( (Nuplace) = (NuSloopcondition) )) ) &
+		( (NuPs5) <-> (( (Nuplace) = (NuSPriceRejected) )) ) &
+		( (NuPs6) <-> (( (Nuplace) = (NuSinitialPminFlights) )) ) &
+		( (NuPs3) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVTotal_Price) <= (0ud3_0) )) )) ) &
+		( (NuPs4) <-> (( (Nuplace) = (NuSPriceAccepted) )) ) &
+		( (NuPs1) <-> (( (Nuplace) = (NuSfunctionSearchflightPRICE) )) ) &
+		( (NuPs2) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVTotal_Price) > (0ud3_0) )) )) );
+
+	TRANS
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctioncreateFlights) )) )) & (( (active_interaction) = (NuI8) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunctioncreateFlights) )) & (( (next(Nuplace)) = (NuSAddFlight) )) )) & (( (active_interaction) = (NuI9) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSAddFlight) )) & (( (next(Nuplace)) = (NuSaddition) )) )) & (( (active_interaction) = (NuI10) )) )) & (( (next(NuVcounter)) = (( (NuVcounter) + (0ud3_1) )) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSaddition) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI11) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctionSearchflightPRICE) )) )) & (( (active_interaction) = (NuI12) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunctionSearchflightPRICE) )) & (( (next(Nuplace)) = (NuSrequirecondition) )) )) & (( (active_interaction) = (NuI13) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSPriceAccepted) )) )) & (( (active_interaction) = (NuI14) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSPriceRejected) )) )) & (( (active_interaction) = (NuI15) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSPriceRejected) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI17) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSPriceAccepted) )) & (( (next(Nuplace)) = (NuSinitialPminFlights) )) )) & (( (active_interaction) = (NuI16) )) )) & (( (next(NuVPmin)) = (NuVFlight_Price0) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinitialPminFlights) )) & (( (next(Nuplace)) = (NuSloop) )) )) & (( (active_interaction) = (NuI18) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloop) )) & (( (next(Nuplace)) = (NuSloopcondition) )) )) & (( (active_interaction) = (NuI19) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloopcondition) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI20) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSfilghtFound) )) )) & (( (active_interaction) = (NuI21) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSflightNotFound) )) )) & (( (active_interaction) = (NuI22) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfilghtFound) )) & (( (next(Nuplace)) = (NuSsetPminflight) )) )) & (( (active_interaction) = (NuI23) )) )) & (( (next(NuVPmin)) = (NuVFlight_Price) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSflightNotFound) )) & (( (next(Nuplace)) = (NuSloopincrement) )) )) & (( (active_interaction) = (NuI24) )) )) & (( (next(NuVi)) = (( (NuVi) + (0ud3_1) )) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloopincrement) )) & (( (next(Nuplace)) = (NuSloop) )) )) & (( (active_interaction) = (NuI25) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSsetPminflight) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI26) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSPrice_GT_Pmin) )) )) & (( (active_interaction) = (NuI27) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSElse) )) )) & (( (active_interaction) = (NuI28) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSPrice_GT_Pmin) )) & (( (next(Nuplace)) = (NuSreturn) )) )) & (( (active_interaction) = (NuI29) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSreturn) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI30) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSElse) )) & (( (next(Nuplace)) = (NuSrevert) )) )) & (( (active_interaction) = (NuI31) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrevert) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI32) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloop) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI33) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctiongetFlightbyID) )) )) & (( (active_interaction) = (NuI34) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunctiongetFlightbyID) )) & (( (next(Nuplace)) = (NuSrequirecondition) )) )) & (( (active_interaction) = (NuI35) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSIdAccepted) )) )) & (( (active_interaction) = (NuI36) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSIdRejected) )) )) & (( (active_interaction) = (NuI37) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdRejected) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI38) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdAccepted) )) & (( (next(Nuplace)) = (NuSloop) )) )) & (( (active_interaction) = (NuI39) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloop) )) & (( (next(Nuplace)) = (NuSloopcondition) )) )) & (( (active_interaction) = (NuI40) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloopcondition) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI41) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSIdFound) )) )) & (( (active_interaction) = (NuI42) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSIdNotFound) )) )) & (( (active_interaction) = (NuI43) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdNotFound) )) & (( (next(Nuplace)) = (NuSloopincrement) )) )) & (( (active_interaction) = (NuI44) )) )) & (( (next(NuVj)) = (( (NuVj) + (0ud3_1) )) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloopincrement) )) & (( (next(Nuplace)) = (NuSloop) )) )) & (( (active_interaction) = (NuI45) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdFound) )) & (( (next(Nuplace)) = (NuSreturn) )) )) & (( (active_interaction) = (NuI46) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSreturn) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI47) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloop) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI48) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctionBookFLIGHT) )) )) & (( (active_interaction) = (NuI7) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunctionBookFLIGHT) )) & (( (next(Nuplace)) = (NuSrequirecondition) )) )) & (( (active_interaction) = (NuI49) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSIdA) )) )) & (( (active_interaction) = (NuI50) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSIdR) )) )) & (( (active_interaction) = (NuI51) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdR) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI52) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdA) )) & (( (next(Nuplace)) = (NuSloop) )) )) & (( (active_interaction) = (NuI53) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloop) )) & (( (next(Nuplace)) = (NuSloopcondition) )) )) & (( (active_interaction) = (NuI54) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloopcondition) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI55) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSIdF) )) )) & (( (active_interaction) = (NuI56) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSIdNotF) )) )) & (( (active_interaction) = (NuI57) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdNotF) )) & (( (next(Nuplace)) = (NuSloopincrement) )) )) & (( (active_interaction) = (NuI58) )) )) & (( (next(NuVk)) = (( (NuVk) + (0ud3_1) )) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloopincrement) )) & (( (next(Nuplace)) = (NuSloop) )) )) & (( (active_interaction) = (NuI59) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSIdF) )) & (( (next(Nuplace)) = (NuSflightbooked) )) )) & (( (active_interaction) = (NuI60) )) )) & (( (next(NuVFlight_status)) = (0ud3_0) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSflightbooked) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI61) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSloop) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI62) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) ) |
+		( (( (active_interaction) != (NuI62) )) & (( (( (active_interaction) != (NuI61) )) & (( (( (active_interaction) != (NuI60) )) & (( (( (active_interaction) != (NuI59) )) & (( (( (active_interaction) != (NuI58) )) & (( (( (active_interaction) != (NuI57) )) & (( (( (active_interaction) != (NuI56) )) & (( (( (active_interaction) != (NuI55) )) & (( (( (active_interaction) != (NuI54) )) & (( (( (active_interaction) != (NuI53) )) & (( (( (active_interaction) != (NuI52) )) & (( (( (active_interaction) != (NuI51) )) & (( (( (active_interaction) != (NuI50) )) & (( (( (active_interaction) != (NuI49) )) & (( (( (active_interaction) != (NuI7) )) & (( (( (active_interaction) != (NuI48) )) & (( (( (active_interaction) != (NuI47) )) & (( (( (active_interaction) != (NuI46) )) & (( (( (active_interaction) != (NuI45) )) & (( (( (active_interaction) != (NuI44) )) & (( (( (active_interaction) != (NuI43) )) & (( (( (active_interaction) != (NuI42) )) & (( (( (active_interaction) != (NuI41) )) & (( (( (active_interaction) != (NuI40) )) & (( (( (active_interaction) != (NuI39) )) & (( (( (active_interaction) != (NuI38) )) & (( (( (active_interaction) != (NuI37) )) & (( (( (active_interaction) != (NuI36) )) & (( (( (active_interaction) != (NuI35) )) & (( (( (active_interaction) != (NuI34) )) & (( (( (active_interaction) != (NuI33) )) & (( (( (active_interaction) != (NuI32) )) & (( (( (active_interaction) != (NuI31) )) & (( (( (active_interaction) != (NuI30) )) & (( (( (active_interaction) != (NuI29) )) & (( (( (active_interaction) != (NuI28) )) & (( (( (active_interaction) != (NuI27) )) & (( (( (active_interaction) != (NuI26) )) & (( (( (active_interaction) != (NuI25) )) & (( (( (active_interaction) != (NuI24) )) & (( (( (active_interaction) != (NuI23) )) & (( (( (active_interaction) != (NuI22) )) & (( (( (active_interaction) != (NuI21) )) & (( (( (active_interaction) != (NuI20) )) & (( (( (active_interaction) != (NuI19) )) & (( (( (active_interaction) != (NuI18) )) & (( (( (active_interaction) != (NuI16) )) & (( (( (active_interaction) != (NuI17) )) & (( (( (active_interaction) != (NuI15) )) & (( (( (active_interaction) != (NuI14) )) & (( (( (active_interaction) != (NuI13) )) & (( (( (active_interaction) != (NuI12) )) & (( (( (active_interaction) != (NuI11) )) & (( (( (active_interaction) != (NuI10) )) & (( (( (active_interaction) != (NuI9) )) & (( (( (active_interaction) != (NuI8) )) & (( (( (( (( (( (( (( (( (( (( (( (( (next(Nuplace)) = (Nuplace) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVTotal_Price)) = (NuVTotal_Price) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) & (( (next(NuVFlight_Price0)) = (NuVFlight_Price0) )) )) & (( (next(NuVFlight_Price)) = (NuVFlight_Price) )) )) & (( (next(NuVFlight_status)) = (NuVFlight_status) )) )) & (( (next(NuVPmin)) = (NuVPmin) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVidInput)) = (NuVidInput) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) );
+
+
+MODULE BAUC1(active_interaction)
+
+	VAR
+		NuPBookF		:		boolean;
+		NuPb1		:		boolean;
+		NuPb2		:		boolean;
+		NuPb3		:		boolean;
+		NuPb4		:		boolean;
+		NuPb6		:		boolean;
+		NuPb5		:		boolean;
+		NuVrequestedID		:		unsigned word[3];
+		Nuplace		:		{NuSinvoke, NuSfunctionBookF, NuSrequirecondition, NuSID_Accepted, NuSID_Rejected, NuScall_TA_functionBookFLIGHT};
+
+
+	INIT
+		( (Nuplace) = (NuSinvoke) ) &
+		( (NuVrequestedID) = (0ud3_1) );
+
+	INVAR
+		( (NuPb2) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVrequestedID) > (0ud3_0) )) )) ) &
+		( (NuPb1) <-> (( (Nuplace) = (NuSfunctionBookF) )) ) &
+		( (NuPBookF) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPb4) <-> (( (Nuplace) = (NuSID_Rejected) )) ) &
+		( (NuPb3) <-> (( (( (Nuplace) = (NuSrequirecondition) )) & (( (NuVrequestedID) <= (0ud3_0) )) )) ) &
+		( (NuPb6) <-> (( (Nuplace) = (NuScall_TA_functionBookFLIGHT) )) ) &
+		( (NuPb5) <-> (( (Nuplace) = (NuSID_Accepted) )) );
+
+	TRANS
+		( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctionBookF) )) )) & (( (active_interaction) = (NuI1) )) )) & (( (next(NuVrequestedID)) = (NuVrequestedID) )) ) |
+		( (( (( (( (Nuplace) = (NuSfunctionBookF) )) & (( (next(Nuplace)) = (NuSrequirecondition) )) )) & (( (active_interaction) = (NuI2) )) )) & (( (next(NuVrequestedID)) = (NuVrequestedID) )) ) |
+		( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSID_Accepted) )) )) & (( (active_interaction) = (NuI3) )) )) & (( (next(NuVrequestedID)) = (NuVrequestedID) )) ) |
+		( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSID_Rejected) )) )) & (( (active_interaction) = (NuI4) )) )) & (( (next(NuVrequestedID)) = (NuVrequestedID) )) ) |
+		( (( (( (( (Nuplace) = (NuSID_Rejected) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI5) )) )) & (( (next(NuVrequestedID)) = (NuVrequestedID) )) ) |
+		( (( (( (( (Nuplace) = (NuSID_Accepted) )) & (( (next(Nuplace)) = (NuScall_TA_functionBookFLIGHT) )) )) & (( (active_interaction) = (NuI7) )) )) & (( (next(NuVrequestedID)) = (0ud3_1) )) ) |
+		( (( (( (( (Nuplace) = (NuScall_TA_functionBookFLIGHT) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI6) )) )) & (( (next(NuVrequestedID)) = (NuVrequestedID) )) ) |
+		( (( (active_interaction) != (NuI6) )) & (( (( (active_interaction) != (NuI7) )) & (( (( (active_interaction) != (NuI5) )) & (( (( (active_interaction) != (NuI4) )) & (( (( (active_interaction) != (NuI3) )) & (( (( (active_interaction) != (NuI2) )) & (( (( (active_interaction) != (NuI1) )) & (( (( (next(Nuplace)) = (Nuplace) )) & (( (next(NuVrequestedID)) = (NuVrequestedID) )) )) )) )) )) )) )) )) );
+
+
+MODULE main
+
+	VAR
+		NuInteraction		:		{NuI1, NuI2, NuI3, NuI4, NuI5, NuI6, NuI7, NuI8, NuI9, NuI10, NuI11, NuI12, NuI13, NuI14, NuI15, NuI16, NuI17, NuI18, NuI19, NuI20, NuI21, NuI22, NuI23, NuI24, NuI25, NuI26, NuI27, NuI28, NuI29, NuI30, NuI31, NuI32, NuI33, NuI34, NuI35, NuI36, NuI37, NuI38, NuI39, NuI40, NuI41, NuI42, NuI43, NuI44, NuI45, NuI46, NuI47, NuI48, NuI49, NuI50, NuI51, NuI52, NuI53, NuI54, NuI55, NuI56, NuI57, NuI58, NuI59, NuI60, NuI61, NuI62};
+		bauc	:	BAUC(NuInteraction);
+		bauc1	:	BAUC1(NuInteraction);
+
+	DEFINE
+		BAUC_s5		:=		bauc.NuPs5;
+		BAUC_s1		:=		bauc.NuPs1;
+		BAUC_s16		:=		bauc.NuPs16;
+		BAUC_s4		:=		bauc.NuPs4;
+		BAUC_b14		:=		bauc.NuPb14;
+		BAUC1_b4		:=		bauc1.NuPb4;
+		BAUC_g8		:=		bauc.NuPg8;
+		BAUC_c1		:=		bauc.NuPc1;
+		BAUC_b4		:=		bauc.NuPb4;
+		Book_flights_id		:=		( (bauc1.NuPb5) & (bauc.NuPBookFLIGHT) );
+		BAUC_b6		:=		bauc.NuPb6;
+		BAUC_s21		:=		bauc.NuPs21;
+		BAUC_g13		:=		bauc.NuPg13;
+		BAUC_s2		:=		bauc.NuPs2;
+		BAUC1_b3		:=		bauc1.NuPb3;
+		BAUC_s15		:=		bauc.NuPs15;
+		BAUC_b1		:=		bauc.NuPb1;
+		BAUC_createFlights		:=		bauc.NuPcreateFlights;
+		BAUC_s12		:=		bauc.NuPs12;
+		BAUC_g5		:=		bauc.NuPg5;
+		BAUC_s11		:=		bauc.NuPs11;
+		BAUC_s17		:=		bauc.NuPs17;
+		BAUC_b9		:=		bauc.NuPb9;
+		BAUC_g2		:=		bauc.NuPg2;
+		BAUC_g6		:=		bauc.NuPg6;
+		BAUC_b3		:=		bauc.NuPb3;
+		BAUC_g11		:=		bauc.NuPg11;
+		BAUC_g1		:=		bauc.NuPg1;
+		BAUC_b13		:=		bauc.NuPb13;
+		BAUC_s3		:=		bauc.NuPs3;
+		BAUC_g7		:=		bauc.NuPg7;
+		BAUC_s13		:=		bauc.NuPs13;
+		BAUC_s20		:=		bauc.NuPs20;
+		BAUC_g3		:=		bauc.NuPg3;
+		BAUC1_b6		:=		bauc1.NuPb6;
+		BAUC_b7		:=		bauc.NuPb7;
+		BAUC_s18		:=		bauc.NuPs18;
+		BAUC_b5		:=		bauc.NuPb5;
+		BAUC1_BookF		:=		bauc1.NuPBookF;
+		BAUC_s14		:=		bauc.NuPs14;
+		BAUC_b10		:=		bauc.NuPb10;
+		BAUC_s7		:=		bauc.NuPs7;
+		BAUC_b12		:=		bauc.NuPb12;
+		BAUC_g9		:=		bauc.NuPg9;
+		BAUC_s10		:=		bauc.NuPs10;
+		BAUC_g14		:=		bauc.NuPg14;
+		BAUC_b2		:=		bauc.NuPb2;
+		BAUC_s6		:=		bauc.NuPs6;
+		BAUC_s9		:=		bauc.NuPs9;
+		BAUC_getFlightbyID		:=		bauc.NuPgetFlightbyID;
+		BAUC_s8		:=		bauc.NuPs8;
+		BAUC_c2counterPlus1		:=		bauc.NuPc2counterPlus1;
+		BAUC_c3		:=		bauc.NuPc3;
+		BAUC_g10		:=		bauc.NuPg10;
+		BAUC1_b2		:=		bauc1.NuPb2;
+		BAUC_b8		:=		bauc.NuPb8;
+		BAUC_s19		:=		bauc.NuPs19;
+		BAUC_g4		:=		bauc.NuPg4;
+		BAUC_b11		:=		bauc.NuPb11;
+		BAUC_g12		:=		bauc.NuPg12;
+		BAUC1_b1		:=		bauc1.NuPb1;
+		BAUC_SearchflightPRICE		:=		bauc.NuPSearchflightPRICE;
+
+
+	INVAR
+		( (( (NuInteraction) = (NuI17) )) -> (BAUC_s5) ) &
+		( (( (NuInteraction) = (NuI13) )) -> (BAUC_s1) ) &
+		( (( (NuInteraction) = (NuI28) )) -> (BAUC_s16) ) &
+		( (( (NuInteraction) = (NuI16) )) -> (BAUC_s4) ) &
+		( (( (NuInteraction) = (NuI62) )) -> (BAUC_b14) ) &
+		( (( (NuInteraction) = (NuI5) )) -> (BAUC1_b4) ) &
+		( (( (NuInteraction) = (NuI42) )) -> (BAUC_g8) ) &
+		( (( (NuInteraction) = (NuI9) )) -> (BAUC_c1) ) &
+		( (( (NuInteraction) = (NuI52) )) -> (BAUC_b4) ) &
+		( (( (NuInteraction) = (NuI7) )) -> (Book_flights_id) ) &
+		( (( (NuInteraction) = (NuI54) )) -> (BAUC_b6) ) &
+		( (( (NuInteraction) = (NuI33) )) -> (BAUC_s21) ) &
+		( (( (NuInteraction) = (NuI47) )) -> (BAUC_g13) ) &
+		( (( (NuInteraction) = (NuI14) )) -> (BAUC_s2) ) &
+		( (( (NuInteraction) = (NuI4) )) -> (BAUC1_b3) ) &
+		( (( (NuInteraction) = (NuI27) )) -> (BAUC_s15) ) &
+		( (( (NuInteraction) = (NuI49) )) -> (BAUC_b1) ) &
+		( (( (NuInteraction) = (NuI8) )) -> (BAUC_createFlights) ) &
+		( (( (NuInteraction) = (NuI24) )) -> (BAUC_s12) ) &
+		( (( (NuInteraction) = (NuI39) )) -> (BAUC_g5) ) &
+		( (( (NuInteraction) = (NuI23) )) -> (BAUC_s11) ) &
+		( (( (NuInteraction) = (NuI29) )) -> (BAUC_s17) ) &
+		( (( (NuInteraction) = (NuI57) )) -> (BAUC_b9) ) &
+		( (( (NuInteraction) = (NuI36) )) -> (BAUC_g2) ) &
+		( (( (NuInteraction) = (NuI40) )) -> (BAUC_g6) ) &
+		( (( (NuInteraction) = (NuI51) )) -> (BAUC_b3) ) &
+		( (( (NuInteraction) = (NuI45) )) -> (BAUC_g11) ) &
+		( (( (NuInteraction) = (NuI35) )) -> (BAUC_g1) ) &
+		( (( (NuInteraction) = (NuI61) )) -> (BAUC_b13) ) &
+		( (( (NuInteraction) = (NuI15) )) -> (BAUC_s3) ) &
+		( (( (NuInteraction) = (NuI41) )) -> (BAUC_g7) ) &
+		( (( (NuInteraction) = (NuI25) )) -> (BAUC_s13) ) &
+		( (( (NuInteraction) = (NuI32) )) -> (BAUC_s20) ) &
+		( (( (NuInteraction) = (NuI37) )) -> (BAUC_g3) ) &
+		( (( (NuInteraction) = (NuI6) )) -> (BAUC1_b6) ) &
+		( (( (NuInteraction) = (NuI55) )) -> (BAUC_b7) ) &
+		( (( (NuInteraction) = (NuI30) )) -> (BAUC_s18) ) &
+		( (( (NuInteraction) = (NuI53) )) -> (BAUC_b5) ) &
+		( (( (NuInteraction) = (NuI1) )) -> (BAUC1_BookF) ) &
+		( (( (NuInteraction) = (NuI26) )) -> (BAUC_s14) ) &
+		( (( (NuInteraction) = (NuI58) )) -> (BAUC_b10) ) &
+		( (( (NuInteraction) = (NuI19) )) -> (BAUC_s7) ) &
+		( (( (NuInteraction) = (NuI60) )) -> (BAUC_b12) ) &
+		( (( (NuInteraction) = (NuI43) )) -> (BAUC_g9) ) &
+		( (( (NuInteraction) = (NuI22) )) -> (BAUC_s10) ) &
+		( (( (NuInteraction) = (NuI48) )) -> (BAUC_g14) ) &
+		( (( (NuInteraction) = (NuI50) )) -> (BAUC_b2) ) &
+		( (( (NuInteraction) = (NuI18) )) -> (BAUC_s6) ) &
+		( (( (NuInteraction) = (NuI21) )) -> (BAUC_s9) ) &
+		( (( (NuInteraction) = (NuI34) )) -> (BAUC_getFlightbyID) ) &
+		( (( (NuInteraction) = (NuI20) )) -> (BAUC_s8) ) &
+		( (( (NuInteraction) = (NuI10) )) -> (BAUC_c2counterPlus1) ) &
+		( (( (NuInteraction) = (NuI11) )) -> (BAUC_c3) ) &
+		( (( (NuInteraction) = (NuI44) )) -> (BAUC_g10) ) &
+		( (( (NuInteraction) = (NuI3) )) -> (BAUC1_b2) ) &
+		( (( (NuInteraction) = (NuI56) )) -> (BAUC_b8) ) &
+		( (( (NuInteraction) = (NuI31) )) -> (BAUC_s19) ) &
+		( (( (NuInteraction) = (NuI38) )) -> (BAUC_g4) ) &
+		( (( (NuInteraction) = (NuI59) )) -> (BAUC_b11) ) &
+		( (( (NuInteraction) = (NuI46) )) -> (BAUC_g12) ) &
+		( (( (NuInteraction) = (NuI2) )) -> (BAUC1_b1) ) &
+		( (( (NuInteraction) = (NuI12) )) -> (BAUC_SearchflightPRICE) );
+
+	TRANS
+		( (( (NuInteraction) = (NuI7) )) -> (( (next(bauc.NuVidInput)) = (bauc1.NuVrequestedID) )) );
+
+

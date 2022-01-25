@@ -1,0 +1,275 @@
+MODULE BAUC(active_interaction)
+
+	VAR
+		NuPStart		:		boolean;
+		NuPStart0		:		boolean;
+		NuPStart01		:		boolean;
+		NuPStart1		:		boolean;
+		NuPStart2		:		boolean;
+		NuPStart3		:		boolean;
+		NuPStart4		:		boolean;
+		NuPStart5		:		boolean;
+		NuPStart6		:		boolean;
+		NuPStart7		:		boolean;
+		NuPStop		:		boolean;
+		NuPStop0		:		boolean;
+		NuPStop01		:		boolean;
+		NuPStop1		:		boolean;
+		NuPStop2		:		boolean;
+		NuPNew		:		boolean;
+		NuPNew0		:		boolean;
+		NuPNew001		:		boolean;
+		NuPNew01		:		boolean;
+		NuPNew1		:		boolean;
+		NuPNew2		:		boolean;
+		NuPNew3		:		boolean;
+		NuPTry		:		boolean;
+		NuPTry0		:		boolean;
+		NuPTry01		:		boolean;
+		NuPTry1		:		boolean;
+		NuPTry2		:		boolean;
+		NuPTry3		:		boolean;
+		NuPTry4		:		boolean;
+		NuPTry5		:		boolean;
+		NuPTry6		:		boolean;
+		NuPTry7		:		boolean;
+		NuPTry8		:		boolean;
+		NuPTry9		:		boolean;
+		NuPTry10		:		boolean;
+		NuPfb		:		boolean;
+		NuPfb0		:		boolean;
+		NuPfb1		:		boolean;
+		NuVresponseHash		:		unsigned word[3];
+		NuVquestion		:		unsigned word[3];
+		NuV_responseHash		:		unsigned word[3];
+		NuV_question		:		unsigned word[3];
+		NuV_response		:		unsigned word[3];
+		NuVmsgvalue		:		unsigned word[3];
+		NuVadmin		:		unsigned word[3];
+		Nuplace		:		{NuSinvoke, NuSfallback_Function, NuSStart_Function, NuSpublic, NuSpayable, NuSexternal, NuSifcondition, NuSresponceEqual0X0, NuSresponceDEqual0X0, NuShashing, NuSquestionEqual_questionS, NuSStop_Function, NuSsending_Ether_transfer, NuSNew_Function, NuSresponseHashEqual_responseHash, NuSquestionEqual_questionN, NuSTry_Function, NuSrequirecondition, NuSaddressEqualtxorigin, NuSaddressDEqualtxorigin, NuSt1, NuSt2};
+
+
+	INIT
+		( (NuVmsgvalue) = (0ud3_3) ) &
+		( (NuVresponseHash) = (0ud3_0) ) &
+		( (NuVquestion) = (0ud3_0) ) &
+		( (NuV_responseHash) = (0ud3_1) ) &
+		( (NuV_question) = (0ud3_1) ) &
+		( (NuV_response) = (0ud3_1) ) &
+		( (NuVadmin) = (0ud3_1) ) &
+		( (Nuplace) = (NuSinvoke) );
+
+	INVAR
+		( (NuPStop01) <-> (( (Nuplace) = (NuSpublic) )) ) &
+		( (NuPStart01) <-> (( (Nuplace) = (NuSpublic) )) ) &
+		( (NuPfb0) <-> (( (Nuplace) = (NuSfallback_Function) )) ) &
+		( (NuPfb1) <-> (( (Nuplace) = (NuSexternal) )) ) &
+		( (NuPStop) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPStart) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPTry10) <-> (( (Nuplace) = (NuSt2) )) ) &
+		( (NuPStart3) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVresponseHash) != (0ud3_0) )) )) ) &
+		( (NuPStart2) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVresponseHash) = (0ud3_0) )) )) ) &
+		( (NuPNew) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPStart5) <-> (( (Nuplace) = (NuSresponceEqual0X0) )) ) &
+		( (NuPStart4) <-> (( (Nuplace) = (NuSresponceDEqual0X0) )) ) &
+		( (NuPStart7) <-> (( (Nuplace) = (NuSquestionEqual_questionS) )) ) &
+		( (NuPStart6) <-> (( (Nuplace) = (NuShashing) )) ) &
+		( (NuPNew0) <-> (( (( (Nuplace) = (NuSNew_Function) )) & (( (NuVadmin) = (0ud3_1) )) )) ) &
+		( (NuPNew1) <-> (( (Nuplace) = (NuSpayable) )) ) &
+		( (NuPfb) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPNew01) <-> (( (Nuplace) = (NuSpublic) )) ) &
+		( (NuPNew2) <-> (( (Nuplace) = (NuSquestionEqual_questionN) )) ) &
+		( (NuPNew3) <-> (( (Nuplace) = (NuSresponseHashEqual_responseHash) )) ) &
+		( (NuPTry2) <-> (( (Nuplace) = (NuSrequirecondition) )) ) &
+		( (NuPTry1) <-> (( (Nuplace) = (NuSpayable) )) ) &
+		( (NuPStart1) <-> (( (Nuplace) = (NuSpayable) )) ) &
+		( (NuPTry0) <-> (( (Nuplace) = (NuSTry_Function) )) ) &
+		( (NuPStart0) <-> (( (Nuplace) = (NuSStart_Function) )) ) &
+		( (NuPTry6) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (( (NuVresponseHash) = (NuV_response) )) & (( (NuVmsgvalue) > (0ud3_1) )) )) )) ) &
+		( (NuPTry5) <-> (( (Nuplace) = (NuSaddressEqualtxorigin) )) ) &
+		( (NuPTry4) <-> (( (Nuplace) = (NuSaddressDEqualtxorigin) )) ) &
+		( (NuPTry3) <-> (( (Nuplace) = (NuSrequirecondition) )) ) &
+		( (NuPTry9) <-> (( (Nuplace) = (NuSsending_Ether_transfer) )) ) &
+		( (NuPTry8) <-> (( (Nuplace) = (NuSt1) )) ) &
+		( (NuPTry7) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (( (NuVresponseHash) != (NuV_response) )) | (( (NuVmsgvalue) <= (0ud3_1) )) )) )) ) &
+		( (NuPTry01) <-> (( (Nuplace) = (NuSpublic) )) ) &
+		( (NuPNew001) <-> (( (( (Nuplace) = (NuSNew_Function) )) & (( (NuVadmin) = (0ud3_0) )) )) ) &
+		( (NuPStop1) <-> (( (Nuplace) = (NuSpayable) )) ) &
+		( (NuPStop0) <-> (( (Nuplace) = (NuSStop_Function) )) ) &
+		( (NuPStop2) <-> (( (Nuplace) = (NuSsending_Ether_transfer) )) ) &
+		( (NuPTry) <-> (( (Nuplace) = (NuSinvoke) )) );
+
+	TRANS
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSStart_Function) )) )) & (( (active_interaction) = (NuI9) )) )) & (( (next(NuVresponseHash)) = (0ud3_0) )) )) & (( (next(NuVquestion)) = (0ud3_1) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSStart_Function) )) & (( (next(Nuplace)) = (NuSpublic) )) )) & (( (active_interaction) = (NuI10) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpublic) )) & (( (next(Nuplace)) = (NuSpayable) )) )) & (( (active_interaction) = (NuI11) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpayable) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI12) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSresponceEqual0X0) )) )) & (( (active_interaction) = (NuI13) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSresponceDEqual0X0) )) )) & (( (active_interaction) = (NuI14) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSresponceDEqual0X0) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI15) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSresponceEqual0X0) )) & (( (next(Nuplace)) = (NuShashing) )) )) & (( (active_interaction) = (NuI16) )) )) & (( (next(NuVresponseHash)) = (0ud3_1) )) )) & (( (next(NuVquestion)) = (NuV_question) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuShashing) )) & (( (next(Nuplace)) = (NuSquestionEqual_questionS) )) )) & (( (active_interaction) = (NuI17) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSquestionEqual_questionS) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI18) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSStop_Function) )) )) & (( (active_interaction) = (NuI19) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSStop_Function) )) & (( (next(Nuplace)) = (NuSpublic) )) )) & (( (active_interaction) = (NuI20) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpublic) )) & (( (next(Nuplace)) = (NuSpayable) )) )) & (( (active_interaction) = (NuI21) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpayable) )) & (( (next(Nuplace)) = (NuSsending_Ether_transfer) )) )) & (( (active_interaction) = (NuI22) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSsending_Ether_transfer) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI23) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSNew_Function) )) )) & (( (active_interaction) = (NuI1) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (Nuplace) = (NuSNew_Function) )) & (( (next(Nuplace)) = (NuSpublic) )) )) & (( (active_interaction) = (NuI2) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) ) |
+		( (( (( (( (( (( (( (( (( (Nuplace) = (NuSNew_Function) )) & (( (next(Nuplace)) = (NuSpublic) )) )) & (( (active_interaction) = (NuI3) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSNew_Function) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI25) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpublic) )) & (( (next(Nuplace)) = (NuSpayable) )) )) & (( (active_interaction) = (NuI24) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpayable) )) & (( (next(Nuplace)) = (NuSquestionEqual_questionN) )) )) & (( (active_interaction) = (NuI26) )) )) & (( (next(NuVquestion)) = (NuV_question) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSquestionEqual_questionN) )) & (( (next(Nuplace)) = (NuSresponseHashEqual_responseHash) )) )) & (( (active_interaction) = (NuI27) )) )) & (( (next(NuVresponseHash)) = (NuV_responseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSresponseHashEqual_responseHash) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI28) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSTry_Function) )) )) & (( (active_interaction) = (NuI29) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSTry_Function) )) & (( (next(Nuplace)) = (NuSpublic) )) )) & (( (active_interaction) = (NuI30) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpublic) )) & (( (next(Nuplace)) = (NuSpayable) )) )) & (( (active_interaction) = (NuI31) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpayable) )) & (( (next(Nuplace)) = (NuSrequirecondition) )) )) & (( (active_interaction) = (NuI32) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSaddressEqualtxorigin) )) )) & (( (active_interaction) = (NuI33) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition) )) & (( (next(Nuplace)) = (NuSaddressDEqualtxorigin) )) )) & (( (active_interaction) = (NuI34) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSaddressDEqualtxorigin) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI35) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSaddressEqualtxorigin) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI36) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSt1) )) )) & (( (active_interaction) = (NuI37) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSt2) )) )) & (( (active_interaction) = (NuI38) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSt1) )) & (( (next(Nuplace)) = (NuSsending_Ether_transfer) )) )) & (( (active_interaction) = (NuI39) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSsending_Ether_transfer) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI40) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSt2) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI41) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfallback_Function) )) )) & (( (active_interaction) = (NuI6) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfallback_Function) )) & (( (next(Nuplace)) = (NuSexternal) )) )) & (( (active_interaction) = (NuI7) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSexternal) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI8) )) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (active_interaction) != (NuI8) )) & (( (( (active_interaction) != (NuI7) )) & (( (( (active_interaction) != (NuI6) )) & (( (( (active_interaction) != (NuI41) )) & (( (( (active_interaction) != (NuI40) )) & (( (( (active_interaction) != (NuI39) )) & (( (( (active_interaction) != (NuI38) )) & (( (( (active_interaction) != (NuI37) )) & (( (( (active_interaction) != (NuI36) )) & (( (( (active_interaction) != (NuI35) )) & (( (( (active_interaction) != (NuI34) )) & (( (( (active_interaction) != (NuI33) )) & (( (( (active_interaction) != (NuI32) )) & (( (( (active_interaction) != (NuI31) )) & (( (( (active_interaction) != (NuI30) )) & (( (( (active_interaction) != (NuI29) )) & (( (( (active_interaction) != (NuI28) )) & (( (( (active_interaction) != (NuI27) )) & (( (( (active_interaction) != (NuI26) )) & (( (( (active_interaction) != (NuI24) )) & (( (( (active_interaction) != (NuI25) )) & (( (( (active_interaction) != (NuI3) )) & (( (( (active_interaction) != (NuI2) )) & (( (( (active_interaction) != (NuI1) )) & (( (( (active_interaction) != (NuI23) )) & (( (( (active_interaction) != (NuI22) )) & (( (( (active_interaction) != (NuI21) )) & (( (( (active_interaction) != (NuI20) )) & (( (( (active_interaction) != (NuI19) )) & (( (( (active_interaction) != (NuI18) )) & (( (( (active_interaction) != (NuI17) )) & (( (( (active_interaction) != (NuI16) )) & (( (( (active_interaction) != (NuI15) )) & (( (( (active_interaction) != (NuI14) )) & (( (( (active_interaction) != (NuI13) )) & (( (( (active_interaction) != (NuI12) )) & (( (( (active_interaction) != (NuI11) )) & (( (( (active_interaction) != (NuI10) )) & (( (( (active_interaction) != (NuI9) )) & (( (( (( (( (( (( (( (( (next(Nuplace)) = (Nuplace) )) & (( (next(NuVresponseHash)) = (NuVresponseHash) )) )) & (( (next(NuVquestion)) = (NuVquestion) )) )) & (( (next(NuV_responseHash)) = (NuV_responseHash) )) )) & (( (next(NuV_question)) = (NuV_question) )) )) & (( (next(NuV_response)) = (NuV_response) )) )) & (( (next(NuVmsgvalue)) = (NuVmsgvalue) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) );
+
+
+MODULE MODIFIER(active_interaction)
+
+	VAR
+		NuPc0		:		boolean;
+		NuPc1		:		boolean;
+		NuPc2		:		boolean;
+		NuPc3		:		boolean;
+		NuPc4		:		boolean;
+		NuVadmin		:		unsigned word[3];
+		Nuplace		:		{NuSinvoke, NuScheck, NuSaccept, NuSreject};
+
+
+	INIT
+		( (Nuplace) = (NuSinvoke) & (NuVadmin) = (0ud3_0) );
+
+	INVAR
+		( (NuPc3) <-> (( (Nuplace) = (NuSaccept) )) ) &
+		( (NuPc4) <-> (( (Nuplace) = (NuSreject) )) ) &
+		( (NuPc1) <-> (( (( (Nuplace) = (NuScheck) )) & (( (NuVadmin) = (0ud3_1) )) )) ) &
+		( (NuPc2) <-> (( (( (Nuplace) = (NuScheck) )) & (( (NuVadmin) = (0ud3_0) )) )) ) &
+		( (NuPc0) <-> (( (Nuplace) = (NuSinvoke) )) );
+
+	TRANS
+		( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuScheck) )) )) & (( (active_interaction) = (NuI1) )) ) |
+		( (( (( (( (Nuplace) = (NuScheck) )) & (( (next(Nuplace)) = (NuSaccept) )) )) & (( (active_interaction) = (NuI2) )) )) & (( (next(NuVadmin)) = (0ud3_1) )) ) |
+		( (( (( (( (Nuplace) = (NuScheck) )) & (( (next(Nuplace)) = (NuSreject) )) )) & (( (active_interaction) = (NuI3) )) )) & (( (next(NuVadmin)) = (0ud3_0) )) ) |
+		( (( (( (( (Nuplace) = (NuSaccept) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI4) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (( (( (Nuplace) = (NuSreject) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI5) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) ) |
+		( (( (active_interaction) != (NuI5) )) & (( (( (active_interaction) != (NuI4) )) & (( (( (active_interaction) != (NuI3) )) & (( (( (active_interaction) != (NuI2) )) & (( (( (active_interaction) != (NuI1) )) & (( (( (next(Nuplace)) = (Nuplace) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) )) )) )) )) );
+
+
+MODULE main
+
+	VAR
+		NuInteraction		:		{NuI1, NuI2, NuI3, NuI4, NuI5, NuI6, NuI7, NuI8, NuI9, NuI10, NuI11, NuI12, NuI13, NuI14, NuI15, NuI16, NuI17, NuI18, NuI19, NuI20, NuI21, NuI22, NuI23, NuI24, NuI25, NuI26, NuI27, NuI28, NuI29, NuI30, NuI31, NuI32, NuI33, NuI34, NuI35, NuI36, NuI37, NuI38, NuI39, NuI40, NuI41};
+		bauc	:	BAUC(NuInteraction);
+		modifier	:	MODIFIER(NuInteraction);
+
+	DEFINE
+		BAUC_fb1		:=		bauc.NuPfb1;
+		BAUC_Try10		:=		bauc.NuPTry10;
+		modifier_c3		:=		modifier.NuPc3;
+		BAUC_Stop0		:=		bauc.NuPStop0;
+		BAUC_Try0		:=		bauc.NuPTry0;
+		BAUC_Start4		:=		bauc.NuPStart4;
+		BAUC_Stop01		:=		bauc.NuPStop01;
+		BAUC_Start		:=		bauc.NuPStart;
+		reject_admin		:=		( (modifier.NuPc2) & (bauc.NuPNew0) );
+		BAUC_Stop2		:=		bauc.NuPStop2;
+		BAUC_Try7		:=		bauc.NuPTry7;
+		BAUC_New2		:=		bauc.NuPNew2;
+		BAUC_Try4		:=		bauc.NuPTry4;
+		BAUC_Try01		:=		bauc.NuPTry01;
+		BAUC_New001		:=		bauc.NuPNew001;
+		BAUC_Stop1		:=		bauc.NuPStop1;
+		BAUC_Start0		:=		bauc.NuPStart0;
+		BAUC_New3		:=		bauc.NuPNew3;
+		BAUC_Try		:=		bauc.NuPTry;
+		BAUC_fb		:=		bauc.NuPfb;
+		BAUC_fb0		:=		bauc.NuPfb0;
+		BAUC_Start2		:=		bauc.NuPStart2;
+		BAUC_Start1		:=		bauc.NuPStart1;
+		BAUC_Try3		:=		bauc.NuPTry3;
+		BAUC_Try6		:=		bauc.NuPTry6;
+		check_admin		:=		( (bauc.NuPNew) & (modifier.NuPc0) );
+		BAUC_Start3		:=		bauc.NuPStart3;
+		modifier_c4		:=		modifier.NuPc4;
+		BAUC_Try1		:=		bauc.NuPTry1;
+		accept_admin		:=		( (modifier.NuPc1) & (bauc.NuPNew0) );
+		BAUC_Try2		:=		bauc.NuPTry2;
+		BAUC_Start5		:=		bauc.NuPStart5;
+		BAUC_New1		:=		bauc.NuPNew1;
+		BAUC_Start01		:=		bauc.NuPStart01;
+		BAUC_Try5		:=		bauc.NuPTry5;
+		BAUC_Start6		:=		bauc.NuPStart6;
+		BAUC_Stop		:=		bauc.NuPStop;
+		BAUC_Start7		:=		bauc.NuPStart7;
+		BAUC_New01		:=		bauc.NuPNew01;
+		BAUC_Try9		:=		bauc.NuPTry9;
+		BAUC_Try8		:=		bauc.NuPTry8;
+
+
+	INVAR
+		( (( (NuInteraction) = (NuI8) )) -> (BAUC_fb1) ) &
+		( (( (NuInteraction) = (NuI41) )) -> (BAUC_Try10) ) &
+		( (( (NuInteraction) = (NuI4) )) -> (modifier_c3) ) &
+		( (( (NuInteraction) = (NuI20) )) -> (BAUC_Stop0) ) &
+		( (( (NuInteraction) = (NuI30) )) -> (BAUC_Try0) ) &
+		( (( (NuInteraction) = (NuI15) )) -> (BAUC_Start4) ) &
+		( (( (NuInteraction) = (NuI21) )) -> (BAUC_Stop01) ) &
+		( (( (NuInteraction) = (NuI9) )) -> (BAUC_Start) ) &
+		( (( (NuInteraction) = (NuI3) )) -> (reject_admin) ) &
+		( (( (NuInteraction) = (NuI23) )) -> (BAUC_Stop2) ) &
+		( (( (NuInteraction) = (NuI38) )) -> (BAUC_Try7) ) &
+		( (( (NuInteraction) = (NuI27) )) -> (BAUC_New2) ) &
+		( (( (NuInteraction) = (NuI35) )) -> (BAUC_Try4) ) &
+		( (( (NuInteraction) = (NuI31) )) -> (BAUC_Try01) ) &
+		( (( (NuInteraction) = (NuI25) )) -> (BAUC_New001) ) &
+		( (( (NuInteraction) = (NuI22) )) -> (BAUC_Stop1) ) &
+		( (( (NuInteraction) = (NuI10) )) -> (BAUC_Start0) ) &
+		( (( (NuInteraction) = (NuI28) )) -> (BAUC_New3) ) &
+		( (( (NuInteraction) = (NuI29) )) -> (BAUC_Try) ) &
+		( (( (NuInteraction) = (NuI6) )) -> (BAUC_fb) ) &
+		( (( (NuInteraction) = (NuI7) )) -> (BAUC_fb0) ) &
+		( (( (NuInteraction) = (NuI13) )) -> (BAUC_Start2) ) &
+		( (( (NuInteraction) = (NuI12) )) -> (BAUC_Start1) ) &
+		( (( (NuInteraction) = (NuI34) )) -> (BAUC_Try3) ) &
+		( (( (NuInteraction) = (NuI37) )) -> (BAUC_Try6) ) &
+		( (( (NuInteraction) = (NuI1) )) -> (check_admin) ) &
+		( (( (NuInteraction) = (NuI14) )) -> (BAUC_Start3) ) &
+		( (( (NuInteraction) = (NuI5) )) -> (modifier_c4) ) &
+		( (( (NuInteraction) = (NuI32) )) -> (BAUC_Try1) ) &
+		( (( (NuInteraction) = (NuI2) )) -> (accept_admin) ) &
+		( (( (NuInteraction) = (NuI33) )) -> (BAUC_Try2) ) &
+		( (( (NuInteraction) = (NuI16) )) -> (BAUC_Start5) ) &
+		( (( (NuInteraction) = (NuI26) )) -> (BAUC_New1) ) &
+		( (( (NuInteraction) = (NuI11) )) -> (BAUC_Start01) ) &
+		( (( (NuInteraction) = (NuI36) )) -> (BAUC_Try5) ) &
+		( (( (NuInteraction) = (NuI17) )) -> (BAUC_Start6) ) &
+		( (( (NuInteraction) = (NuI19) )) -> (BAUC_Stop) ) &
+		( (( (NuInteraction) = (NuI18) )) -> (BAUC_Start7) ) &
+		( (( (NuInteraction) = (NuI24) )) -> (BAUC_New01) ) &
+		( (( (NuInteraction) = (NuI40) )) -> (BAUC_Try9) ) &
+		( (( (NuInteraction) = (NuI39) )) -> (BAUC_Try8) );
+
+	TRANS
+		( (( (NuInteraction) = (NuI3) )) -> (( (next(bauc.NuVadmin)) = (modifier.NuVadmin) )) ) &
+		( (( (NuInteraction) = (NuI1) )) -> (( (next(modifier.NuVadmin)) = (bauc.NuVadmin) )) ) &
+		( (( (NuInteraction) = (NuI2) )) -> (( (next(bauc.NuVadmin)) = (modifier.NuVadmin) )) );
+
+

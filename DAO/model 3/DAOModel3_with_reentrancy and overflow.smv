@@ -1,0 +1,112 @@
+MODULE BAUC(active_interaction)
+
+	VAR
+		NuPdonate		:		boolean;
+		NuPcreditPlusamount1		:		boolean;
+		NuPd1		:		boolean;
+		NuPqueryCredit		:		boolean;
+		NuPq1		:		boolean;
+		NuPq2		:		boolean;
+		NuPwithdraw		:		boolean;
+		NuPw1		:		boolean;
+		NuPw2		:		boolean;
+		NuPw3		:		boolean;
+		NuPw4		:		boolean;
+		NuPw5		:		boolean;
+		NuPw6		:		boolean;
+		NuPcreditMinusamount		:		boolean;
+		NuVcredit		:		unsigned word[3];
+		NuVamount1		:		unsigned word[3];
+		NuVamount		:		unsigned word[3];
+		Nuplace		:		{NuSinvoke, NuSfunctiondonate, NuSaddition, NuSfunctionwithdraw, NuSifcondition, NuSamount_availble, NuSamount_not_availble, NuSsending_ether_call, NuSsubtraction, NuSfunctionqueryCredit, NuSreturn};
+
+
+	INIT
+		( (Nuplace) = (NuSinvoke) ) &
+		( (NuVcredit) = (0ud3_5) ) &
+		( (NuVamount) = (0ud3_3) ) &
+		( (NuVamount1) = (0ud3_5) );
+
+	INVAR
+		( (NuPcreditPlusamount1) <-> (( (Nuplace) = (NuSfunctiondonate) )) ) &
+		( (NuPcreditMinusamount) <-> (( (Nuplace) = (NuSsending_ether_call) )) ) &
+		( (NuPd1) <-> (( (Nuplace) = (NuSaddition) )) ) &
+		( (NuPqueryCredit) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPq1) <-> (( (Nuplace) = (NuSfunctionqueryCredit) )) ) &
+		( (NuPq2) <-> (( (Nuplace) = (NuSreturn) )) ) &
+		( (NuPwithdraw) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPw5) <-> (( (Nuplace) = (NuSsubtraction) )) ) &
+		( (NuPw6) <-> (( (Nuplace) = (NuSamount_not_availble) )) ) &
+		( (NuPw3) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVcredit) < (NuVamount) )) )) ) &
+		( (NuPw4) <-> (( (Nuplace) = (NuSamount_availble) )) ) &
+		( (NuPw1) <-> (( (Nuplace) = (NuSfunctionwithdraw) )) ) &
+		( (NuPdonate) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPw2) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVcredit) >= (NuVamount) )) )) );
+
+	TRANS
+		( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctiondonate) )) )) & (( (active_interaction) = (NuI1) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSfunctiondonate) )) & (( (next(Nuplace)) = (NuSaddition) )) )) & (( (active_interaction) = (NuI2) )) )) & (( (next(NuVcredit)) = (( (NuVcredit) + (NuVamount1) )) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSaddition) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI3) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctionwithdraw) )) )) & (( (active_interaction) = (NuI7) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSfunctionwithdraw) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI9) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSamount_availble) )) )) & (( (active_interaction) = (NuI10) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSamount_not_availble) )) )) & (( (active_interaction) = (NuI11) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSamount_availble) )) & (( (next(Nuplace)) = (NuSsending_ether_call) )) )) & (( (active_interaction) = (NuI12) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSsending_ether_call) )) & (( (next(Nuplace)) = (NuSsubtraction) )) )) & (( (active_interaction) = (NuI8) )) )) & (( (next(NuVcredit)) = (( (NuVcredit) - (NuVamount) )) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSsubtraction) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI13) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSamount_not_availble) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI14) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunctionqueryCredit) )) )) & (( (active_interaction) = (NuI4) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSfunctionqueryCredit) )) & (( (next(Nuplace)) = (NuSreturn) )) )) & (( (active_interaction) = (NuI5) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSreturn) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI6) )) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) ) |
+		( (( (active_interaction) != (NuI6) )) & (( (( (active_interaction) != (NuI5) )) & (( (( (active_interaction) != (NuI4) )) & (( (( (active_interaction) != (NuI14) )) & (( (( (active_interaction) != (NuI13) )) & (( (( (active_interaction) != (NuI8) )) & (( (( (active_interaction) != (NuI12) )) & (( (( (active_interaction) != (NuI11) )) & (( (( (active_interaction) != (NuI10) )) & (( (( (active_interaction) != (NuI9) )) & (( (( (active_interaction) != (NuI7) )) & (( (( (active_interaction) != (NuI3) )) & (( (( (active_interaction) != (NuI2) )) & (( (( (active_interaction) != (NuI1) )) & (( (( (( (( (next(Nuplace)) = (Nuplace) )) & (( (next(NuVcredit)) = (NuVcredit) )) )) & (( (next(NuVamount1)) = (NuVamount1) )) )) & (( (next(NuVamount)) = (NuVamount) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) );
+
+
+MODULE main
+
+	VAR
+		NuInteraction		:		{NuI1, NuI2, NuI3, NuI4, NuI5, NuI6, NuI7, NuI8, NuI9, NuI10, NuI11, NuI12, NuI13, NuI14};
+		bauc	:	BAUC(NuInteraction);
+
+	DEFINE
+		BAUC_queryCredit		:=		bauc.NuPqueryCredit;
+		BAUC_creditPlusamount1		:=		bauc.NuPcreditPlusamount1;
+		BAUC_q1		:=		bauc.NuPq1;
+		BAUC_w6		:=		bauc.NuPw6;
+		BAUC_q2		:=		bauc.NuPq2;
+		BAUC_withdraw		:=		bauc.NuPwithdraw;
+		BAUC_donate		:=		bauc.NuPdonate;
+		BAUC_w4		:=		bauc.NuPw4;
+		BAUC_w5		:=		bauc.NuPw5;
+		BAUC_w3		:=		bauc.NuPw3;
+		BAUC_creditMinusamount		:=		bauc.NuPcreditMinusamount;
+		BAUC_d1		:=		bauc.NuPd1;
+		BAUC_w1		:=		bauc.NuPw1;
+		BAUC_w2		:=		bauc.NuPw2;
+
+
+	INVAR
+		( (( (NuInteraction) = (NuI4) )) -> (BAUC_queryCredit) ) &
+		( (( (NuInteraction) = (NuI2) )) -> (BAUC_creditPlusamount1) ) &
+		( (( (NuInteraction) = (NuI5) )) -> (BAUC_q1) ) &
+		( (( (NuInteraction) = (NuI14) )) -> (BAUC_w6) ) &
+		( (( (NuInteraction) = (NuI6) )) -> (BAUC_q2) ) &
+		( (( (NuInteraction) = (NuI7) )) -> (BAUC_withdraw) ) &
+		( (( (NuInteraction) = (NuI1) )) -> (BAUC_donate) ) &
+		( (( (NuInteraction) = (NuI12) )) -> (BAUC_w4) ) &
+		( (( (NuInteraction) = (NuI13) )) -> (BAUC_w5) ) &
+		( (( (NuInteraction) = (NuI11) )) -> (BAUC_w3) ) &
+		( (( (NuInteraction) = (NuI8) )) -> (BAUC_creditMinusamount) ) &
+		( (( (NuInteraction) = (NuI3) )) -> (BAUC_d1) ) &
+		( (( (NuInteraction) = (NuI9) )) -> (BAUC_w1) ) &
+		( (( (NuInteraction) = (NuI10) )) -> (BAUC_w2) );
+
+--Spec_1 check reentrancy vulnerability
+CTLSPEC NAME Reentrancy_Vulnerability :=AG ( (bauc.Nuplace = NuSfunctiondonate) | (bauc.Nuplace = NuSfunctionwithdraw)| (bauc.Nuplace = NuSfunctionqueryCredit) ->  EF (   AG ((bauc.Nuplace = NuSsending_ether_call) -> AF (bauc.Nuplace = NuSsubtraction)) ) ) 
+
+--Spec_7 check overflow vulnerability
+CTLSPEC NAME Overflow_Vulnerability :=AG ((bauc.Nuplace =NuSfunctiondonate & bauc.NuVcredit < bauc.NuVamount1) -> AF bauc.Nuplace = NuSaddition)   
+CTLSPEC NAME Overflow_Vulnerability_1 :=AG ((bauc.Nuplace = NuSfunctiondonate)  & (bauc.NuVcredit + bauc.NuVamount1 < bauc.NuVamount1) ->E[ bauc.Nuplace = NuSfunctiondonate U bauc.Nuplace = NuSaddition ])  
+
+--Spec_8 check underflow vulnerability
+CTLSPEC NAME Underflow_Vulnerability := AG ((bauc.Nuplace = NuSfunctionwithdraw & bauc.NuVamount > bauc.NuVcredit ) -> AF bauc.Nuplace = NuSsubtraction)   
+CTLSPEC NAME Underflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunctionwithdraw & (bauc.NuVcredit  <  bauc.NuVamount) -> E [ bauc.Nuplace = NuSfunctionwithdraw U bauc.Nuplace = NuSsubtraction ])

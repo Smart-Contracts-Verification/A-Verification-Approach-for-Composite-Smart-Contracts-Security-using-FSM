@@ -1,0 +1,99 @@
+model goldgame
+
+	port type syncPort
+	
+
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+
+
+atomic type Goldgame
+	
+	data int msgvalue = 5
+	data bool responseHash = FALSE
+	data bool question = TRUE
+	data bool _question
+	data bool _responseHash
+	
+
+export port syncPort Start
+export port syncPort Ifcondition
+export port syncPort responseHashEqualkeccak256abiencoderesponse
+export port syncPort questionEqualquestion
+export port syncPort FinishStart
+
+export port syncPort Stop
+export port syncPort Transferbalancestop
+export port syncPort FinishStop
+
+
+export port syncPort New 
+export port syncPort QuestionEqualquestionANDresponseHashEqualresponseHash
+export port syncPort FinishNew
+
+export port syncPort Try 
+export port syncPort IfresponseHashEqualkeccak256abiencoderesponseANDmsgvaluegraterThan1ether
+export port syncPort RequiremsgsenderEqualtxorigin
+export port syncPort Transferbalancetry
+export port syncPort FinishTry
+
+
+  place    invoke, funcstart, hashing, ifconditionstart, setvariablestart, functionstop, sendingetherstop,  functionnew, setvariablenew, functiontry, txorigin, ifconditiontry, sendingethertry
+
+initial to invoke do {_question= FALSE; _responseHash=FALSE;}
+  
+on Start from invoke to funcstart
+on Ifcondition from funcstart to invoke provided (responseHash != FALSE)
+on responseHashEqualkeccak256abiencoderesponse from funcstart to hashing provided (responseHash == FALSE) do {responseHash = _responseHash; }
+on questionEqualquestion from  hashing to setvariablestart do {question = _question;}
+on FinishStart from setvariablestart to invoke
+
+on Stop from invoke to functionstop
+on Transferbalancestop from functionstop to sendingetherstop
+on FinishStop from sendingetherstop to invoke
+
+
+on New from invoke to functionnew 
+on QuestionEqualquestionANDresponseHashEqualresponseHash from functionnew to setvariablenew do {question = _question; responseHash = _responseHash;}
+on FinishNew from setvariablenew to invoke
+
+on Try from invoke to functiontry
+on RequiremsgsenderEqualtxorigin from functiontry to txorigin
+on Ifcondition1 from txorigin to functiontry  provided (responseHash != _responseHash && msgvalue <= 1 ) 
+on Transferbalancetry from txorigin to sendingethertry provided (responseHash == _responseHash && msgvalue > 1 )
+on FinishTry from sendingethertry to invoke
+
+end
+
+
+compound type globModel
+
+  component Goldgame  BAUC
+  
+
+  connector SINGLE BAUC_Start( BAUC.Start)
+  connector SINGLE BAUC_Ifcondition( BAUC.Ifcondition)
+  connector SINGLE BAUC_responseHashEqualkeccak256abiencoderesponse( BAUC.responseHashEqualkeccak256abiencoderesponse)
+  connector SINGLE BAUC_questionEqualquestion( BAUC.questionEqualquestion)
+
+  connector SINGLE BAUC_Stop( BAUC.Stop)
+  connector SINGLE BAUC_Transferbalancestop( BAUC.Transferbalancestop)
+ 
+  connector SINGLE BAUC_New( BAUC.New)
+  connector SINGLE BAUC_QuestionEqualquestionANDresponseHashEqualresponseHash( BAUC.QuestionEqualquestionANDresponseHashEqualresponseHash)
+
+  connector SINGLE BAUC_Try( BAUC.Try)
+  connector SINGLE BAUC_Ifcondition1( BAUC.Ifcondition1)
+  connector SINGLE BAUC_RequiremsgsenderEqualtxorigin( BAUC.RequiremsgsenderEqualtxorigin)
+  connector SINGLE BAUC_Transferbalancetry( BAUC.Transferbalancetry)
+
+connector SINGLE BAUC_FinishStart( BAUC.FinishStart)
+connector SINGLE BAUC_FinishStop( BAUC.FinishStop)
+connector SINGLE BAUC_FinishNew( BAUC.FinishNew)
+connector SINGLE BAUC_FinishTry( BAUC.FinishTry)
+   end
+
+component globModel Root
+ end

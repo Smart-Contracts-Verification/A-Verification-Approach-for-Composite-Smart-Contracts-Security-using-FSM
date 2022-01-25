@@ -1,0 +1,70 @@
+model donateModel
+
+	port type syncPort
+
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+atomic type donate 
+data int credit
+data int amount1
+data int amount
+
+export port syncPort Donate
+export port syncPort CreditPlusAmount
+
+export port syncPort donate_finish
+export port syncPort Withdraw
+export port syncPort CreditlessThanAmount1 
+export port syncPort CreditmsgsendergreaterThanAmount
+export port syncPort CreditmsgsenderlessThanAmount
+export port syncPort CallvalueAmount
+export port syncPort CreditmsgsenderMinusAmount
+export port syncPort withdraw_finish
+export port syncPort QueryCredit
+export port syncPort ReturnCredit
+
+  place    invoke , function_donate, addition, function_withdraw, accept_condition, sending_ether, subtraction, function_querycredit
+
+initial to invoke do {credit =5; amount = 3; amount1 = 5 ;}
+
+on Donate from invoke to function_donate  
+on CreditlessThanAmount1 from function_donate to invoke provided (credit + amount1 < amount1)
+on CreditPlusAmount from function_donate to addition provided (credit + amount1 >= amount1)  do {credit = credit + amount1;}
+on donate_finish from addition to invoke
+
+on Withdraw from invoke to function_withdraw
+on CreditmsgsenderlessThanAmount from function_withdraw to invoke provided (credit  < amount)
+on CreditmsgsendergreaterThanAmount from function_withdraw to accept_condition provided (credit >= amount) on CreditmsgsenderMinusAmount from  accept_condition  to subtraction  do {credit= credit - amount;}
+
+on CallvalueAmount from subtraction to  sending_ether
+on withdraw_finish from sending_ether to invoke 
+
+
+on QueryCredit from invoke to function_querycredit
+on ReturnCredit from function_querycredit to invoke
+
+end
+
+compound type globModel
+
+  component donate BAUC
+  
+  connector SINGLE BAUC_Donate ( BAUC.Donate )
+  connector SINGLE BAUC_CreditPlusAmount ( BAUC.CreditPlusAmount )
+  connector SINGLE BAUC_CreditlessThanAmount1  ( BAUC.CreditlessThanAmount1  )
+connector SINGLE BAUC_donate_finish ( BAUC.donate_finish )
+  connector SINGLE BAUC_Withdraw ( BAUC.Withdraw )
+  connector SINGLE BAUC_CreditmsgsenderlessThanAmount ( BAUC.CreditmsgsenderlessThanAmount )
+  connector SINGLE BAUC_CreditmsgsendergreaterThanAmount ( BAUC.CreditmsgsendergreaterThanAmount )
+  connector SINGLE BAUC_CallvalueAmount ( BAUC.CallvalueAmount )
+  connector SINGLE BAUC_CreditmsgsenderMinusAmount ( BAUC.CreditmsgsenderMinusAmount )
+   connector SINGLE BAUC_withdraw_finish ( BAUC.withdraw_finish )
+  connector SINGLE BAUC_QueryCredit  ( BAUC.QueryCredit  )
+  connector SINGLE BAUC_ReturnCredit ( BAUC.ReturnCredit )
+  end
+
+component globModel Root
+
+ end

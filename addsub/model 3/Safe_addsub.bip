@@ -1,0 +1,81 @@
+model donateModel
+
+	port type syncPort
+
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+atomic type overflow
+data int c
+data int a
+data int b
+
+export port syncPort add
+export port syncPort sub
+export port syncPort aPlusb
+export port syncPort aPlusb1
+export port syncPort aPlusb2
+export port syncPort aPlusb3
+export port syncPort aPlusb4
+export port syncPort aPlusb5
+
+export port syncPort aMinusb
+export port syncPort aMinusb1
+export port syncPort aMinusb2
+export port syncPort aMinusb3
+export port syncPort aMinusb4
+export port syncPort aMinusb5
+
+
+
+  place    invoke , addition,  subtraction, function_add, function_sub, ifcondition, a1, a2, s1, s2
+
+initial to invoke do {c=0;a= 2; b =3;}
+
+on add from invoke to function_add
+on aPlusb from function_add to ifcondition
+on aPlusb1 from ifcondition  to a1 provided ( c + a >=a) 
+on aPlusb2 from a1 to addition do { c = c + a;}
+on aPlusb3 from addition to invoke
+on aPlusb4 from ifcondition to a2 provided ( c + a < a)
+on aPlusb5 from a2 to invoke
+
+  
+on sub from invoke to function_sub
+on aMinusb from function_sub to ifcondition 
+on aMinusb1 from ifcondition  to s1 provided (b <= c)
+on aMinusb2 from s1 to subtraction do {c = c - b;}
+on aMinusb3 from subtraction to invoke 
+on aMinusb4 from ifcondition to s2 provided (b > c)
+on aMinusb5 from s2 to invoke
+end
+
+
+
+
+compound type globModel
+
+  component overflow BAUC
+  
+  connector SINGLE BAUC_add ( BAUC.add )
+  connector SINGLE BAUC_sub ( BAUC.sub )
+ connector SINGLE BAUC_aMinusb ( BAUC.aMinusb )
+ connector SINGLE BAUC_aMinusb1 ( BAUC.aMinusb1 )
+ connector SINGLE BAUC_aMinusb2 ( BAUC.aMinusb2 )
+ connector SINGLE BAUC_aMinusb3 ( BAUC.aMinusb3 )
+ connector SINGLE BAUC_aMinusb4 ( BAUC.aMinusb4)
+ connector SINGLE BAUC_aMinusb5 ( BAUC.aMinusb5 )
+
+ connector SINGLE BAUC_aPlusb  ( BAUC.aPlusb  )
+ connector SINGLE BAUC_aPlusb1  ( BAUC.aPlusb1  )
+ connector SINGLE BAUC_aPlusb2  ( BAUC.aPlusb2  )
+ connector SINGLE BAUC_aPlusb3  ( BAUC.aPlusb3  )
+ connector SINGLE BAUC_aPlusb4  ( BAUC.aPlusb4  )
+ connector SINGLE BAUC_aPlusb5  ( BAUC.aPlusb5  )
+
+  end
+
+component globModel Root
+
+ end

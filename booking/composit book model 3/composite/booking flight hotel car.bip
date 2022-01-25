@@ -1,0 +1,848 @@
+model booking
+
+	port type syncPort
+
+	port type MsgPassing(int x)
+
+	
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+ connector type msgpassing2(MsgPassing sendID, MsgPassing receiveID)
+	define [ sendID  receiveID ]
+		on sendID receiveID  down {receiveID.x = sendID.x ;} 
+	end
+atomic type Flights
+	
+	data int counter=1	
+	data int Total_Price=0
+	data int i = 0
+	data int j= 0
+	data int k= 0
+	data int Flight_Price0= 2
+	data int Flight_Price=0
+	data int Flight_status= 1
+	data int Pmin= 0
+	data int id = 1
+	data int idInput_get = 1
+	data int idInput_book=0
+	data int Flight_Price_founded=0
+	
+export port syncPort createFlights
+export port syncPort c1
+export port syncPort c2counterPlus1
+export port syncPort c3
+
+export port MsgPassing SearchflightPRICE(Total_Price)
+export port syncPort s1
+export port syncPort s2
+export port syncPort s3
+export port syncPort s4
+export port syncPort s5
+export port syncPort s6
+export port syncPort s7
+export port syncPort s8
+export port syncPort s9
+export port syncPort s10
+export port syncPort s11
+export port syncPort s12
+export port syncPort s13
+export port syncPort s14
+export port syncPort s15
+export port syncPort s16
+export port MsgPassing s17(Flight_Price_founded)
+export port syncPort s18
+export port syncPort s19
+export port syncPort s20
+export port syncPort s21
+
+export port syncPort getFlightbyID
+export port syncPort g1
+export port syncPort g2
+export port syncPort g3
+export port syncPort g4
+export port syncPort g5
+export port syncPort g6
+export port syncPort g7
+export port syncPort g8
+export port syncPort g9
+export port syncPort g10
+export port syncPort g11
+export port syncPort g12
+export port syncPort g13
+export port syncPort g14
+
+export port MsgPassing BookFLIGHT(idInput_book)
+export port syncPort b1
+export port syncPort b2
+export port syncPort b3
+export port syncPort b4
+export port syncPort b5
+export port syncPort b6
+export port syncPort b7
+export port syncPort b8
+export port syncPort b9
+export port syncPort b10
+export port syncPort b11
+export port syncPort b12
+export port syncPort b13
+export port syncPort b14
+
+
+  place  invoke, functioncreateFlights, AddFlight, addition, functionSearchflightPRICE, requirecondition, PriceAccepted, PriceRejected, initialPminFlights, loop, loopcondition, loopincrement, ifcondition, filghtFound, flightNotFound, setPminflight, Price_GT_Pmin, Else, revert, return, functiongetFlightbyID, IdAccepted, IdRejected, IdFound, IdNotFound, functionBookFLIGHT, IdA, IdR, IdF, IdNotF, flightbooked
+		 
+initial to invoke 
+
+on createFlights from invoke to functioncreateFlights
+on c1 from functioncreateFlights to  AddFlight
+on c2counterPlus1 from AddFlight to addition do { counter = counter + 1; }
+on c3 from addition to invoke
+
+on SearchflightPRICE from invoke to functionSearchflightPRICE
+on s1 from functionSearchflightPRICE to requirecondition
+on s2 from requirecondition to PriceAccepted provided ( Total_Price > 0)
+on s3 from requirecondition to PriceRejected provided (Total_Price <= 0)
+on s5 from PriceRejected to invoke
+on s4 from PriceAccepted to initialPminFlights do {Pmin = Flight_Price0;}
+on s6 from initialPminFlights to loop 
+on s7 from loop to loopcondition provided (i<= counter)
+on s8 from loopcondition to ifcondition
+on s9 from ifcondition to filghtFound provided (Flight_Price <= Pmin)
+on s10 from ifcondition to flightNotFound provided (Flight_Price > Pmin)
+on s11 from filghtFound to setPminflight do { Pmin = Flight_Price;}
+on s12 from flightNotFound to loopincrement do {i = i + 1;}
+on s13 from loopincrement to loop
+on s14 from setPminflight to ifcondition
+on s15 from ifcondition to Price_GT_Pmin provided ( Total_Price >= Pmin)
+on s16 from ifcondition to Else provided (Total_Price < Pmin)
+on s17 from Price_GT_Pmin to return do { Flight_Price_founded = Pmin;}
+on s18 from return to invoke
+on s19 from Else to revert
+on s20 from revert to invoke
+on s21 from loop to invoke provided (i > counter)
+
+on getFlightbyID from invoke to functiongetFlightbyID
+on g1 from functiongetFlightbyID to requirecondition
+on g2 from requirecondition to IdAccepted provided (idInput_get >0)
+on g3 from requirecondition to IdRejected provided (idInput_get<= 0)
+on g4 from IdRejected to invoke
+on g5 from IdAccepted to loop 
+on g6 from loop to loopcondition provided ( j <= counter)
+on g7 from loopcondition to ifcondition
+on g8 from ifcondition to IdFound provided (idInput_get == id)
+on g9 from ifcondition to IdNotFound provided (idInput_get != id)
+on g10 from IdNotFound to loopincrement do {j = j + 1;}
+on g11 from loopincrement to loop 
+on g12 from IdFound to return
+on g13 from return to invoke
+on g14 from loop to invoke provided  (j > counter)
+
+on BookFLIGHT from invoke to functionBookFLIGHT
+on b1 from functionBookFLIGHT to requirecondition
+on b2 from requirecondition to IdA provided (idInput_book > 0)
+on b3 from requirecondition to IdR provided (idInput_book <= 0)
+on b4 from IdR to invoke
+on b5 from IdA to loop 
+on b6 from loop to loopcondition provided ( k <= counter)
+on b7 from loopcondition to ifcondition
+on b8 from ifcondition to IdF provided (idInput_book== id && Flight_status == 1)
+on b9 from ifcondition to IdNotF provided (idInput_book != id || Flight_status != 1)
+on b10 from IdNotF to loopincrement do {k = k + 1;}
+on b11 from loopincrement to loop 
+on b12 from IdF to flightbooked do {Flight_status = 0;}
+on b13 from flightbooked to invoke
+on b14 from loop to invoke provided (k > counter)
+
+end
+
+
+atomic type Cars
+	
+	data int counter=1	
+	data int Total_Price=0
+	data int i = 0
+	data int j= 0
+	data int k= 0
+	data int Car_Price0= 2
+	data int Car_Price=0
+	data int Car_status= 1
+	data int Pmin= 0
+	data int id = 1
+	data int idInput_get = 1
+	data int idInput_book=0
+	data int Car_Price_founded=0
+	
+export port syncPort createCars
+export port syncPort c1
+export port syncPort c2counterPlus1
+export port syncPort c3
+
+export port MsgPassing SearchCarPRICE(Total_Price)
+export port syncPort s1
+export port syncPort s2
+export port syncPort s3
+export port syncPort s4
+export port syncPort s5
+export port syncPort s6
+export port syncPort s7
+export port syncPort s8
+export port syncPort s9
+export port syncPort s10
+export port syncPort s11
+export port syncPort s12
+export port syncPort s13
+export port syncPort s14
+export port syncPort s15
+export port syncPort s16
+export port MsgPassing s17(Car_Price_founded)
+export port syncPort s18
+export port syncPort s19
+export port syncPort s20
+export port syncPort s21
+
+export port syncPort getCarbyID
+export port syncPort g1
+export port syncPort g2
+export port syncPort g3
+export port syncPort g4
+export port syncPort g5
+export port syncPort g6
+export port syncPort g7
+export port syncPort g8
+export port syncPort g9
+export port syncPort g10
+export port syncPort g11
+export port syncPort g12
+export port syncPort g13
+export port syncPort g14
+
+export port MsgPassing BookCar(idInput_book)
+export port syncPort b1
+export port syncPort b2
+export port syncPort b3
+export port syncPort b4
+export port syncPort b5
+export port syncPort b6
+export port syncPort b7
+export port syncPort b8
+export port syncPort b9
+export port syncPort b10
+export port syncPort b11
+export port syncPort b12
+export port syncPort b13
+export port syncPort b14
+
+
+  place  invoke, functioncreateCars, AddCar, addition, functionSearchCar, requirecondition, PriceAccepted, PriceRejected, initialPminCars, loop, loopcondition, loopincrement, ifcondition, carFound, carNotFound, setPmincar, Price_GT_Pmin, Else, revert, return, functiongetcarbyID, IdAccepted, IdRejected, IdFound, IdNotFound, functionBookCar, IdA, IdR, IdF, IdNotF, Carbooked
+		 
+initial to invoke
+
+on createCars from invoke to functioncreateCars
+on c1 from functioncreateCars to  AddCar
+on c2counterPlus1 from AddCar to addition do { counter = counter + 1; }
+on c3 from addition to invoke
+
+on SearchCarPRICE from invoke to functionSearchCar
+on s1 from functionSearchCar to requirecondition
+on s2 from requirecondition to PriceAccepted provided ( Total_Price > 0)
+on s3 from requirecondition to PriceRejected provided (Total_Price <= 0)
+on s5 from PriceRejected to invoke
+on s4 from PriceAccepted to initialPminCars do {Pmin = Car_Price0;}
+on s6 from initialPminCars to loop 
+on s7 from loop to loopcondition provided (i<= counter)
+on s8 from loopcondition to ifcondition
+on s9 from ifcondition to carFound provided (Car_Price <= Pmin)
+on s10 from ifcondition to carNotFound provided (Car_Price > Pmin)
+on s11 from carFound to setPmincar do { Pmin = Car_Price;}
+on s12 from carNotFound to loopincrement do {i = i + 1;}
+on s13 from loopincrement to loop
+on s14 from setPmincar to ifcondition
+on s15 from ifcondition to Price_GT_Pmin provided ( Total_Price >= Pmin)
+on s16 from ifcondition to Else provided (Total_Price < Pmin)
+on s17 from Price_GT_Pmin to return do {Car_Price_founded = Pmin;}
+on s18 from return to invoke
+on s19 from Else to revert
+on s20 from revert to invoke
+on s21 from loop to invoke provided (i > counter)
+
+on getCarbyID from invoke to functiongetcarbyID
+on g1 from functiongetcarbyID to requirecondition
+on g2 from requirecondition to IdAccepted provided (id >0)
+on g3 from requirecondition to IdRejected provided (id<= 0)
+on g4 from IdRejected to invoke
+on g5 from IdAccepted to loop 
+on g6 from loop to loopcondition provided ( j <= counter)
+on g7 from loopcondition to ifcondition
+on g8 from ifcondition to IdFound provided (idInput_get == id)
+on g9 from ifcondition to IdNotFound provided (idInput_get != id)
+on g10 from IdNotFound to loopincrement do {j = j + 1;}
+on g11 from loopincrement to loop 
+on g12 from IdFound to return
+on g13 from return to invoke
+on g14 from loop to invoke provided  (j > counter)
+
+on BookCar from invoke to functionBookCar
+on b1 from functionBookCar to requirecondition
+on b2 from requirecondition to IdA provided (idInput_book > 0)
+on b3 from requirecondition to IdR provided (idInput_book <= 0)
+on b4 from IdR to invoke
+on b5 from IdA to loop 
+on b6 from loop to loopcondition provided ( k <= counter)
+on b7 from loopcondition to ifcondition
+on b8 from ifcondition to IdF provided (idInput_book == id && Car_status == 1)
+on b9 from ifcondition to IdNotF provided (idInput_book != id || Car_status != 1)
+on b10 from IdNotF to loopincrement do {k = k + 1;}
+on b11 from loopincrement to loop 
+on b12 from IdF to Carbooked do {Car_status = 0;}
+on b13 from Carbooked to invoke
+on b14 from loop to invoke provided (k > counter)
+
+end
+
+
+atomic type Hotels
+	
+	data int counter=1	
+	data int Total_Price=0
+	data int i = 0
+	data int j= 0
+	data int k= 0
+	data int Hotel_Price0= 2
+	data int Hotel_Price=0
+	data int Hotel_status= 1
+	data int Pmin= 0
+	data int id = 1
+	data int idInput_get = 1
+	data int idInput_book=0
+	data int Hotel_Price_founded=0
+	
+export port syncPort createHotels
+export port syncPort c1
+export port syncPort c2counterPlus1
+export port syncPort c3
+
+export port MsgPassing SearchHotelPRICE(Total_Price)
+export port syncPort s1
+export port syncPort s2
+export port syncPort s3
+export port syncPort s4
+export port syncPort s5
+export port syncPort s6
+export port syncPort s7
+export port syncPort s8
+export port syncPort s9
+export port syncPort s10
+export port syncPort s11
+export port syncPort s12
+export port syncPort s13
+export port syncPort s14
+export port syncPort s15
+export port syncPort s16
+export port MsgPassing s17(Hotel_Price_founded)
+export port syncPort s18
+export port syncPort s19
+export port syncPort s20
+export port syncPort s21
+
+export port syncPort getHotelbyID
+export port syncPort g1
+export port syncPort g2
+export port syncPort g3
+export port syncPort g4
+export port syncPort g5
+export port syncPort g6
+export port syncPort g7
+export port syncPort g8
+export port syncPort g9
+export port syncPort g10
+export port syncPort g11
+export port syncPort g12
+export port syncPort g13
+export port syncPort g14
+
+export port MsgPassing BookHotel(idInput_book)
+export port syncPort b1
+export port syncPort b2
+export port syncPort b3
+export port syncPort b4
+export port syncPort b5
+export port syncPort b6
+export port syncPort b7
+export port syncPort b8
+export port syncPort b9
+export port syncPort b10
+export port syncPort b11
+export port syncPort b12
+export port syncPort b13
+export port syncPort b14
+
+
+  place  invoke, functioncreateHotels, AddHotel, addition, functionSearchHotel, requirecondition, PriceAccepted, PriceRejected, initialPminHotels, loop, loopcondition, loopincrement, ifcondition, HotelFound, HotelNotFound, setPminHotel, Price_GT_Pmin, Else, revert, return, functiongetHotelbyID, IdAccepted, IdRejected, IdFound, IdNotFound, functionBookHotel, IdA, IdR, IdF, IdNotF, Hotelbooked
+		 
+initial to invoke
+
+on createHotels from invoke to functioncreateHotels
+on c1 from functioncreateHotels to  AddHotel
+on c2counterPlus1 from AddHotel to addition do { counter = counter + 1; }
+on c3 from addition to invoke
+
+on SearchHotelPRICE from invoke to functionSearchHotel
+on s1 from functionSearchHotel to requirecondition
+on s2 from requirecondition to PriceAccepted provided ( Total_Price > 0)
+on s3 from requirecondition to PriceRejected provided (Total_Price <= 0)
+on s5 from PriceRejected to invoke
+on s4 from PriceAccepted to initialPminHotels do {Pmin = Hotel_Price0;}
+on s6 from initialPminHotels to loop 
+on s7 from loop to loopcondition provided (i<= counter)
+on s8 from loopcondition to ifcondition
+on s9 from ifcondition to HotelFound provided (Hotel_Price <= Pmin)
+on s10 from ifcondition to HotelNotFound provided (Hotel_Price > Pmin)
+on s11 from HotelFound to setPminHotel do { Pmin = Hotel_Price;}
+on s12 from HotelNotFound to loopincrement do {i = i + 1;}
+on s13 from loopincrement to loop
+on s14 from setPminHotel to ifcondition
+on s15 from ifcondition to Price_GT_Pmin provided ( Total_Price >= Pmin)
+on s16 from ifcondition to Else provided (Total_Price < Pmin)
+on s17 from Price_GT_Pmin to return do {Hotel_Price_founded = Pmin;}
+on s18 from return to invoke
+on s19 from Else to revert
+on s20 from revert to invoke
+on s21 from loop to invoke provided (i > counter)
+
+on getHotelbyID from invoke to functiongetHotelbyID
+on g1 from functiongetHotelbyID to requirecondition
+on g2 from requirecondition to IdAccepted provided (id >0)
+on g3 from requirecondition to IdRejected provided (id<= 0)
+on g4 from IdRejected to invoke
+on g5 from IdAccepted to loop 
+on g6 from loop to loopcondition provided ( j <= counter)
+on g7 from loopcondition to ifcondition
+on g8 from ifcondition to IdFound provided (idInput_get == id)
+on g9 from ifcondition to IdNotFound provided (idInput_get != id)
+on g10 from IdNotFound to loopincrement do {j = j + 1;}
+on g11 from loopincrement to loop 
+on g12 from IdFound to return
+on g13 from return to invoke
+on g14 from loop to invoke provided  (j > counter)
+
+on BookHotel from invoke to functionBookHotel
+on b1 from functionBookHotel to requirecondition
+on b2 from requirecondition to IdA provided (idInput_book > 0)
+on b3 from requirecondition to IdR provided (idInput_book <= 0)
+on b4 from IdR to invoke
+on b5 from IdA to loop 
+on b6 from loop to loopcondition provided ( k <= counter)
+on b7 from loopcondition to ifcondition
+on b8 from ifcondition to IdF provided (idInput_book == id && Hotel_status == 1)
+on b9 from ifcondition to IdNotF provided (idInput_book != id || Hotel_status != 1)
+on b10 from IdNotF to loopincrement do {k = k + 1;}
+on b11 from loopincrement to loop 
+on b12 from IdF to Hotelbooked do {Hotel_status = 0;}
+on b13 from Hotelbooked to invoke
+on b14 from loop to invoke provided (k > counter)
+
+end
+
+
+atomic type Search
+
+data int Price=7
+data int NewPrice=0
+data int NewPrice2=0
+data int Price_flight=0
+data int Price_hotel=0
+data int Price_car=0
+
+export port syncPort SearchTrip
+export port syncPort s1
+export port syncPort s2
+export port syncPort s3
+export port syncPort s4
+export port MsgPassing s5(Price)
+export port MsgPassing s05(Price_flight)
+export port syncPort s6
+export port syncPort s7
+export port syncPort s8
+export port syncPort s9
+export port syncPort s10
+export port MsgPassing s11(NewPrice)
+export port MsgPassing s011(Price_hotel)
+export port syncPort s12
+export port syncPort s13
+export port syncPort s14
+export port syncPort s15
+export port syncPort s16
+export port MsgPassing s17(NewPrice2)
+export port MsgPassing s017(Price_car)
+export port syncPort s18
+export port syncPort s19
+export port syncPort s20
+export port syncPort s21
+export port syncPort s22
+export port syncPort s23
+export port syncPort s24
+
+
+ place  invoke, functionSearchTrip, callfunction_response1, callfunction_response2, callfunction_response3, requirecondition, Price_accepted, Price_rejected, call_flight_functionSearchflightPRICE, ifcondition, flight_not_found, flight_found, subtraction, call_hotel_functionSearchHotel, hotel_not_found, hotel_found, call_car_functionSearchCar, car_not_found, car_found, Trip_found, Trip_not_found
+
+initial to invoke 
+
+on SearchTrip from invoke to functionSearchTrip
+on s1 from functionSearchTrip to requirecondition
+on s2 from requirecondition to Price_accepted provided ( Price > 0 )
+on s3 from requirecondition to Price_rejected provided ( Price <= 0 ) 
+on s4 from Price_rejected to invoke
+on s5 from Price_accepted to call_flight_functionSearchflightPRICE
+on s05 from call_flight_functionSearchflightPRICE to callfunction_response1
+on s6 from callfunction_response1 to ifcondition
+on s7 from ifcondition to flight_not_found provided ( Price <= Price_flight ||  Price_flight <=0)
+on s8 from ifcondition to flight_found provided ( Price > Price_flight && Price_flight >0 )
+on s9 from flight_not_found to Trip_not_found
+on s10 from flight_found to subtraction do {NewPrice= Price -Price_flight;}
+on s11 from subtraction to call_hotel_functionSearchHotel
+on s011 from call_hotel_functionSearchHotel to callfunction_response2
+on s12 from callfunction_response2 to ifcondition
+on s13 from ifcondition to hotel_found provided ( NewPrice > Price_hotel && Price_hotel > 0 )
+on s14 from ifcondition to hotel_not_found provided ( NewPrice <= Price_hotel ||  Price_hotel <=0)
+on s15 from hotel_not_found to Trip_not_found
+on s16 from hotel_found to subtraction do {NewPrice2= NewPrice - Price_hotel;}
+on s17 from subtraction to call_car_functionSearchCar
+on s017 from call_car_functionSearchCar to callfunction_response3
+on s18 from callfunction_response3 to ifcondition
+on s19 from ifcondition to car_found provided ( NewPrice2 > Price_car && Price_car > 0 )
+on s20 from ifcondition to car_not_found provided ( NewPrice2 <= Price_car ||  Price_car <=0)
+on s21 from car_not_found to Trip_not_found
+on s22 from car_found to Trip_found
+on s23 from Trip_not_found to invoke
+on s24 from Trip_found to invoke
+
+end
+
+atomic type Book
+	
+data int requestedID_Flight=2
+data int requestedID_Car=5
+data int requestedID_Hotel=4
+
+	
+export port syncPort BookFlight
+export port syncPort bFlight1
+export port syncPort bFlight2
+export port syncPort bFlight3
+export port syncPort bFlight4
+export port syncPort bFlight6
+export port MsgPassing bFlight5(requestedID_Flight)
+
+export port syncPort BookCar
+export port syncPort bCar1
+export port syncPort bCar2
+export port syncPort bCar3
+export port syncPort bCar4
+export port syncPort bCar6
+export port MsgPassing bCar5(requestedID_Car)
+
+export port syncPort BookHotel
+export port syncPort bHotel1
+export port syncPort bHotel2
+export port syncPort bHotel3
+export port syncPort bHotel4
+export port syncPort bHotel6
+export port MsgPassing bHotel5(requestedID_Hotel)
+
+
+  place  invoke, functionBookFlight, requirecondition, IDFlight_Accepted, IDFlight_Rejected, call_Flight_functionBookFLIGHT, functionBookCar,  IDCar_Accepted, IDCar_Rejected, call_Car_functionBookCar, functionBookHotel, IDHotel_Accepted, IDHotel_Rejected, call_Hotel_functionBookHotel
+		 
+initial to invoke 
+
+on BookFlight from invoke to functionBookFlight
+on bFlight1 from functionBookFlight to requirecondition
+on bFlight2 from requirecondition to IDFlight_Accepted provided (requestedID_Flight > 0)
+on bFlight3 from requirecondition to IDFlight_Rejected provided (requestedID_Flight <= 0)
+on bFlight4 from IDFlight_Rejected to invoke
+on bFlight5 from IDFlight_Accepted to call_Flight_functionBookFLIGHT do { requestedID_Flight = 1;}
+on bFlight6 from call_Flight_functionBookFLIGHT to invoke
+
+
+on BookCar from invoke to functionBookCar
+on bCar1 from functionBookCar to requirecondition
+on bCar2 from requirecondition to IDCar_Accepted provided (requestedID_Car > 0)
+on bCar3 from requirecondition to IDCar_Rejected provided (requestedID_Car <= 0)
+on bCar4 from IDCar_Rejected to invoke
+on bCar5 from IDCar_Accepted to call_Car_functionBookCar do {requestedID_Car = 1;}
+on bCar6 from call_Car_functionBookCar to invoke
+
+
+on BookHotel from invoke to functionBookHotel
+on bHotel1 from functionBookHotel to requirecondition
+on bHotel2 from requirecondition to IDHotel_Accepted provided (requestedID_Hotel > 0)
+on bHotel3 from requirecondition to IDHotel_Rejected provided (requestedID_Hotel <= 0)
+on bHotel4 from IDHotel_Rejected to invoke
+on bHotel5 from IDHotel_Accepted to call_Hotel_functionBookHotel do { requestedID_Hotel= 1;}
+on bHotel6 from call_Hotel_functionBookHotel to invoke
+
+
+
+end
+
+compound type globModel
+
+  component Flights  FLIGHT
+  component Cars     CAR
+  component Hotels   HOTEL
+  component Book     BOOK
+  component Search   SEARCH
+
+
+connector msgpassing2 search_flights_id(SEARCH.s5, FLIGHT.SearchflightPRICE)
+connector msgpassing2 search_car_id(SEARCH.s11, CAR.SearchCarPRICE )
+connector msgpassing2 search_hotel_id(SEARCH.s17, HOTEL.SearchHotelPRICE)
+
+connector msgpassing2 found_flights_id( FLIGHT.s17, SEARCH.s05)
+connector msgpassing2 found_car_id(CAR.s17, SEARCH.s011  )
+connector msgpassing2 found_hotel_id(HOTEL.s17, SEARCH.s017 )
+
+
+connector msgpassing2 Book_flights_id (BOOK.bFlight5, FLIGHT.BookFLIGHT)
+connector msgpassing2 Book_car_id (BOOK.bCar5, CAR.BookCar)
+connector msgpassing2 Book_hotel_id (BOOK.bHotel5, HOTEL.BookHotel)
+
+connector SINGLE BOOK_BookFlight( BOOK.BookFlight)
+connector SINGLE BOOK_bFlight1( BOOK.bFlight1)
+connector SINGLE BOOK_bFlight2( BOOK.bFlight2)
+connector SINGLE BOOK_bFlight3( BOOK.bFlight3)
+connector SINGLE BOOK_bFlight4( BOOK.bFlight4)
+connector SINGLE BOOK_bFlight6( BOOK.bFlight6)
+
+connector SINGLE BOOK_BookCar( BOOK.BookCar)
+connector SINGLE BOOK_bCar1( BOOK.bCar1)
+connector SINGLE BOOK_bCar2( BOOK.bCar2)
+connector SINGLE BOOK_bCar3( BOOK.bCar3)
+connector SINGLE BOOK_bCar4( BOOK.bCar4)
+connector SINGLE BOOK_bCar6( BOOK.bCar6)
+
+connector SINGLE BOOK_BookHotel( BOOK.BookHotel)
+connector SINGLE BOOK_bHotel1( BOOK.bHotel1)
+connector SINGLE BOOK_bHotel2( BOOK.bHotel2)
+connector SINGLE BOOK_bHotel3( BOOK.bHotel3)
+connector SINGLE BOOK_bHotel4( BOOK.bHotel4)
+connector SINGLE BOOK_bHotel6( BOOK.bHotel6)
+
+connector SINGLE FLIGHT_createFlights( FLIGHT.createFlights)
+connector SINGLE FLIGHT_c1( FLIGHT.c1)
+connector SINGLE FLIGHT_c2counterPlus1( FLIGHT.c2counterPlus1)
+connector SINGLE FLIGHT_c3 ( FLIGHT.c3)
+
+
+
+connector SINGLE FLIGHT_s1( FLIGHT.s1)
+connector SINGLE FLIGHT_s2( FLIGHT.s2)
+connector SINGLE FLIGHT_s3( FLIGHT.s3)
+connector SINGLE FLIGHT_s4( FLIGHT.s4)
+connector SINGLE FLIGHT_s5( FLIGHT.s5)
+connector SINGLE FLIGHT_s6( FLIGHT.s6)
+connector SINGLE FLIGHT_s7( FLIGHT.s7)
+connector SINGLE FLIGHT_s8( FLIGHT.s8)
+connector SINGLE FLIGHT_s9( FLIGHT.s9)
+connector SINGLE FLIGHT_s10( FLIGHT.s10)
+connector SINGLE FLIGHT_s11( FLIGHT.s11)
+connector SINGLE FLIGHT_s12( FLIGHT.s12)
+connector SINGLE FLIGHT_s13( FLIGHT.s13)
+connector SINGLE FLIGHT_s14( FLIGHT.s14)
+connector SINGLE FLIGHT_s15( FLIGHT.s15)
+connector SINGLE FLIGHT_s16( FLIGHT.s16)
+
+connector SINGLE FLIGHT_s18( FLIGHT.s18)
+connector SINGLE FLIGHT_s19( FLIGHT.s19)
+connector SINGLE FLIGHT_s20( FLIGHT.s20)
+connector SINGLE FLIGHT_s21( FLIGHT.s21)
+
+
+connector SINGLE FLIGHT_getFlightbyID( FLIGHT.getFlightbyID)
+connector SINGLE FLIGHT_g1( FLIGHT.g1)
+connector SINGLE FLIGHT_g2( FLIGHT.g2)
+connector SINGLE FLIGHT_g3( FLIGHT.g3)
+connector SINGLE FLIGHT_g4( FLIGHT.g4)
+connector SINGLE FLIGHT_g5( FLIGHT.g5)
+connector SINGLE FLIGHT_g6( FLIGHT.g6)
+connector SINGLE FLIGHT_g7( FLIGHT.g7)
+connector SINGLE FLIGHT_g8( FLIGHT.g8)
+connector SINGLE FLIGHT_g9( FLIGHT.g9)
+connector SINGLE FLIGHT_g10( FLIGHT.g10)
+connector SINGLE FLIGHT_g11( FLIGHT.g11)
+connector SINGLE FLIGHT_g12( FLIGHT.g12)
+connector SINGLE FLIGHT_g13( FLIGHT.g13)
+connector SINGLE FLIGHT_g14( FLIGHT.g14)
+
+
+connector SINGLE FLIGHT_b1( FLIGHT.b1)
+connector SINGLE FLIGHT_b2( FLIGHT.b2)
+connector SINGLE FLIGHT_b3( FLIGHT.b3)
+connector SINGLE FLIGHT_b4( FLIGHT.b4)
+connector SINGLE FLIGHT_b5( FLIGHT.b5)
+connector SINGLE FLIGHT_b6( FLIGHT.b6)
+connector SINGLE FLIGHT_b7( FLIGHT.b7)
+connector SINGLE FLIGHT_b8( FLIGHT.b8)
+connector SINGLE FLIGHT_b9( FLIGHT.b9)
+connector SINGLE FLIGHT_b10( FLIGHT.b10)
+connector SINGLE FLIGHT_b11( FLIGHT.b11)
+connector SINGLE FLIGHT_b12( FLIGHT.b12)
+connector SINGLE FLIGHT_b13( FLIGHT.b13)
+connector SINGLE FLIGHT_b14( FLIGHT.b14)
+
+
+connector SINGLE CAR_createCars( CAR.createCars)
+connector SINGLE CAR_c1( CAR.c1)
+connector SINGLE CAR_c2counterPlus1( CAR.c2counterPlus1)
+connector SINGLE CAR_c3 ( CAR.c3)
+
+
+
+connector SINGLE CAR_s1( CAR.s1)
+connector SINGLE CAR_s2( CAR.s2)
+connector SINGLE CAR_s3( CAR.s3)
+connector SINGLE CAR_s4( CAR.s4)
+connector SINGLE CAR_s5( CAR.s5)
+connector SINGLE CAR_s6( CAR.s6)
+connector SINGLE CAR_s7( CAR.s7)
+connector SINGLE CAR_s8( CAR.s8)
+connector SINGLE CAR_s9( CAR.s9)
+connector SINGLE CAR_s10( CAR.s10)
+connector SINGLE CAR_s11( CAR.s11)
+connector SINGLE CAR_s12( CAR.s12)
+connector SINGLE CAR_s13( CAR.s13)
+connector SINGLE CAR_s14( CAR.s14)
+connector SINGLE CAR_s15( CAR.s15)
+connector SINGLE CAR_s16( CAR.s16)
+
+connector SINGLE CAR_s18( CAR.s18)
+connector SINGLE CAR_s19( CAR.s19)
+connector SINGLE CAR_s20( CAR.s20)
+connector SINGLE CAR_s21( CAR.s21)
+
+
+connector SINGLE CAR_getCarbyID( CAR.getCarbyID)
+connector SINGLE CAR_g1( CAR.g1)
+connector SINGLE CAR_g2( CAR.g2)
+connector SINGLE CAR_g3( CAR.g3)
+connector SINGLE CAR_g4( CAR.g4)
+connector SINGLE CAR_g5( CAR.g5)
+connector SINGLE CAR_g6( CAR.g6)
+connector SINGLE CAR_g7( CAR.g7)
+connector SINGLE CAR_g8( CAR.g8)
+connector SINGLE CAR_g9( CAR.g9)
+connector SINGLE CAR_g10( CAR.g10)
+connector SINGLE CAR_g11( CAR.g11)
+connector SINGLE CAR_g12( CAR.g12)
+connector SINGLE CAR_g13( CAR.g13)
+connector SINGLE CAR_g14( CAR.g14)
+
+
+connector SINGLE CAR_b1( CAR.b1)
+connector SINGLE CAR_b2( CAR.b2)
+connector SINGLE CAR_b3( CAR.b3)
+connector SINGLE CAR_b4( CAR.b4)
+connector SINGLE CAR_b5( CAR.b5)
+connector SINGLE CAR_b6( CAR.b6)
+connector SINGLE CAR_b7( CAR.b7)
+connector SINGLE CAR_b8( CAR.b8)
+connector SINGLE CAR_b9( CAR.b9)
+connector SINGLE CAR_b10( CAR.b10)
+connector SINGLE CAR_b11( CAR.b11)
+connector SINGLE CAR_b12( CAR.b12)
+connector SINGLE CAR_b13( CAR.b13)
+connector SINGLE CAR_b14( CAR.b14)
+
+connector SINGLE HOTEL_createHotels( HOTEL.createHotels)
+connector SINGLE HOTEL_c1( HOTEL.c1)
+connector SINGLE HOTEL_c2counterPlus1( HOTEL.c2counterPlus1)
+connector SINGLE HOTEL_c3 ( HOTEL.c3)
+
+
+
+connector SINGLE HOTEL_s1( HOTEL.s1)
+connector SINGLE HOTEL_s2( HOTEL.s2)
+connector SINGLE HOTEL_s3( HOTEL.s3)
+connector SINGLE HOTEL_s4( HOTEL.s4)
+connector SINGLE HOTEL_s5( HOTEL.s5)
+connector SINGLE HOTEL_s6( HOTEL.s6)
+connector SINGLE HOTEL_s7( HOTEL.s7)
+connector SINGLE HOTEL_s8( HOTEL.s8)
+connector SINGLE HOTEL_s9( HOTEL.s9)
+connector SINGLE HOTEL_s10( HOTEL.s10)
+connector SINGLE HOTEL_s11( HOTEL.s11)
+connector SINGLE HOTEL_s12( HOTEL.s12)
+connector SINGLE HOTEL_s13( HOTEL.s13)
+connector SINGLE HOTEL_s14( HOTEL.s14)
+connector SINGLE HOTEL_s15( HOTEL.s15)
+connector SINGLE HOTEL_s16( HOTEL.s16)
+
+connector SINGLE HOTEL_s18( HOTEL.s18)
+connector SINGLE HOTEL_s19( HOTEL.s19)
+connector SINGLE HOTEL_s20( HOTEL.s20)
+connector SINGLE HOTEL_s21( HOTEL.s21)
+
+
+connector SINGLE HOTEL_getHotelbyID( HOTEL.getHotelbyID)
+connector SINGLE HOTEL_g1( HOTEL.g1)
+connector SINGLE HOTEL_g2( HOTEL.g2)
+connector SINGLE HOTEL_g3( HOTEL.g3)
+connector SINGLE HOTEL_g4( HOTEL.g4)
+connector SINGLE HOTEL_g5( HOTEL.g5)
+connector SINGLE HOTEL_g6( HOTEL.g6)
+connector SINGLE HOTEL_g7( HOTEL.g7)
+connector SINGLE HOTEL_g8( HOTEL.g8)
+connector SINGLE HOTEL_g9( HOTEL.g9)
+connector SINGLE HOTEL_g10( HOTEL.g10)
+connector SINGLE HOTEL_g11( HOTEL.g11)
+connector SINGLE HOTEL_g12( HOTEL.g12)
+connector SINGLE HOTEL_g13( HOTEL.g13)
+connector SINGLE HOTEL_g14( HOTEL.g14)
+
+
+connector SINGLE HOTEL_b1( HOTEL.b1)
+connector SINGLE HOTEL_b2( HOTEL.b2)
+connector SINGLE HOTEL_b3( HOTEL.b3)
+connector SINGLE HOTEL_b4( HOTEL.b4)
+connector SINGLE HOTEL_b5( HOTEL.b5)
+connector SINGLE HOTEL_b6( HOTEL.b6)
+connector SINGLE HOTEL_b7( HOTEL.b7)
+connector SINGLE HOTEL_b8( HOTEL.b8)
+connector SINGLE HOTEL_b9( HOTEL.b9)
+connector SINGLE HOTEL_b10( HOTEL.b10)
+connector SINGLE HOTEL_b11( HOTEL.b11)
+connector SINGLE HOTEL_b12( HOTEL.b12)
+connector SINGLE HOTEL_b13( HOTEL.b13)
+connector SINGLE HOTEL_b14( HOTEL.b14)
+
+
+connector SINGLE SEARCH_SearchTrip( SEARCH.SearchTrip)
+connector SINGLE SEARCH_s1( SEARCH.s1)
+connector SINGLE SEARCH_s2( SEARCH.s2)
+connector SINGLE SEARCH_s3( SEARCH.s3)
+connector SINGLE SEARCH_s4( SEARCH.s4)
+connector SINGLE SEARCH_s6( SEARCH.s6)
+connector SINGLE SEARCH_s7( SEARCH.s7)
+connector SINGLE SEARCH_s8( SEARCH.s8)
+connector SINGLE SEARCH_s9( SEARCH.s9)
+connector SINGLE SEARCH_s10( SEARCH.s10)
+connector SINGLE SEARCH_s12( SEARCH.s12)
+connector SINGLE SEARCH_s13( SEARCH.s13)
+connector SINGLE SEARCH_s14( SEARCH.s14)
+connector SINGLE SEARCH_s15( SEARCH.s15)
+connector SINGLE SEARCH_s16( SEARCH.s16)
+connector SINGLE SEARCH_s18( SEARCH.s18)
+connector SINGLE SEARCH_s19( SEARCH.s19)
+connector SINGLE SEARCH_s20( SEARCH.s20)
+connector SINGLE SEARCH_s21( SEARCH.s21)
+connector SINGLE SEARCH_s22( SEARCH.s22)
+connector SINGLE SEARCH_s23( SEARCH.s23)
+connector SINGLE SEARCH_s24( SEARCH.s24)
+
+
+
+
+end
+
+component globModel Root
+ end

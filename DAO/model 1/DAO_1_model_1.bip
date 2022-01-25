@@ -1,0 +1,65 @@
+model donateModel
+
+	port type syncPort
+
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+atomic type donate 
+data int credit
+data int amount1
+data int amount
+
+export port syncPort Donate
+export port syncPort Donate1
+export port syncPort Donate2
+export port syncPort Withdraw
+export port syncPort Tw0
+export port syncPort Tw1
+export port syncPort Tw2
+export port syncPort Tw3
+export port syncPort Tw4
+export port syncPort QueryCredit
+export port syncPort ReturnCredit
+
+  place    invoke , donate, donate1, withdraw, w1, w2, w3, queryCredit
+
+initial to invoke do {credit =5; amount = 3; amount1 = 5 ;}
+
+on Donate from invoke to donate  
+on Donate1 from donate to donate1 do {credit = credit + amount1;}
+on Donate2 from donate1 to invoke
+
+on Withdraw from invoke to withdraw 
+on Tw0 from withdraw to invoke provided (credit  < amount)
+on Tw1 from withdraw to w1 provided (credit >= amount) 
+on Tw2 from w1 to w2  
+on Tw3 from w2 to w3  do {credit= credit - amount;}
+on Tw4 from w3 to invoke 
+
+on QueryCredit from invoke to queryCredit
+on ReturnCredit from queryCredit to invoke
+
+end
+
+compound type globModel
+
+  component donate BAUC
+  
+  connector SINGLE BAUC_Donate ( BAUC.Donate )
+  connector SINGLE BAUC_Donate1 ( BAUC.Donate1 )
+connector SINGLE BAUC_Donate2 ( BAUC.Donate2 )
+  connector SINGLE BAUC_Withdraw ( BAUC.Withdraw )
+  connector SINGLE BAUC_Tw0 ( BAUC.Tw0 )
+  connector SINGLE BAUC_Tw1 ( BAUC.Tw1 )
+  connector SINGLE BAUC_Tw2 ( BAUC.Tw2 )
+  connector SINGLE BAUC_Tw3 ( BAUC.Tw3 )
+   connector SINGLE BAUC_Tw4 ( BAUC.Tw4 )
+  connector SINGLE BAUC_QueryCredit  ( BAUC.QueryCredit  )
+  connector SINGLE BAUC_ReturnCredit ( BAUC.ReturnCredit )
+  end
+
+component globModel Root
+
+ end
