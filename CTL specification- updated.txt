@@ -1,44 +1,37 @@
 --***Spec_1 check reentrancy vulnerability*** @**
-	CTLSPEC NAME Reentrancy_Vulnerability :=AG ( (bauc.Nuplace = NuSfunction_forward) | (bauc.Nuplace = NuSfunction_withdrawallEther)| (bauc.Nuplace = NuSfunction_withdraw) | (bauc.Nuplace = NuSfunction_kill)  ->  EF (   AG ((bauc.Nuplace = NuSsending_ether_call) -> AF (bauc.Nuplace = NuSsubtraction)) ) ) 
+CTLSPEC NAME Reentrancy_Vulnerability :=AG ( (bauc.Nuplace = NuSfunction_name) | (bauc.Nuplace = NuSfunction_name)| (bauc.Nuplace = NuSfunction_name) -> EF ( AG ((bauc.Nuplace = NuSsending_ether_call) -> AF (bauc.Nuplace = NuSsubtraction)) ) ) 
 
 --***Spec_2 check overflow vulnerability***@**
-	CTLSPEC NAME Overflow_Vulnerability :=AG ((bauc.Nuplace = NuSfunction_add & bauc.NuVc < bauc.NuVa) -> AF bauc.Nuplace = NuSaddition)   
-	CTLSPEC NAME Overflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunction_add & (bauc.NuVc + bauc.NuVa < bauc.NuVa) -> E [ bauc.Nuplace = NuSfunction_add U bauc.Nuplace = NuSaddition ])  
-
+CTLSPEC NAME Overflow_Vulnerability :=AG ((bauc.Nuplace = NuSfunction_name & bauc.NuVc < bauc.NuVa) -> AF bauc.Nuplace = NuSaddition)    
+	
 --***Spec_3 check underflow vulnerability***@**
-CTLSPEC NAME Underflow_Vulnerability := AG ((bauc.Nuplace = NuSfunction_sub & bauc.NuVb > bauc.NuVc ) -> AF bauc.Nuplace = NuSsubtraction)   
-CTLSPEC NAME Underflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunction_sub & (bauc.NuVc  <  bauc.NuVb) -> E [ bauc.Nuplace = NuSfunction_sub U bauc.Nuplace = NuSsubtraction ])
+CTLSPEC NAME Underflow_Vulnerability := AG ((bauc.Nuplace = NuSfunction_name & bauc.NuVb > bauc.NuVc ) -> AF bauc.Nuplace = NuSsubtraction)   
 
 --***Spec_4 check delegatecall vulnerability***@**
-	CTLSPEC NAME delegatecall_Vulnerability := AG(EF(bauc.Nuplace = NuSdelegatecall))
+CTLSPEC NAME delegatecall_Vulnerability := AG(EF(bauc.Nuplace = NuSdelegatecall))
 
 --***Spec_5 check tx.origin vulnerability***@**
-	CTLSPEC NAME txorigin_Vulnerability := EG((bauc.Nuplace = NuSrequirecondition) |(bauc.Nuplace = NuSifcondition)->  EX(bauc.Nuplace = NuStxorigin))
+CTLSPEC NAME txorigin_Vulnerability := EG((bauc.Nuplace = NuSrequirecondition) |(bauc.Nuplace = NuSifcondition)->  EX(bauc.Nuplace = NuStxorigin))
 
 --***Spec_6 check SELFDESTRUCT vulnerability***@**
-	CTLSPEC NAME selfdestruct_Vulnerability := AG(bauc.Nuplace = NuSpublic -> EF(bauc.Nuplace =NuSselfdestruct))
+CTLSPEC NAME selfdestruct_Vulnerability := AG(bauc.Nuplace = NuSpublic -> EF(bauc.Nuplace =NuSselfdestruct))
 
 --***Spec_7 check DoS with (Unexpected) revert vulnerability
-	CTLSPEC NAME DoS_Vulnerability1 :=AG(EF(bauc.Nuplace = NuSaddress_sending_ether_send))
-	CTLSPEC NAME DoS_Vulnerability2 :=EG((bauc.Nuplace = NuSloop)-> AF ((bauc.Nuplace = NuSloopcondition) ->EF( bauc.Nuplace = NuSaddress_sending_ether_send[x])) )
-	CTLSPEC NAME DoS_Vulnerability3 :=EG((bauc.Nuplace = NuSloopcondition)-> AF ( bauc.Nuplace = NuSaddress_sending_ether_send[x]) )
+CTLSPEC NAME DoS_Vulnerability1 :=AG(EF(bauc.Nuplace = NuSaddress_sending_ether_send))
+CTLSPEC NAME DoS_Vulnerability2 :=EG((bauc.Nuplace = NuSloop)-> AF ((bauc.Nuplace = NuSloopcondition) ->EF( bauc.Nuplace = NuSaddress_sending_ether_send[x])) )
+CTLSPEC NAME DoS_Vulnerability3 :=EG((bauc.Nuplace = NuSloopcondition)-> AF ( bauc.Nuplace = NuSaddress_sending_ether_send[x]) )
 
 --***Spec_8 check Ether lock vulnerability***@**
-	CTLSPEC NAME Etherlock_Vulnerability :=AG (bauc.Nuplace = NuSfallback_Function ""| NuSreceive_Function"" -> AG(bauc.Nuplace = NuSexternal -> AX(bauc.Nuplace = NuSpayable))) & AG (EF !(bauc.Nuplace = NuSsending_Ether_transfer) ""| !(bauc.Nuplace = NuSsending_Ether_call) |!(bauc.Nuplace = NuSsending_Ether_send)"")
+CTLSPEC NAME Etherlock_Vulnerability :=AG (bauc.Nuplace = NuSfallback_Function ""| NuSreceive_Function"" -> AG(bauc.Nuplace = NuSexternal -> AX(bauc.Nuplace = NuSpayable))) & AG (EF !(bauc.Nuplace = NuSsending_Ether_transfer)| !(bauc.Nuplace = NuSsending_Ether_call) |!(bauc.Nuplace = NuSsending_Ether_send))
 
 --***Spec_9 check Unexpected ether balance  vulnerability
-	CTLSPEC NAME Unexpected_ether_balance_Vulnerability :=EG( ((bauc.Nuplace = NuSrequirecondition) |(bauc.Nuplace = NuSifcondition) |(bauc.Nuplace = NuSassertcondition) )  -> EX (bauc.Nuplace = (this.balance)) )
+CTLSPEC NAME Unexpected_ether_balance_Vulnerability :=EG( ((bauc.Nuplace = NuSrequirecondition) |(bauc.Nuplace = NuSifcondition) |(bauc.Nuplace = NuSassertcondition) )  -> EX (bauc.Nuplace = (this.balance)) )
 
 --***Spec_10 check Unchecked Call Return Value vulnerability***@**
-	CTLSPEC NAME Unchecked_Call_Return_Vulnerability1 :=AG(EF((bauc.Nuplace = NuSdelegatecall) |(bauc.Nuplace = NuSsending_Ether_call) | (bauc.Nuplace = NuSsending_Ether_send)))
+CTLSPEC NAME Unchecked_Call_Return_Vulnerability1 :=AG(EF((bauc.Nuplace = NuSdelegatecall) |(bauc.Nuplace = NuSsending_Ether_call) | (bauc.Nuplace = NuSsending_Ether_send)))
 --if True then 
-	CTLSPEC NAME Unchecked_Call_Return_Vulnerability2 :=EG( (bauc.Nuplace = NuSdelegatecall) |(bauc.Nuplace = NuSsending_ether_call) | (bauc.Nuplace = NuSsending_ether_send)) -> EX (!(bauc.Nuplace =NuSifcondition)  )
-	CTLSPEC NAME Unchecked_Call_Return_Vulnerability2 :=EG( (bauc.Nuplace = NuSdelegatecall) |(bauc.Nuplace = NuSsending_ether_call) | (bauc.Nuplace = NuSsending_ether_send)) -> EX (!(bauc.Nuplace =NuSrequirecondition) )
-	
+CTLSPEC NAME Unchecked_Call_Return_Vulnerability2 :=EG( (bauc.Nuplace = NuSdelegatecall) |(bauc.Nuplace = NuSsending_ether_call) | (bauc.Nuplace = NuSsending_ether_send)) -> EX (!(bauc.Nuplace =NuSifcondition)  )
+CTLSPEC NAME Unchecked_Call_Return_Vulnerability2 :=EG( (bauc.Nuplace = NuSdelegatecall) |(bauc.Nuplace = NuSsending_ether_call) | (bauc.Nuplace = NuSsending_ether_send)) -> EX (!(bauc.Nuplace =NuSrequirecondition) )
 
 --***Spec_11 check Function Default Visibility vulnerability***@**
-	CTLSPEC NAME Function_Default_Visibility_Vulnerability :=AG ( bauc.Nuplace =(function1) | bauc.Nuplace  = (function2)| bauc.Nuplace = (function3)-> EX (bauc.Nuplace  = NuSpublic))
-
-
-
-
+CTLSPEC NAME Function_Default_Visibility_Vulnerability :=AG ( bauc.Nuplace =(function1) | bauc.Nuplace  = (function2)| bauc.Nuplace = (function3)-> EX (bauc.Nuplace  = NuSpublic))
