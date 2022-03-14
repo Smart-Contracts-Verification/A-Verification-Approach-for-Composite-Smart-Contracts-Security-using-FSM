@@ -1,0 +1,229 @@
+model smartcontractHotel
+
+	port type syncPort
+
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+ 
+
+atomic type SChotel
+	
+	data int counter=1
+	data bool in_userlist=0	
+	data int InputPrice=5
+	data int pricezero= 3
+	data int PminH=5
+	data int hotelstatus=1
+	data int id = 1
+	data int inputbook=1
+	data int inputID=1
+	data int i = 0
+	data int j= 0
+	data int k= 0
+	data bool admin=1
+
+	
+export port syncPort c0
+export port syncPort c1
+export port syncPort c2
+export port syncPort c3
+export port syncPort c4
+
+export port syncPort s0
+export port syncPort s1
+export port syncPort s2
+export port syncPort s3
+export port syncPort s4
+export port syncPort s5
+export port syncPort s6
+export port syncPort s7
+export port syncPort s8
+export port syncPort s9
+export port syncPort s10
+export port syncPort s11
+export port syncPort s12
+export port syncPort s13
+export port syncPort s14
+export port syncPort s15
+export port syncPort s16
+export port syncPort s17
+export port syncPort s18
+export port syncPort s19
+export port syncPort s20
+
+
+export port syncPort g0
+export port syncPort g1
+export port syncPort g2
+export port syncPort g3
+export port syncPort g4
+export port syncPort g5
+export port syncPort g6
+export port syncPort g7
+export port syncPort g8
+export port syncPort g9
+export port syncPort g10
+export port syncPort g11
+
+
+export port syncPort b0
+export port syncPort b1
+export port syncPort b2
+export port syncPort b3
+export port syncPort b4
+export port syncPort b5
+export port syncPort b6
+export port syncPort b7
+export port syncPort b8
+export port syncPort b9
+export port syncPort b10
+export port syncPort b11
+
+export port syncPort f0
+export port syncPort f1
+export port syncPort f2
+export port syncPort f3
+
+
+
+  place  sending_Ether_transfer,sending_Ether_call,subtraction,delegatecall, sending_Ether_send,invoke, function_create, public_create, addhotel, addition_counter_1, function_search, external_search,requirecondition_s, InputPrice_Accepted,InputPrice_Rejected,price_zero,Loop,Loopcondition,Loopincrement,no_hotel_available,ifcondition_s,set_PminH,PminH_not_found,ifcondition_s1,hotel_found,hotel_not_found, function_get, public_get, Loop_g,Loopcondition_g,Loopincrement_g,ifcondition_g,id_found, id_not_found, list_info, function_book, external_book, Loop_b,Loopcondition_b,Loopincrement_b,ifcondition_b,hotelID_found,hotelID_not_found,hotel_booked, Selfdestruct, function_fallback, external_fallback, payable_fallback
+
+initial to invoke
+
+on c0 from invoke to function_create
+on c1 from function_create to public_create 
+on c2 from public_create to addhotel 
+on c3 from addhotel to addition_counter_1 do { counter = counter + 1; }
+on c4 from addition_counter_1 to invoke
+
+on s0 from invoke to function_search 
+on s1 from function_search to external_search
+on s2 from external_search to requirecondition_s
+on s3 from requirecondition_s to InputPrice_Accepted provided (InputPrice > 0)
+on s5 from requirecondition_s to InputPrice_Rejected provided (InputPrice <= 0)
+on s4 from InputPrice_Rejected to invoke
+on s6 from InputPrice_Accepted to price_zero do {pricezero= 3;}
+on s7 from price_zero to Loop
+on s8 from Loop to Loopcondition
+on s9 from Loopcondition to ifcondition_s provided (i<=counter)
+on s10 from ifcondition_s to set_PminH provided (pricezero < PminH && hotelstatus==1 ) do {PminH = pricezero;}
+on s11 from ifcondition_s to PminH_not_found provided (pricezero >= PminH || hotelstatus !=1 ) 
+on s12 from PminH_not_found to Loopincrement do {i = i+1;}
+on s13 from set_PminH to ifcondition_s1
+on s14 from ifcondition_s1 to hotel_found provided (InputPrice > PminH) 
+on s15 from ifcondition_s1 to hotel_not_found provided (InputPrice <= PminH  )
+on s16 from Loopincrement to Loopcondition 
+on s17 from Loopcondition to no_hotel_available provided (i>counter)
+on s18 from no_hotel_available to hotel_not_found
+on s19 from hotel_not_found to invoke
+on s20 from hotel_found to invoke
+
+on g0 from invoke to function_get provided (in_userlist ==1)
+on g1 from function_get to public_get
+on g2 from public_get to Loop_g
+on g3 from Loop_g to Loopcondition_g
+on g4 from Loopcondition_g to ifcondition_g provided(j <= counter)
+on g5 from ifcondition_g to id_found provided(id == inputID)
+on g6 from id_found to list_info
+on g7 from list_info to invoke
+on g8 from ifcondition_g to id_not_found provided(id != inputID)
+on g9 from id_not_found to Loopincrement_g do {j = j+1;}
+on g10 from Loopincrement_g to Loopcondition_g 
+on g11 from Loopcondition_g to invoke provided (j > counter)
+
+
+on b0 from invoke to function_book
+on b1 from function_book to external_book
+on b2 from external_book to Loop_b
+on b3 from Loop_b to Loopcondition_b
+on b4 from Loopcondition_b to ifcondition_b provided (k <= counter)
+on b5 from ifcondition_b to hotelID_found provided(id == inputbook && hotelstatus == 1 )
+on b6 from hotelID_found to hotel_booked do { hotelstatus = 0;in_userlist =1; }
+on b7 from ifcondition_b to hotelID_not_found provided(id != inputbook || hotelstatus != 1 )
+on b8 from hotelID_not_found to Loopincrement_b do {k=k+1;}
+on b9 from Loopincrement_b to Loopcondition_b
+on b10 from Loopcondition_b to invoke provided (k > counter)
+on b11 from hotel_booked to invoke
+
+on f0 from invoke to function_fallback
+on f1 from function_fallback to external_fallback
+on f2 from external_fallback to payable_fallback
+on f3 from payable_fallback to invoke
+
+
+end
+
+
+
+compound type globModel
+
+  component SChotel hotel
+
+connector SINGLE hotel_c0( hotel.c0)
+
+connector SINGLE hotel_c1( hotel.c1)
+connector SINGLE hotel_c2( hotel.c2)
+connector SINGLE hotel_c3 ( hotel.c3)
+connector SINGLE hotel_c4 ( hotel.c4)
+
+connector SINGLE hotel_s0( hotel.s0)
+connector SINGLE hotel_s1( hotel.s1)
+connector SINGLE hotel_s2( hotel.s2)
+connector SINGLE hotel_s3( hotel.s3)
+connector SINGLE hotel_s4( hotel.s4)
+connector SINGLE hotel_s5( hotel.s5)
+connector SINGLE hotel_s6( hotel.s6)
+connector SINGLE hotel_s7( hotel.s7)
+connector SINGLE hotel_s8( hotel.s8)
+connector SINGLE hotel_s9( hotel.s9)
+connector SINGLE hotel_s10( hotel.s10)
+connector SINGLE hotel_s11( hotel.s11)
+connector SINGLE hotel_s12( hotel.s12)
+connector SINGLE hotel_s13( hotel.s13)
+connector SINGLE hotel_s14( hotel.s14)
+connector SINGLE hotel_s15( hotel.s15)
+connector SINGLE hotel_s16( hotel.s16)
+connector SINGLE hotel_s17( hotel.s17)
+connector SINGLE hotel_s18( hotel.s18)
+connector SINGLE hotel_s19( hotel.s19)
+connector SINGLE hotel_s20( hotel.s20)
+
+connector SINGLE hotel_g0( hotel.g0)
+connector SINGLE hotel_g1( hotel.g1)
+connector SINGLE hotel_g2( hotel.g2)
+connector SINGLE hotel_g3( hotel.g3)
+connector SINGLE hotel_g4( hotel.g4)
+connector SINGLE hotel_g5( hotel.g5)
+connector SINGLE hotel_g6( hotel.g6)
+connector SINGLE hotel_g7( hotel.g7)
+connector SINGLE hotel_g8( hotel.g8)
+connector SINGLE hotel_g9( hotel.g9)
+connector SINGLE hotel_g10( hotel.g10)
+connector SINGLE hotel_g11( hotel.g11)
+
+connector SINGLE hotel_b0( hotel.b0)
+connector SINGLE hotel_b1( hotel.b1)
+connector SINGLE hotel_b2( hotel.b2)
+connector SINGLE hotel_b3( hotel.b3)
+connector SINGLE hotel_b4( hotel.b4)
+connector SINGLE hotel_b5( hotel.b5)
+connector SINGLE hotel_b6( hotel.b6)
+connector SINGLE hotel_b7( hotel.b7)
+connector SINGLE hotel_b8( hotel.b8)
+connector SINGLE hotel_b9( hotel.b9)
+connector SINGLE hotel_b10( hotel.b10)
+connector SINGLE hotel_b11( hotel.b11)
+
+connector SINGLE hotel_f0( hotel.f0)
+connector SINGLE hotel_f1( hotel.f1)
+connector SINGLE hotel_f2( hotel.f2)
+connector SINGLE hotel_f3( hotel.f3)
+
+
+
+end
+
+component globModel Root
+ end

@@ -1,0 +1,232 @@
+model smartcontractCAR
+
+	port type syncPort
+
+ connector type SINGLE(syncPort p)
+    define p
+end
+
+ 
+
+atomic type SCcar
+	
+	data int counter=1
+	data bool in_userlist=0	
+	data bool admin=1
+	data int InputPrice=5
+	data int pricezero= 3
+	data int PminH=5
+	data int carstatus=1
+	data int id = 1
+	data int inputbook=1
+	data int inputID=1
+	data int i = 0
+	data int j= 0
+	data int k= 0
+
+	
+export port syncPort c0
+export port syncPort c1
+export port syncPort c2
+export port syncPort c3
+export port syncPort c4
+export port syncPort c5
+
+export port syncPort s0
+export port syncPort s1
+export port syncPort s2
+export port syncPort s3
+export port syncPort s4
+export port syncPort s5
+export port syncPort s6
+export port syncPort s7
+export port syncPort s8
+export port syncPort s9
+export port syncPort s10
+export port syncPort s11
+export port syncPort s12
+export port syncPort s13
+export port syncPort s14
+export port syncPort s15
+export port syncPort s16
+export port syncPort s17
+export port syncPort s18
+export port syncPort s19
+export port syncPort s20
+
+
+export port syncPort g0
+export port syncPort g1
+export port syncPort g2
+export port syncPort g3
+export port syncPort g4
+export port syncPort g5
+export port syncPort g6
+export port syncPort g7
+export port syncPort g8
+export port syncPort g9
+export port syncPort g10
+export port syncPort g11
+
+
+export port syncPort b0
+export port syncPort b1
+export port syncPort b2
+export port syncPort b3
+export port syncPort b4
+export port syncPort b5
+export port syncPort b6
+export port syncPort b7
+export port syncPort b8
+export port syncPort b9
+export port syncPort b10
+export port syncPort b11
+
+export port syncPort f0
+export port syncPort f1
+export port syncPort f2
+export port syncPort f3
+
+
+
+  place  sending_Ether_transfer,sending_Ether_call,subtraction,delegatecall, sending_Ether_send,invoke, function_create, public_create, addcar, addition_counter_1, function_search, external_search,requirecondition_s, InputPrice_Accepted,InputPrice_Rejected,price_zero,Loop,Loopcondition,Loopincrement,no_car_available,ifcondition_s,set_PminH,PminH_not_found,ifcondition_s1,car_found,car_not_found, function_get, public_get, Loop_g,Loopcondition_g,Loopincrement_g,ifcondition_g,id_found, id_not_found, list_info, function_book, external_book, Loop_b,Loopcondition_b,Loopincrement_b,ifcondition_b,carID_found,carID_not_found,car_booked, Selfdestruct, function_fallback, external_fallback, payable_fallback
+
+initial to invoke
+
+on c0 from invoke to function_create
+on c1 from function_create to public_create 
+on c2 from public_create to addcar
+on c3 from addcar to addition_counter_1 provided (counter +1 > 1) do { counter = counter + 1; }
+on c5 from addcar to invoke provided (counter +1 <= 1)
+on c4 from addition_counter_1 to invoke
+
+on s0 from invoke to function_search 
+on s1 from function_search to external_search
+on s2 from external_search to requirecondition_s
+on s3 from requirecondition_s to InputPrice_Accepted provided (InputPrice > 0)
+on s5 from requirecondition_s to InputPrice_Rejected provided (InputPrice <= 0)
+on s4 from InputPrice_Rejected to invoke
+on s6 from InputPrice_Accepted to price_zero do {pricezero= 3;}
+on s7 from price_zero to Loop
+on s8 from Loop to Loopcondition
+on s9 from Loopcondition to ifcondition_s provided (i<=counter)
+on s10 from ifcondition_s to set_PminH provided (pricezero < PminH && carstatus==1 ) do {PminH = pricezero;}
+on s11 from ifcondition_s to PminH_not_found provided (pricezero >= PminH || carstatus !=1 ) 
+on s12 from PminH_not_found to Loopincrement do {i = i+1;}
+on s13 from set_PminH to ifcondition_s1
+on s14 from ifcondition_s1 to car_found provided (InputPrice > PminH) 
+on s15 from ifcondition_s1 to car_not_found provided (InputPrice <= PminH  )
+on s16 from Loopincrement to Loopcondition 
+on s17 from Loopcondition to no_car_available provided (i>counter)
+on s18 from no_car_available to car_not_found
+on s19 from car_not_found to invoke
+on s20 from car_found to invoke
+
+on g0 from invoke to function_get provided (in_userlist==1)
+on g1 from function_get to public_get
+on g2 from public_get to Loop_g
+on g3 from Loop_g to Loopcondition_g
+on g4 from Loopcondition_g to ifcondition_g provided(j <= counter)
+on g5 from ifcondition_g to id_found provided(id == inputID)
+on g6 from id_found to list_info
+on g7 from list_info to invoke
+on g8 from ifcondition_g to id_not_found provided(id != inputID)
+on g9 from id_not_found to Loopincrement_g do {j = j+1;}
+on g10 from Loopincrement_g to Loopcondition_g 
+on g11 from Loopcondition_g to invoke provided (j > counter)
+
+
+on b0 from invoke to function_book
+on b1 from function_book to external_book
+on b2 from external_book to Loop_b
+on b3 from Loop_b to Loopcondition_b
+on b4 from Loopcondition_b to ifcondition_b provided (k <= counter)
+on b5 from ifcondition_b to carID_found provided(id == inputbook && carstatus == 1 )
+on b6 from carID_found to car_booked do { carstatus = 0;in_userlist =1; }
+on b7 from ifcondition_b to carID_not_found provided(id != inputbook || carstatus != 1 )
+on b8 from carID_not_found to Loopincrement_b do {k=k+1;}
+on b9 from Loopincrement_b to Loopcondition_b
+on b10 from Loopcondition_b to invoke provided (k > counter)
+on b11 from car_booked to invoke
+
+on f0 from invoke to function_fallback
+on f1 from function_fallback to external_fallback
+on f2 from external_fallback to payable_fallback
+on f3 from payable_fallback to invoke
+
+
+end
+
+
+
+compound type globModel
+
+  component SCcar car
+
+connector SINGLE car_c0( car.c0)
+
+connector SINGLE car_c1( car.c1)
+connector SINGLE car_c2( car.c2)
+connector SINGLE car_c3 ( car.c3)
+connector SINGLE car_c4 ( car.c4)
+connector SINGLE car_c5 ( car.c5)
+
+connector SINGLE car_s0( car.s0)
+connector SINGLE car_s1( car.s1)
+connector SINGLE car_s2( car.s2)
+connector SINGLE car_s3( car.s3)
+connector SINGLE car_s4( car.s4)
+connector SINGLE car_s5( car.s5)
+connector SINGLE car_s6( car.s6)
+connector SINGLE car_s7( car.s7)
+connector SINGLE car_s8( car.s8)
+connector SINGLE car_s9( car.s9)
+connector SINGLE car_s10( car.s10)
+connector SINGLE car_s11( car.s11)
+connector SINGLE car_s12( car.s12)
+connector SINGLE car_s13( car.s13)
+connector SINGLE car_s14( car.s14)
+connector SINGLE car_s15( car.s15)
+connector SINGLE car_s16( car.s16)
+connector SINGLE car_s17( car.s17)
+connector SINGLE car_s18( car.s18)
+connector SINGLE car_s19( car.s19)
+connector SINGLE car_s20( car.s20)
+
+connector SINGLE car_g0( car.g0)
+connector SINGLE car_g1( car.g1)
+connector SINGLE car_g2( car.g2)
+connector SINGLE car_g3( car.g3)
+connector SINGLE car_g4( car.g4)
+connector SINGLE car_g5( car.g5)
+connector SINGLE car_g6( car.g6)
+connector SINGLE car_g7( car.g7)
+connector SINGLE car_g8( car.g8)
+connector SINGLE car_g9( car.g9)
+connector SINGLE car_g10( car.g10)
+connector SINGLE car_g11( car.g11)
+
+connector SINGLE car_b0( car.b0)
+connector SINGLE car_b1( car.b1)
+connector SINGLE car_b2( car.b2)
+connector SINGLE car_b3( car.b3)
+connector SINGLE car_b4( car.b4)
+connector SINGLE car_b5( car.b5)
+connector SINGLE car_b6( car.b6)
+connector SINGLE car_b7( car.b7)
+connector SINGLE car_b8( car.b8)
+connector SINGLE car_b9( car.b9)
+connector SINGLE car_b10( car.b10)
+connector SINGLE car_b11( car.b11)
+
+connector SINGLE car_f0( car.f0)
+connector SINGLE car_f1( car.f1)
+connector SINGLE car_f2( car.f2)
+connector SINGLE car_f3( car.f3)
+
+
+
+end
+
+component globModel Root
+ end
