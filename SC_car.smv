@@ -1,0 +1,346 @@
+MODULE CAR(active_interaction)
+
+	VAR
+		NuPc0		:		boolean;
+		NuPc1		:		boolean;
+		NuPc2		:		boolean;
+		NuPc3		:		boolean;
+		NuPc4		:		boolean;
+		NuPc5		:		boolean;
+		NuPs0		:		boolean;
+		NuPs1		:		boolean;
+		NuPs2		:		boolean;
+		NuPs3		:		boolean;
+		NuPs4		:		boolean;
+		NuPs5		:		boolean;
+		NuPs6		:		boolean;
+		NuPs7		:		boolean;
+		NuPs8		:		boolean;
+		NuPs9		:		boolean;
+		NuPs10		:		boolean;
+		NuPs11		:		boolean;
+		NuPs12		:		boolean;
+		NuPs13		:		boolean;
+		NuPs14		:		boolean;
+		NuPs15		:		boolean;
+		NuPs16		:		boolean;
+		NuPs17		:		boolean;
+		NuPs18		:		boolean;
+		NuPs19		:		boolean;
+		NuPs20		:		boolean;
+		NuPg0		:		boolean;
+		NuPg1		:		boolean;
+		NuPg2		:		boolean;
+		NuPg3		:		boolean;
+		NuPg4		:		boolean;
+		NuPg5		:		boolean;
+		NuPg6		:		boolean;
+		NuPg7		:		boolean;
+		NuPg8		:		boolean;
+		NuPg9		:		boolean;
+		NuPg10		:		boolean;
+		NuPg11		:		boolean;
+		NuPb0		:		boolean;
+		NuPb1		:		boolean;
+		NuPb2		:		boolean;
+		NuPb3		:		boolean;
+		NuPb4		:		boolean;
+		NuPb5		:		boolean;
+		NuPb6		:		boolean;
+		NuPb7		:		boolean;
+		NuPb8		:		boolean;
+		NuPb9		:		boolean;
+		NuPb10		:		boolean;
+		NuPb11		:		boolean;
+		NuPf0		:		boolean;
+		NuPf1		:		boolean;
+		NuPf2		:		boolean;
+		NuPf3		:		boolean;
+		NuVcounter		:		unsigned word[3];
+		NuVin_userlist		:		boolean;
+		NuVadmin		:		boolean;
+		NuVInputPrice		:		unsigned word[3];
+		NuVpricezero		:		unsigned word[3];
+		NuVPminC		:		unsigned word[3];
+		NuVcarstatus		:		unsigned word[3];
+		NuVid		:		unsigned word[3];
+		NuVinputbook		:		unsigned word[3];
+		NuVinputID		:		unsigned word[3];
+		NuVi		:		unsigned word[3];
+		NuVj		:		unsigned word[3];
+		NuVk		:		unsigned word[3];
+		Nuplace		:		{NuSsending_Ether_transfer, NuSsending_Ether_call, NuSsubtraction, NuSdelegatecall, NuSsending_Ether_send, NuSinvoke, NuSfunction_create, NuSpublic_create, NuSaddcar, NuSaddition_counter_1, NuSfunction_search, NuSexternal_search, NuSrequirecondition_s, NuSInputPrice_Accepted, NuSInputPrice_Rejected, NuSprice_zero, NuSLoop, NuSLoopcondition, NuSLoopincrement, NuSno_car_available, NuSifcondition_s, NuSset_PminH, NuSPminH_not_found, NuSifcondition_s1, NuScar_found, NuScar_not_found, NuSfunction_get, NuSpublic_get, NuSLoop_g, NuSLoopcondition_g, NuSLoopincrement_g, NuSifcondition_g, NuSid_found, NuSid_not_found, NuSlist_info, NuSfunction_book, NuSexternal_book, NuSLoop_b, NuSLoopcondition_b, NuSLoopincrement_b, NuSifcondition_b, NuScarID_found, NuScarID_not_found, NuScar_booked, NuSSelfdestruct, NuSfunction_fallback, NuSexternal_fallback, NuSpayable_fallback};
+
+
+	INIT
+		( (NuVcounter) = (0ud3_1) ) &
+		( (NuVin_userlist) = (FALSE) ) &
+		( (NuVadmin) = (TRUE) ) &
+		( (NuVInputPrice) = (0ud3_5) ) &
+		( (NuVpricezero) = (0ud3_3) ) &
+		( (NuVPminC) = (0ud3_5) ) &
+		( (NuVcarstatus) = (0ud3_1) ) &
+		( (NuVid) = (0ud3_1) ) &
+		( (NuVinputbook) = (0ud3_1) ) &
+		( (NuVinputID) = (0ud3_1) ) &
+		( (NuVi) = (0ud3_0) ) &
+		( (NuVj) = (0ud3_0) ) &
+		( (NuVk) = (0ud3_0) ) &
+		( (Nuplace) = (NuSinvoke) );
+
+	INVAR
+		( (NuPg11) <-> (( (( (Nuplace) = (NuSLoopcondition_g) )) & (( (NuVj) > (NuVcounter) )) )) ) &
+		( (NuPg10) <-> (( (Nuplace) = (NuSLoopincrement_g) )) ) &
+		( (NuPb2) <-> (( (Nuplace) = (NuSexternal_book) )) ) &
+		( (NuPb1) <-> (( (Nuplace) = (NuSfunction_book) )) ) &
+		( (NuPb0) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPf3) <-> (( (Nuplace) = (NuSpayable_fallback) )) ) &
+		( (NuPf2) <-> (( (Nuplace) = (NuSexternal_fallback) )) ) &
+		( (NuPf1) <-> (( (Nuplace) = (NuSfunction_fallback) )) ) &
+		( (NuPf0) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPs3) <-> (( (( (Nuplace) = (NuSrequirecondition_s) )) & (( (NuVInputPrice) > (0ud3_0) )) )) ) &
+		( (NuPs2) <-> (( (Nuplace) = (NuSexternal_search) )) ) &
+		( (NuPs1) <-> (( (Nuplace) = (NuSfunction_search) )) ) &
+		( (NuPs0) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPs20) <-> (( (Nuplace) = (NuScar_found) )) ) &
+		( (NuPb9) <-> (( (Nuplace) = (NuSLoopincrement_b) )) ) &
+		( (NuPb8) <-> (( (Nuplace) = (NuScarID_not_found) )) ) &
+		( (NuPb7) <-> (( (( (Nuplace) = (NuSifcondition_b) )) & (( (( (NuVid) != (NuVinputbook) )) | (( (NuVcarstatus) != (0ud3_1) )) )) )) ) &
+		( (NuPb6) <-> (( (Nuplace) = (NuScarID_found) )) ) &
+		( (NuPb5) <-> (( (( (Nuplace) = (NuSifcondition_b) )) & (( (( (NuVid) = (NuVinputbook) )) & (( (NuVcarstatus) = (0ud3_1) )) )) )) ) &
+		( (NuPb4) <-> (( (( (Nuplace) = (NuSLoopcondition_b) )) & (( (NuVk) <= (NuVcounter) )) )) ) &
+		( (NuPb3) <-> (( (Nuplace) = (NuSLoop_b) )) ) &
+		( (NuPc3) <-> (( (( (Nuplace) = (NuSaddcar) )) & (( (( (NuVcounter) + (0ud3_1) )) > (0ud3_1) )) )) ) &
+		( (NuPg7) <-> (( (Nuplace) = (NuSlist_info) )) ) &
+		( (NuPc2) <-> (( (Nuplace) = (NuSpublic_create) )) ) &
+		( (NuPg6) <-> (( (Nuplace) = (NuSid_found) )) ) &
+		( (NuPc1) <-> (( (Nuplace) = (NuSfunction_create) )) ) &
+		( (NuPg5) <-> (( (( (Nuplace) = (NuSifcondition_g) )) & (( (NuVid) = (NuVinputID) )) )) ) &
+		( (NuPc0) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPg4) <-> (( (( (Nuplace) = (NuSLoopcondition_g) )) & (( (NuVj) <= (NuVcounter) )) )) ) &
+		( (NuPg3) <-> (( (Nuplace) = (NuSLoop_g) )) ) &
+		( (NuPg2) <-> (( (Nuplace) = (NuSpublic_get) )) ) &
+		( (NuPg1) <-> (( (Nuplace) = (NuSfunction_get) )) ) &
+		( (NuPg0) <-> (( (( (Nuplace) = (NuSinvoke) )) & (( (NuVin_userlist) = (TRUE) )) )) ) &
+		( (NuPb10) <-> (( (( (Nuplace) = (NuSLoopcondition_b) )) & (( (NuVk) > (NuVcounter) )) )) ) &
+		( (NuPb11) <-> (( (Nuplace) = (NuScar_booked) )) ) &
+		( (NuPs9) <-> (( (( (Nuplace) = (NuSLoopcondition) )) & (( (NuVi) <= (NuVcounter) )) )) ) &
+		( (NuPs8) <-> (( (Nuplace) = (NuSLoop) )) ) &
+		( (NuPs7) <-> (( (Nuplace) = (NuSprice_zero) )) ) &
+		( (NuPs6) <-> (( (Nuplace) = (NuSInputPrice_Accepted) )) ) &
+		( (NuPs5) <-> (( (( (Nuplace) = (NuSrequirecondition_s) )) & (( (NuVInputPrice) <= (0ud3_0) )) )) ) &
+		( (NuPs4) <-> (( (Nuplace) = (NuSInputPrice_Rejected) )) ) &
+		( (NuPs17) <-> (( (( (Nuplace) = (NuSLoopcondition) )) & (( (NuVi) > (NuVcounter) )) )) ) &
+		( (NuPs18) <-> (( (Nuplace) = (NuSno_car_available) )) ) &
+		( (NuPs15) <-> (( (( (Nuplace) = (NuSifcondition_s1) )) & (( (NuVInputPrice) <= (NuVPminC) )) )) ) &
+		( (NuPs16) <-> (( (Nuplace) = (NuSLoopincrement) )) ) &
+		( (NuPs19) <-> (( (Nuplace) = (NuScar_not_found) )) ) &
+		( (NuPs10) <-> (( (( (Nuplace) = (NuSifcondition_s) )) & (( (( (NuVpricezero) < (NuVPminC) )) & (( (NuVcarstatus) = (0ud3_1) )) )) )) ) &
+		( (NuPs13) <-> (( (Nuplace) = (NuSset_PminH) )) ) &
+		( (NuPs14) <-> (( (( (Nuplace) = (NuSifcondition_s1) )) & (( (NuVInputPrice) > (NuVPminC) )) )) ) &
+		( (NuPc5) <-> (( (( (Nuplace) = (NuSaddcar) )) & (( (( (NuVcounter) + (0ud3_1) )) <= (0ud3_1) )) )) ) &
+		( (NuPs11) <-> (( (( (Nuplace) = (NuSifcondition_s) )) & (( (( (NuVpricezero) >= (NuVPminC) )) | (( (NuVcarstatus) != (0ud3_1) )) )) )) ) &
+		( (NuPg9) <-> (( (Nuplace) = (NuSid_not_found) )) ) &
+		( (NuPc4) <-> (( (Nuplace) = (NuSaddition_counter_1) )) ) &
+		( (NuPs12) <-> (( (Nuplace) = (NuSPminH_not_found) )) ) &
+		( (NuPg8) <-> (( (( (Nuplace) = (NuSifcondition_g) )) & (( (NuVid) != (NuVinputID) )) )) );
+
+	TRANS
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunction_create) )) )) & (( (active_interaction) = (NuI1) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunction_create) )) & (( (next(Nuplace)) = (NuSpublic_create) )) )) & (( (active_interaction) = (NuI2) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpublic_create) )) & (( (next(Nuplace)) = (NuSaddcar) )) )) & (( (active_interaction) = (NuI3) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSaddcar) )) & (( (next(Nuplace)) = (NuSaddition_counter_1) )) )) & (( (active_interaction) = (NuI4) )) )) & (( (next(NuVcounter)) = (( (NuVcounter) + (0ud3_1) )) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSaddcar) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI6) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSaddition_counter_1) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI5) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunction_search) )) )) & (( (active_interaction) = (NuI7) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunction_search) )) & (( (next(Nuplace)) = (NuSexternal_search) )) )) & (( (active_interaction) = (NuI8) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSexternal_search) )) & (( (next(Nuplace)) = (NuSrequirecondition_s) )) )) & (( (active_interaction) = (NuI9) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition_s) )) & (( (next(Nuplace)) = (NuSInputPrice_Accepted) )) )) & (( (active_interaction) = (NuI10) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSrequirecondition_s) )) & (( (next(Nuplace)) = (NuSInputPrice_Rejected) )) )) & (( (active_interaction) = (NuI12) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSInputPrice_Rejected) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI11) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSInputPrice_Accepted) )) & (( (next(Nuplace)) = (NuSprice_zero) )) )) & (( (active_interaction) = (NuI13) )) )) & (( (next(NuVpricezero)) = (0ud3_3) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSprice_zero) )) & (( (next(Nuplace)) = (NuSLoop) )) )) & (( (active_interaction) = (NuI14) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoop) )) & (( (next(Nuplace)) = (NuSLoopcondition) )) )) & (( (active_interaction) = (NuI15) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopcondition) )) & (( (next(Nuplace)) = (NuSifcondition_s) )) )) & (( (active_interaction) = (NuI16) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_s) )) & (( (next(Nuplace)) = (NuSset_PminH) )) )) & (( (active_interaction) = (NuI17) )) )) & (( (next(NuVPminC)) = (NuVpricezero) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_s) )) & (( (next(Nuplace)) = (NuSPminH_not_found) )) )) & (( (active_interaction) = (NuI18) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSPminH_not_found) )) & (( (next(Nuplace)) = (NuSLoopincrement) )) )) & (( (active_interaction) = (NuI19) )) )) & (( (next(NuVi)) = (( (NuVi) + (0ud3_1) )) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSset_PminH) )) & (( (next(Nuplace)) = (NuSifcondition_s1) )) )) & (( (active_interaction) = (NuI20) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_s1) )) & (( (next(Nuplace)) = (NuScar_found) )) )) & (( (active_interaction) = (NuI21) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_s1) )) & (( (next(Nuplace)) = (NuScar_not_found) )) )) & (( (active_interaction) = (NuI22) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopincrement) )) & (( (next(Nuplace)) = (NuSLoopcondition) )) )) & (( (active_interaction) = (NuI23) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopcondition) )) & (( (next(Nuplace)) = (NuSno_car_available) )) )) & (( (active_interaction) = (NuI24) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSno_car_available) )) & (( (next(Nuplace)) = (NuScar_not_found) )) )) & (( (active_interaction) = (NuI25) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuScar_not_found) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI26) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuScar_found) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI27) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunction_get) )) )) & (( (active_interaction) = (NuI28) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunction_get) )) & (( (next(Nuplace)) = (NuSpublic_get) )) )) & (( (active_interaction) = (NuI29) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpublic_get) )) & (( (next(Nuplace)) = (NuSLoop_g) )) )) & (( (active_interaction) = (NuI30) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoop_g) )) & (( (next(Nuplace)) = (NuSLoopcondition_g) )) )) & (( (active_interaction) = (NuI31) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopcondition_g) )) & (( (next(Nuplace)) = (NuSifcondition_g) )) )) & (( (active_interaction) = (NuI32) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_g) )) & (( (next(Nuplace)) = (NuSid_found) )) )) & (( (active_interaction) = (NuI33) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSid_found) )) & (( (next(Nuplace)) = (NuSlist_info) )) )) & (( (active_interaction) = (NuI34) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSlist_info) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI35) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_g) )) & (( (next(Nuplace)) = (NuSid_not_found) )) )) & (( (active_interaction) = (NuI36) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSid_not_found) )) & (( (next(Nuplace)) = (NuSLoopincrement_g) )) )) & (( (active_interaction) = (NuI37) )) )) & (( (next(NuVj)) = (( (NuVj) + (0ud3_1) )) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopincrement_g) )) & (( (next(Nuplace)) = (NuSLoopcondition_g) )) )) & (( (active_interaction) = (NuI38) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopcondition_g) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI39) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunction_book) )) )) & (( (active_interaction) = (NuI40) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunction_book) )) & (( (next(Nuplace)) = (NuSexternal_book) )) )) & (( (active_interaction) = (NuI41) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSexternal_book) )) & (( (next(Nuplace)) = (NuSLoop_b) )) )) & (( (active_interaction) = (NuI42) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoop_b) )) & (( (next(Nuplace)) = (NuSLoopcondition_b) )) )) & (( (active_interaction) = (NuI43) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopcondition_b) )) & (( (next(Nuplace)) = (NuSifcondition_b) )) )) & (( (active_interaction) = (NuI44) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_b) )) & (( (next(Nuplace)) = (NuScarID_found) )) )) & (( (active_interaction) = (NuI45) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuScarID_found) )) & (( (next(Nuplace)) = (NuScar_booked) )) )) & (( (active_interaction) = (NuI46) )) )) & (( (next(NuVcarstatus)) = (0ud3_0) )) )) & (( (next(NuVin_userlist)) = (TRUE) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSifcondition_b) )) & (( (next(Nuplace)) = (NuScarID_not_found) )) )) & (( (active_interaction) = (NuI47) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuScarID_not_found) )) & (( (next(Nuplace)) = (NuSLoopincrement_b) )) )) & (( (active_interaction) = (NuI48) )) )) & (( (next(NuVk)) = (( (NuVk) + (0ud3_1) )) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopincrement_b) )) & (( (next(Nuplace)) = (NuSLoopcondition_b) )) )) & (( (active_interaction) = (NuI49) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSLoopcondition_b) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI50) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuScar_booked) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI51) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunction_fallback) )) )) & (( (active_interaction) = (NuI52) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSfunction_fallback) )) & (( (next(Nuplace)) = (NuSexternal_fallback) )) )) & (( (active_interaction) = (NuI53) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSexternal_fallback) )) & (( (next(Nuplace)) = (NuSpayable_fallback) )) )) & (( (active_interaction) = (NuI54) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (( (Nuplace) = (NuSpayable_fallback) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI55) )) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) ) |
+		( (( (active_interaction) != (NuI55) )) & (( (( (active_interaction) != (NuI54) )) & (( (( (active_interaction) != (NuI53) )) & (( (( (active_interaction) != (NuI52) )) & (( (( (active_interaction) != (NuI51) )) & (( (( (active_interaction) != (NuI50) )) & (( (( (active_interaction) != (NuI49) )) & (( (( (active_interaction) != (NuI48) )) & (( (( (active_interaction) != (NuI47) )) & (( (( (active_interaction) != (NuI46) )) & (( (( (active_interaction) != (NuI45) )) & (( (( (active_interaction) != (NuI44) )) & (( (( (active_interaction) != (NuI43) )) & (( (( (active_interaction) != (NuI42) )) & (( (( (active_interaction) != (NuI41) )) & (( (( (active_interaction) != (NuI40) )) & (( (( (active_interaction) != (NuI39) )) & (( (( (active_interaction) != (NuI38) )) & (( (( (active_interaction) != (NuI37) )) & (( (( (active_interaction) != (NuI36) )) & (( (( (active_interaction) != (NuI35) )) & (( (( (active_interaction) != (NuI34) )) & (( (( (active_interaction) != (NuI33) )) & (( (( (active_interaction) != (NuI32) )) & (( (( (active_interaction) != (NuI31) )) & (( (( (active_interaction) != (NuI30) )) & (( (( (active_interaction) != (NuI29) )) & (( (( (active_interaction) != (NuI28) )) & (( (( (active_interaction) != (NuI27) )) & (( (( (active_interaction) != (NuI26) )) & (( (( (active_interaction) != (NuI25) )) & (( (( (active_interaction) != (NuI24) )) & (( (( (active_interaction) != (NuI23) )) & (( (( (active_interaction) != (NuI22) )) & (( (( (active_interaction) != (NuI21) )) & (( (( (active_interaction) != (NuI20) )) & (( (( (active_interaction) != (NuI19) )) & (( (( (active_interaction) != (NuI18) )) & (( (( (active_interaction) != (NuI17) )) & (( (( (active_interaction) != (NuI16) )) & (( (( (active_interaction) != (NuI15) )) & (( (( (active_interaction) != (NuI14) )) & (( (( (active_interaction) != (NuI13) )) & (( (( (active_interaction) != (NuI11) )) & (( (( (active_interaction) != (NuI12) )) & (( (( (active_interaction) != (NuI10) )) & (( (( (active_interaction) != (NuI9) )) & (( (( (active_interaction) != (NuI8) )) & (( (( (active_interaction) != (NuI7) )) & (( (( (active_interaction) != (NuI5) )) & (( (( (active_interaction) != (NuI6) )) & (( (( (active_interaction) != (NuI4) )) & (( (( (active_interaction) != (NuI3) )) & (( (( (active_interaction) != (NuI2) )) & (( (( (active_interaction) != (NuI1) )) & (( (( (( (( (( (( (( (( (( (( (( (( (( (( (next(Nuplace)) = (Nuplace) )) & (( (next(NuVcounter)) = (NuVcounter) )) )) & (( (next(NuVin_userlist)) = (NuVin_userlist) )) )) & (( (next(NuVadmin)) = (NuVadmin) )) )) & (( (next(NuVInputPrice)) = (NuVInputPrice) )) )) & (( (next(NuVpricezero)) = (NuVpricezero) )) )) & (( (next(NuVPminC)) = (NuVPminC) )) )) & (( (next(NuVcarstatus)) = (NuVcarstatus) )) )) & (( (next(NuVid)) = (NuVid) )) )) & (( (next(NuVinputbook)) = (NuVinputbook) )) )) & (( (next(NuVinputID)) = (NuVinputID) )) )) & (( (next(NuVi)) = (NuVi) )) )) & (( (next(NuVj)) = (NuVj) )) )) & (( (next(NuVk)) = (NuVk) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) );
+
+
+MODULE main
+
+	VAR
+		NuInteraction		:		{NuI1, NuI2, NuI3, NuI4, NuI5, NuI6, NuI7, NuI8, NuI9, NuI10, NuI11, NuI12, NuI13, NuI14, NuI15, NuI16, NuI17, NuI18, NuI19, NuI20, NuI21, NuI22, NuI23, NuI24, NuI25, NuI26, NuI27, NuI28, NuI29, NuI30, NuI31, NuI32, NuI33, NuI34, NuI35, NuI36, NuI37, NuI38, NuI39, NuI40, NuI41, NuI42, NuI43, NuI44, NuI45, NuI46, NuI47, NuI48, NuI49, NuI50, NuI51, NuI52, NuI53, NuI54, NuI55};
+		car	:	CAR(NuInteraction);
+
+	DEFINE
+		car_s4		:=		car.NuPs4;
+		car_b3		:=		car.NuPb3;
+		car_g11		:=		car.NuPg11;
+		car_f2		:=		car.NuPf2;
+		car_b2		:=		car.NuPb2;
+		car_c4		:=		car.NuPc4;
+		car_s18		:=		car.NuPs18;
+		car_s17		:=		car.NuPs17;
+		car_c1		:=		car.NuPc1;
+		car_g3		:=		car.NuPg3;
+		car_s8		:=		car.NuPs8;
+		car_g7		:=		car.NuPg7;
+		car_g5		:=		car.NuPg5;
+		car_s2		:=		car.NuPs2;
+		car_c5		:=		car.NuPc5;
+		car_s5		:=		car.NuPs5;
+		car_b0		:=		car.NuPb0;
+		car_g2		:=		car.NuPg2;
+		car_f1		:=		car.NuPf1;
+		car_s13		:=		car.NuPs13;
+		car_s11		:=		car.NuPs11;
+		car_s19		:=		car.NuPs19;
+		car_g6		:=		car.NuPg6;
+		car_b10		:=		car.NuPb10;
+		car_b9		:=		car.NuPb9;
+		car_f3		:=		car.NuPf3;
+		car_s6		:=		car.NuPs6;
+		car_s15		:=		car.NuPs15;
+		car_s3		:=		car.NuPs3;
+		car_b1		:=		car.NuPb1;
+		car_s1		:=		car.NuPs1;
+		car_s7		:=		car.NuPs7;
+		car_b11		:=		car.NuPb11;
+		car_g4		:=		car.NuPg4;
+		car_s0		:=		car.NuPs0;
+		car_c2		:=		car.NuPc2;
+		car_s20		:=		car.NuPs20;
+		car_s14		:=		car.NuPs14;
+		car_f0		:=		car.NuPf0;
+		car_b5		:=		car.NuPb5;
+		car_b8		:=		car.NuPb8;
+		car_s9		:=		car.NuPs9;
+		car_s10		:=		car.NuPs10;
+		car_s16		:=		car.NuPs16;
+		car_b4		:=		car.NuPb4;
+		car_c3		:=		car.NuPc3;
+		car_b7		:=		car.NuPb7;
+		car_b6		:=		car.NuPb6;
+		car_g8		:=		car.NuPg8;
+		car_g9		:=		car.NuPg9;
+		car_s12		:=		car.NuPs12;
+		car_g1		:=		car.NuPg1;
+		car_c0		:=		car.NuPc0;
+		car_g0		:=		car.NuPg0;
+		car_g10		:=		car.NuPg10;
+
+
+	INVAR
+		( (( (NuInteraction) = (NuI11) )) -> (car_s4) ) &
+		( (( (NuInteraction) = (NuI43) )) -> (car_b3) ) &
+		( (( (NuInteraction) = (NuI39) )) -> (car_g11) ) &
+		( (( (NuInteraction) = (NuI54) )) -> (car_f2) ) &
+		( (( (NuInteraction) = (NuI42) )) -> (car_b2) ) &
+		( (( (NuInteraction) = (NuI5) )) -> (car_c4) ) &
+		( (( (NuInteraction) = (NuI25) )) -> (car_s18) ) &
+		( (( (NuInteraction) = (NuI24) )) -> (car_s17) ) &
+		( (( (NuInteraction) = (NuI2) )) -> (car_c1) ) &
+		( (( (NuInteraction) = (NuI31) )) -> (car_g3) ) &
+		( (( (NuInteraction) = (NuI15) )) -> (car_s8) ) &
+		( (( (NuInteraction) = (NuI35) )) -> (car_g7) ) &
+		( (( (NuInteraction) = (NuI33) )) -> (car_g5) ) &
+		( (( (NuInteraction) = (NuI9) )) -> (car_s2) ) &
+		( (( (NuInteraction) = (NuI6) )) -> (car_c5) ) &
+		( (( (NuInteraction) = (NuI12) )) -> (car_s5) ) &
+		( (( (NuInteraction) = (NuI40) )) -> (car_b0) ) &
+		( (( (NuInteraction) = (NuI30) )) -> (car_g2) ) &
+		( (( (NuInteraction) = (NuI53) )) -> (car_f1) ) &
+		( (( (NuInteraction) = (NuI20) )) -> (car_s13) ) &
+		( (( (NuInteraction) = (NuI18) )) -> (car_s11) ) &
+		( (( (NuInteraction) = (NuI26) )) -> (car_s19) ) &
+		( (( (NuInteraction) = (NuI34) )) -> (car_g6) ) &
+		( (( (NuInteraction) = (NuI50) )) -> (car_b10) ) &
+		( (( (NuInteraction) = (NuI49) )) -> (car_b9) ) &
+		( (( (NuInteraction) = (NuI55) )) -> (car_f3) ) &
+		( (( (NuInteraction) = (NuI13) )) -> (car_s6) ) &
+		( (( (NuInteraction) = (NuI22) )) -> (car_s15) ) &
+		( (( (NuInteraction) = (NuI10) )) -> (car_s3) ) &
+		( (( (NuInteraction) = (NuI41) )) -> (car_b1) ) &
+		( (( (NuInteraction) = (NuI8) )) -> (car_s1) ) &
+		( (( (NuInteraction) = (NuI14) )) -> (car_s7) ) &
+		( (( (NuInteraction) = (NuI51) )) -> (car_b11) ) &
+		( (( (NuInteraction) = (NuI32) )) -> (car_g4) ) &
+		( (( (NuInteraction) = (NuI7) )) -> (car_s0) ) &
+		( (( (NuInteraction) = (NuI3) )) -> (car_c2) ) &
+		( (( (NuInteraction) = (NuI27) )) -> (car_s20) ) &
+		( (( (NuInteraction) = (NuI21) )) -> (car_s14) ) &
+		( (( (NuInteraction) = (NuI52) )) -> (car_f0) ) &
+		( (( (NuInteraction) = (NuI45) )) -> (car_b5) ) &
+		( (( (NuInteraction) = (NuI48) )) -> (car_b8) ) &
+		( (( (NuInteraction) = (NuI16) )) -> (car_s9) ) &
+		( (( (NuInteraction) = (NuI17) )) -> (car_s10) ) &
+		( (( (NuInteraction) = (NuI23) )) -> (car_s16) ) &
+		( (( (NuInteraction) = (NuI44) )) -> (car_b4) ) &
+		( (( (NuInteraction) = (NuI4) )) -> (car_c3) ) &
+		( (( (NuInteraction) = (NuI47) )) -> (car_b7) ) &
+		( (( (NuInteraction) = (NuI46) )) -> (car_b6) ) &
+		( (( (NuInteraction) = (NuI36) )) -> (car_g8) ) &
+		( (( (NuInteraction) = (NuI37) )) -> (car_g9) ) &
+		( (( (NuInteraction) = (NuI19) )) -> (car_s12) ) &
+		( (( (NuInteraction) = (NuI29) )) -> (car_g1) ) &
+		( (( (NuInteraction) = (NuI1) )) -> (car_c0) ) &
+		( (( (NuInteraction) = (NuI28) )) -> (car_g0) ) &
+		( (( (NuInteraction) = (NuI38) )) -> (car_g10) );
+
+
+
+--***Spec_2 check overflow vulnerability***@**
+	CTLSPEC NAME Overflow_Vulnerability :=AG ((car.Nuplace = NuSfunction_create & car.NuVcounter + 0ud3_1 < 0ud3_1) -> AF car.Nuplace = NuSaddition_counter_1)   
+	
+
+--***Spec_6 check SELFDESTRUCT vulnerability***@**
+	CTLSPEC NAME selfdestruct_Vulnerability0 := AG( car.Nuplace = NuSpublic_create  -> AF (car.Nuplace =NuSSelfdestruct))
+	
+	CTLSPEC NAME selfdestruct_Vulnerability2 := AG( car.Nuplace = NuSpublic_get -> AF (car.Nuplace =NuSSelfdestruct))
+	
+--***Spec_8 check Ether lock vulnerability***@**
+	CTLSPEC NAME Etherlock_Vulnerability :=AG (car.Nuplace = NuSfunction_fallback -> AG(car.Nuplace = NuSexternal_fallback -> AX(car.Nuplace = NuSpayable_fallback))) & AG (EF (!(car.Nuplace = NuSsending_Ether_transfer) | !(car.Nuplace = NuSsending_Ether_call) |!(car.Nuplace = NuSsending_Ether_send)))
+
+
+
+--***Spec_11 check Function Default Visibility vulnerability***@**
+	CTLSPEC NAME Function_Default_Visibility_Vulnerability :=AG ( car.Nuplace = NuSfunction_create -> EX (car.Nuplace  = NuSpublic_create))
+
