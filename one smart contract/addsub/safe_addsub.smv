@@ -1,0 +1,111 @@
+MODULE BAUC(active_interaction)
+
+	VAR
+		NuPadd		:		boolean;
+		NuPsub		:		boolean;
+		NuPaPlusb		:		boolean;
+		NuPaPlusb1		:		boolean;
+		NuPaPlusb2		:		boolean;
+		NuPaPlusb3		:		boolean;
+		NuPaPlusb4		:		boolean;
+		NuPaPlusb5		:		boolean;
+		NuPaMinusb		:		boolean;
+		NuPaMinusb1		:		boolean;
+		NuPaMinusb2		:		boolean;
+		NuPaMinusb3		:		boolean;
+		NuPaMinusb4		:		boolean;
+		NuPaMinusb5		:		boolean;
+		NuVc		:		unsigned word[3];
+		NuVa		:		unsigned word[3];
+		NuVb		:		unsigned word[3];
+		Nuplace		:		{NuSinvoke, NuSaddition, NuSsubtraction, NuSfunction_add, NuSfunction_sub, NuSifcondition, NuSa1, NuSa2, NuSs1, NuSs2};
+
+
+	INIT
+		( (Nuplace) = (NuSinvoke) ) &
+		( (NuVc) = (0ud3_0) ) &
+		( (NuVa) = (0ud3_2) ) &
+		( (NuVb) = (0ud3_3) );
+
+	INVAR
+		( (NuPaPlusb2) <-> (( (Nuplace) = (NuSa1) )) ) &
+		( (NuPaPlusb1) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (( (NuVc) + (NuVa) )) >= (NuVa) )) )) ) &
+		( (NuPaPlusb5) <-> (( (Nuplace) = (NuSa2) )) ) &
+		( (NuPaPlusb4) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (( (NuVc) + (NuVa) )) < (NuVa) )) )) ) &
+		( (NuPaPlusb3) <-> (( (Nuplace) = (NuSaddition) )) ) &
+		( (NuPsub) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPaMinusb1) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVb) <= (NuVc) )) )) ) &
+		( (NuPadd) <-> (( (Nuplace) = (NuSinvoke) )) ) &
+		( (NuPaMinusb2) <-> (( (Nuplace) = (NuSs1) )) ) &
+		( (NuPaPlusb) <-> (( (Nuplace) = (NuSfunction_add) )) ) &
+		( (NuPaMinusb) <-> (( (Nuplace) = (NuSfunction_sub) )) ) &
+		( (NuPaMinusb3) <-> (( (Nuplace) = (NuSsubtraction) )) ) &
+		( (NuPaMinusb4) <-> (( (( (Nuplace) = (NuSifcondition) )) & (( (NuVb) > (NuVc) )) )) ) &
+		( (NuPaMinusb5) <-> (( (Nuplace) = (NuSs2) )) );
+
+	TRANS
+		( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunction_add) )) )) & (( (active_interaction) = (NuI1) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSfunction_add) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI9) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSa1) )) )) & (( (active_interaction) = (NuI10) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSa1) )) & (( (next(Nuplace)) = (NuSaddition) )) )) & (( (active_interaction) = (NuI11) )) )) & (( (next(NuVc)) = (( (NuVc) + (NuVa) )) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSaddition) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI12) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSa2) )) )) & (( (active_interaction) = (NuI13) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSa2) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI14) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSinvoke) )) & (( (next(Nuplace)) = (NuSfunction_sub) )) )) & (( (active_interaction) = (NuI2) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSfunction_sub) )) & (( (next(Nuplace)) = (NuSifcondition) )) )) & (( (active_interaction) = (NuI3) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSs1) )) )) & (( (active_interaction) = (NuI4) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSs1) )) & (( (next(Nuplace)) = (NuSsubtraction) )) )) & (( (active_interaction) = (NuI5) )) )) & (( (next(NuVc)) = (( (NuVc) - (NuVb) )) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSsubtraction) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI6) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSifcondition) )) & (( (next(Nuplace)) = (NuSs2) )) )) & (( (active_interaction) = (NuI7) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (( (( (( (( (Nuplace) = (NuSs2) )) & (( (next(Nuplace)) = (NuSinvoke) )) )) & (( (active_interaction) = (NuI8) )) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) ) |
+		( (( (active_interaction) != (NuI8) )) & (( (( (active_interaction) != (NuI7) )) & (( (( (active_interaction) != (NuI6) )) & (( (( (active_interaction) != (NuI5) )) & (( (( (active_interaction) != (NuI4) )) & (( (( (active_interaction) != (NuI3) )) & (( (( (active_interaction) != (NuI2) )) & (( (( (active_interaction) != (NuI14) )) & (( (( (active_interaction) != (NuI13) )) & (( (( (active_interaction) != (NuI12) )) & (( (( (active_interaction) != (NuI11) )) & (( (( (active_interaction) != (NuI10) )) & (( (( (active_interaction) != (NuI9) )) & (( (( (active_interaction) != (NuI1) )) & (( (( (( (( (next(Nuplace)) = (Nuplace) )) & (( (next(NuVc)) = (NuVc) )) )) & (( (next(NuVa)) = (NuVa) )) )) & (( (next(NuVb)) = (NuVb) )) )) )) )) )) )) )) )) )) )) )) )) )) )) )) );
+
+
+MODULE main
+
+	VAR
+		NuInteraction		:		{NuI1, NuI2, NuI3, NuI4, NuI5, NuI6, NuI7, NuI8, NuI9, NuI10, NuI11, NuI12, NuI13, NuI14};
+		bauc	:	BAUC(NuInteraction);
+
+	DEFINE
+		BAUC_aMinusb3		:=		bauc.NuPaMinusb3;
+		BAUC_aPlusb5		:=		bauc.NuPaPlusb5;
+		BAUC_add		:=		bauc.NuPadd;
+		BAUC_sub		:=		bauc.NuPsub;
+		BAUC_aMinusb2		:=		bauc.NuPaMinusb2;
+		BAUC_aPlusb4		:=		bauc.NuPaPlusb4;
+		BAUC_aMinusb4		:=		bauc.NuPaMinusb4;
+		BAUC_aMinusb		:=		bauc.NuPaMinusb;
+		BAUC_aMinusb5		:=		bauc.NuPaMinusb5;
+		BAUC_aPlusb		:=		bauc.NuPaPlusb;
+		BAUC_aMinusb1		:=		bauc.NuPaMinusb1;
+		BAUC_aPlusb3		:=		bauc.NuPaPlusb3;
+		BAUC_aPlusb1		:=		bauc.NuPaPlusb1;
+		BAUC_aPlusb2		:=		bauc.NuPaPlusb2;
+
+
+	INVAR
+		( (( (NuInteraction) = (NuI6) )) -> (BAUC_aMinusb3) ) &
+		( (( (NuInteraction) = (NuI14) )) -> (BAUC_aPlusb5) ) &
+		( (( (NuInteraction) = (NuI1) )) -> (BAUC_add) ) &
+		( (( (NuInteraction) = (NuI2) )) -> (BAUC_sub) ) &
+		( (( (NuInteraction) = (NuI5) )) -> (BAUC_aMinusb2) ) &
+		( (( (NuInteraction) = (NuI13) )) -> (BAUC_aPlusb4) ) &
+		( (( (NuInteraction) = (NuI7) )) -> (BAUC_aMinusb4) ) &
+		( (( (NuInteraction) = (NuI3) )) -> (BAUC_aMinusb) ) &
+		( (( (NuInteraction) = (NuI8) )) -> (BAUC_aMinusb5) ) &
+		( (( (NuInteraction) = (NuI9) )) -> (BAUC_aPlusb) ) &
+		( (( (NuInteraction) = (NuI4) )) -> (BAUC_aMinusb1) ) &
+		( (( (NuInteraction) = (NuI12) )) -> (BAUC_aPlusb3) ) &
+		( (( (NuInteraction) = (NuI10) )) -> (BAUC_aPlusb1) ) &
+		( (( (NuInteraction) = (NuI11) )) -> (BAUC_aPlusb2) );
+
+--Spec_7 check overflow vulnerability
+CTLSPEC NAME Overflow_Vulnerability :=AG ((bauc.Nuplace = NuSfunction_add & bauc.NuVc < bauc.NuVa) -> AF bauc.Nuplace = NuSaddition)   
+CTLSPEC NAME Overflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunction_add & (bauc.NuVc + bauc.NuVa < bauc.NuVa) -> E [ bauc.Nuplace = NuSfunction_add U bauc.Nuplace = NuSaddition ])  
+
+--Spec_8 check underflow vulnerability
+CTLSPEC NAME Underflow_Vulnerability := AG ((bauc.Nuplace = NuSfunction_sub & bauc.NuVb > bauc.NuVc ) -> AF bauc.Nuplace = NuSsubtraction)   
+CTLSPEC NAME Underflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunction_sub & (bauc.NuVc  <  bauc.NuVb) -> E [ bauc.Nuplace = NuSfunction_sub U bauc.Nuplace = NuSsubtraction ])
+
+
