@@ -100,12 +100,10 @@ MODULE main
 		( (( (NuInteraction) = (NuI10) )) -> (BAUC_aPlusb1) ) &
 		( (( (NuInteraction) = (NuI11) )) -> (BAUC_aPlusb2) );
 
---Spec_7 check overflow vulnerability
+--Spec_1 check overflow vulnerability
 CTLSPEC NAME Overflow_Vulnerability :=AG ((bauc.Nuplace = NuSfunction_add & bauc.NuVc < bauc.NuVa) -> AF bauc.Nuplace = NuSaddition)   
-CTLSPEC NAME Overflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunction_add & (bauc.NuVc + bauc.NuVa < bauc.NuVa) -> E [ bauc.Nuplace = NuSfunction_add U bauc.Nuplace = NuSaddition ])  
 
---Spec_8 check underflow vulnerability
+--Spec_2 check underflow vulnerability
 CTLSPEC NAME Underflow_Vulnerability := AG ((bauc.Nuplace = NuSfunction_sub & bauc.NuVb > bauc.NuVc ) -> AF bauc.Nuplace = NuSsubtraction)   
-CTLSPEC NAME Underflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunction_sub & (bauc.NuVc  <  bauc.NuVb) -> E [ bauc.Nuplace = NuSfunction_sub U bauc.Nuplace = NuSsubtraction ])
 
 
