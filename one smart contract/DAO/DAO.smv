@@ -103,10 +103,8 @@ MODULE main
 --Spec_1 check reentrancy vulnerability
 CTLSPEC NAME Reentrancy_Vulnerability :=AG ( (bauc.Nuplace = NuSfunctiondonate) | (bauc.Nuplace = NuSfunctionwithdraw)| (bauc.Nuplace = NuSfunctionqueryCredit) ->  EF (   AG ((bauc.Nuplace = NuSsending_ether_call) -> AF (bauc.Nuplace = NuSsubtraction)) ) ) 
 
---Spec_7 check overflow vulnerability
+--Spec_2 check overflow vulnerability
 CTLSPEC NAME Overflow_Vulnerability :=AG ((bauc.Nuplace =NuSfunctiondonate & bauc.NuVcredit < bauc.NuVamount1) -> AF bauc.Nuplace = NuSaddition)   
-CTLSPEC NAME Overflow_Vulnerability_1 :=AG ((bauc.Nuplace = NuSfunctiondonate)  & (bauc.NuVcredit + bauc.NuVamount1 < bauc.NuVamount1) ->E[ bauc.Nuplace = NuSfunctiondonate U bauc.Nuplace = NuSaddition ])  
 
---Spec_8 check underflow vulnerability
+--Spec_3 check underflow vulnerability
 CTLSPEC NAME Underflow_Vulnerability := AG ((bauc.Nuplace = NuSfunctionwithdraw & bauc.NuVamount > bauc.NuVcredit ) -> AF bauc.Nuplace = NuSsubtraction)   
-CTLSPEC NAME Underflow_Vulnerability_1 :=AG (bauc.Nuplace = NuSfunctionwithdraw & (bauc.NuVcredit  <  bauc.NuVamount) -> E [ bauc.Nuplace = NuSfunctionwithdraw U bauc.Nuplace = NuSsubtraction ])
