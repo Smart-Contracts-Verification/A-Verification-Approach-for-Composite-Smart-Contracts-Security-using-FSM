@@ -1,3 +1,7 @@
+// Please change the state names with the ones in your models
+// CTL formulae for "standard" properties
+
+
 --***Spec_1 check reentrancy vulnerability*** @**
 CTLSPEC NAME Reentrancy_Vulnerability :=AG ( (bauc.Nuplace = NuSfunction_name) | (bauc.Nuplace = NuSfunction_name)| (bauc.Nuplace = NuSfunction_name) -> EF ( AG ((bauc.Nuplace = NuSsending_ether_call) -> AF (bauc.Nuplace = NuSsubtraction)) ) ) 
 
