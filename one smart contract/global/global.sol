@@ -1,4 +1,7 @@
-contract SimpleDAO {
+
+// global.sol is a contract that we made from some functions that are known to have vulnerabilities.
+
+contract global {
   
      address public owner;
      uint public credit;
@@ -24,7 +27,7 @@ contract SimpleDAO {
 
 function forward(address  _Recip, bytes _data) public {
    
- require(callee.delegatecall(_data));  }}
+ require(_Recip.delegatecall(_data));  }}
 
 
 
