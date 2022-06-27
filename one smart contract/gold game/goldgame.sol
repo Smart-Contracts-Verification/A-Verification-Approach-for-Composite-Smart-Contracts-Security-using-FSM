@@ -1,6 +1,7 @@
 /**
  *Submitted for verification at Etherscan.io on 2021-08-21
 */
+// used as examlpe from ether.scan
 
 contract gold_game {
 
