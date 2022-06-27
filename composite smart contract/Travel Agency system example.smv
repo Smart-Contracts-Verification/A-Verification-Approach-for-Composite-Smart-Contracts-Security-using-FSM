@@ -633,30 +633,20 @@ INIT( NuInteraction=NuI80 | NuInteraction=NuI13 | NuInteraction=NuI15 |NuInterac
 		( (( (NuInteraction) = (NuI1) )) -> (( (next(flight.NuVprice)) = (search.NuVtrip_price) )) & (( (next(flight.NuVadminflight)) = !(search.NuVadmin) ))  & (( (next(flight.NuVin_userlist)) = (search.NuVuser) )) );
 
 
+--RULE 1
+CTLSPEC NAME rule1_Admin_create_flight :=AG (flight.NuVadminflight = FALSE -> !(EX flight.Nuplace = NuSfunction_create))
+CTLSPEC NAME rule1_Admin_create_hotel  :=AG (hotel.NuVadminhotel = FALSE -> !(EX hotel.Nuplace = NuSfunction_create))
+CTLSPEC NAME rule1_Admin_create_car    :=AG (car.NuVadmincar = FALSE -> !(EX car.Nuplace = NuSfunction_create))
 
+--RULE 2
+CTLSPEC NAME rule2_User_info_flight :=AG (flight.NuVin_userlist = FALSE -> !(EX flight.Nuplace = NuSfunction_get))
+CTLSPEC NAME rule2_User_info_hotel  :=AG (hotel.NuVin_userlist = FALSE -> !(EX hotel.Nuplace = NuSfunction_get))
 
---function create rule 1
-CTLSPEC NAME rule_1f :=AG(flight.NuVadminflight = FALSE -> AG !(NuInteraction=NuI19))
-CTLSPEC NAME rule_1c :=AG(car.NuVadmincar = FALSE -> AG !(NuInteraction=NuI42))
-CTLSPEC NAME rule_1h :=AG(hotel.NuVadminhotel = FALSE -> AG !(NuInteraction=NuI61))
+--RULE 3
+CTLSPEC NAME rule_3_searching_trip :=AG (((search.NuVadmin = FALSE) | (search.NuVuser = FALSE) )-> AX (search.Nuplace = NuSfunctionSearchTrip))
+CTLSPEC NAME rule_3_booking_trip   :=AG (((book.NuVadmin = FALSE) | (book.NuVuser = FALSE)) -> AX ((book.Nuplace = NuSfunction_BookCar) | (book.Nuplace = NuSfunction_BookFlight) |( book.Nuplace = NuSfunction_BookHotel) ) )  
 
-
-CTLSPEC NAME rule_1f0 := !E[flight.NuVadminflight = TRUE U (!(flight.Nuplace=NuSfunction_create) & flight.NuVadminflight = TRUE) ]
-CTLSPEC NAME rule_1c0 :=!E[car.NuVadmincar = TRUE U (!(car.Nuplace=NuSfunction_create) & car.NuVadmincar = TRUE) ]
-CTLSPEC NAME rule_1h0 :=!E[hotel.NuVadminhotel = TRUE U (!(hotel.Nuplace=NuSfunction_create) & hotel.NuVadminhotel = TRUE) ]
-
---function get rule 2
-CTLSPEC NAME rule_2f :=!E[flight.NuVin_userlist = TRUE U (!(NuInteraction=NuI28) & flight.NuVin_userlist = TRUE) ]
-CTLSPEC NAME rule_2h :=!E[hotel.NuVin_userlist = TRUE U (!(NuInteraction=NuI71) & hotel.NuVin_userlist  = TRUE) ]
-
---rule 3
-CTLSPEC NAME rule_3 :=AG(EF(NuInteraction=NuI80) | NuInteraction=NuI13 | NuInteraction=NuI15 |NuInteraction=NuI17)
-
---rule 4
-CTLSPEC NAME rule_4f :=AG((NuInteraction=NuI1) -> AX (flight.NuVadminflight = !search.NuVadmin))
-CTLSPEC NAME rule_4h :=AG((NuInteraction=NuI2) -> AX (hotel.NuVadminhotel = !search.NuVadmin))
-CTLSPEC NAME rule_4c :=AG((NuInteraction=NuI3) -> AX (car.NuVadmincar = !search.NuVadmin))
- 
-
-
-
+--RULE 4
+CTLSPEC NAME rule4_call_flight :=AG((NuInteraction=NuI1) -> AX (flight.NuVadminflight = !search.NuVadmin))
+CTLSPEC NAME rule4_call_hotel  :=AG((NuInteraction=NuI2) -> AX (hotel.NuVadminhotel = !search.NuVadmin))
+CTLSPEC NAME rule4_call_car    :=AG((NuInteraction=NuI3) -> AX (car.NuVadmincar = !search.NuVadmin))
