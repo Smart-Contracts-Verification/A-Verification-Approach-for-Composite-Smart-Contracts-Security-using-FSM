@@ -1,0 +1,6 @@
+**** PROPERTY LIST [ Type, Status, Counter-example Number, Name ] ****
+--------------------------  PROPERTY LIST  -------------------------
+000 :AG ((bauc.Nuplace = NuSfunction_add & bauc.NuVc < bauc.NuVa) -> AF bauc.Nuplace = NuSaddition) 
+  [CTL            False          1      Overflow_Vulnerability]
+001 :AG ((bauc.Nuplace = NuSfunction_sub & bauc.NuVb > bauc.NuVc) -> AF bauc.Nuplace = NuSsubtraction) 
+  [CTL            False          2      Underflow_Vulnerability]
