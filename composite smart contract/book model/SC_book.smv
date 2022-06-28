@@ -1036,14 +1036,19 @@ MODULE main
 		( (( (NuInteraction) = (NuI3) )) -> (( (next(car.NuVinputbook)) = (book.NuVinputIDcar) )) );
 
 
---if True then 
+--*********************************************
+--BOOK properties
+--*********************************************
+--***Spec1 Unchecked Call Return Vulnerability***@** 
 	CTLSPEC NAME Atomocity_proprty_Unchecked_Call_Return_Vulner1 :=EG( book.Nuplace = NuSsending_Ether_send -> EX !(book.Nuplace =NuSifcondition)  )
 	CTLSPEC NAME Atomocity_proprty_Unchecked_Call_Return_Vulner2 :=EG( book.Nuplace = NuSsending_Ether_send -> EX !(book.Nuplace =NuSrequirecondition)  )
 
 --***Spec_2 check overflow vulnerability***@**
 --	CTLSPEC NAME Arithmeticcorrectness_proprty_Overflow_Vulner_car :=AG ((car.Nuplace = NuSfunction_create & car.NuVcounter + 0ud3_1 < 0ud3_1) -> AF car.Nuplace = NuSaddition_counter_1)   
 	
-
+--*********************************************
+--CAR properties
+--*********************************************
 --***Spec_6 check SELFDESTRUCT vulnerability***@**
 --	CTLSPEC NAME Accesscontrol_proprty_selfdestruct_Vulner_car := AG( car.Nuplace = NuSpublic_create  -> AF (car.Nuplace =NuSSelfdestruct))
 	
@@ -1051,18 +1056,15 @@ MODULE main
 --	
 --***Spec_8 check Ether lock vulnerability***@**
 --	CTLSPEC NAME liquidity_Etherlock_Vulner_car :=AG (car.Nuplace = NuSfunction_fallback -> AG(car.Nuplace = NuSexternal_fallback -> AX(car.Nuplace = NuSpayable_fallback))) & AG (EF (!(car.Nuplace = NuSsending_Ether_transfer) | !(car.Nuplace = NuSsending_Ether_call) |!(car.Nuplace = NuSsending_Ether_send)))
-
-
-
 --***Spec_11 check Function Default Visibility vulnerability***@**
 --	CTLSPEC NAME DataExposure_Function_Default_Visibility_Vulner_car :=AG ( car.Nuplace = NuSfunction_create -> EX (car.Nuplace  = NuSpublic_create))
 
-
-
+--*********************************************
+--Flight properties
+--*********************************************
 --***Spec_2 check overflow vulnerability***@**
 --	CTLSPEC NAME Arithmeticcorrectness_Overflow_Vulnerability_flight :=AG ((flight.Nuplace = NuSfunction_create & flight.NuVcounter +0ud3_1 < 0ud3_1) -> AF flight.Nuplace = NuSaddition_counter_1)   
 	
-
 --***Spec_6 check SELFDESTRUCT vulnerability***@**
 --	CTLSPEC NAME selfdestruct_Vulner0_flight := AG( flight.Nuplace = NuSpublic_create  -> AF (flight.Nuplace =NuSSelfdestruct))
 	CTLSPEC NAME selfdestruct_Vulner1_flight := AG( flight.Nuplace = NuSpublic_kill  -> AF (flight.Nuplace =NuSSelfdestruct))
@@ -1070,40 +1072,20 @@ MODULE main
 	
 --***Spec_8 check Ether lock vulnerability***@**
 --	CTLSPEC NAME AccesscontrolEtherlock_Vulnerability_flight :=AG (flight.Nuplace = NuSfunction_fallback -> AG(flight.Nuplace = NuSexternal_fallback -> AX(flight.Nuplace = NuSpayable_fallback))) & AG (EF (!(flight.Nuplace = NuSsending_Ether_transfer) | !(flight.Nuplace = NuSsending_Ether_call) |!(flight.Nuplace = NuSsending_Ether_send)))
-
-
-
 --***Spec_11 check Function Default Visibility vulnerability***@**
 --	CTLSPEC NAME DataExposure_Function_Default_Visibility_Vulner_flight :=AG ( flight.Nuplace = NuSfunction_kill -> EX (flight.Nuplace  = NuSpublic_kill))
 
-
-
-
-
-
-
+--*********************************************
+--Hotel properties
+--*********************************************
 --***Spec_2 check overflow vulnerability***@**
 --	CTLSPEC NAME Overflow_Vulnerability_hotel :=AG ((hotel.Nuplace = NuSfunction_create & hotel.NuVcounter + 0ud3_1< 0ud3_1) -> AF hotel.Nuplace = NuSaddition_counter_1)   
 	
-
 --***Spec_6 check SELFDESTRUCT vulnerability***@**
 --	CTLSPEC NAME selfdestruct_Vulnerability0_hotel := AG( hotel.Nuplace = NuSpublic_create  -> AF (hotel.Nuplace =NuSSelfdestruct))
---	CTLSPEC NAME selfdestruct_Vulnerability1_hotel := AG( hotel.Nuplace = NuSpublic_get -> AF (hotel.Nuplace =NuSSelfdestruct))
-
-
-	
+--	CTLSPEC NAME selfdestruct_Vulnerability1_hotel := AG( hotel.Nuplace = NuSpublic_get -> AF (hotel.Nuplace =NuSSelfdestruct))	
 --***Spec_8 check Ether lock vulnerability***@**
 --	CTLSPEC NAME Etherlock_Vulnerability_hotel :=AG (hotel.Nuplace = NuSfunction_fallback -> AG(hotel.Nuplace = NuSexternal_fallback -> AX(hotel.Nuplace = NuSpayable_fallback))) & AG (EF (!(hotel.Nuplace = NuSsending_Ether_transfer) | !(hotel.Nuplace = NuSsending_Ether_call) |!(hotel.Nuplace = NuSsending_Ether_send)))
 
-
-
 --***Spec_11 check Function Default Visibility vulnerability***@**
 --	CTLSPEC NAME Function_Default_Visibility_Vulnerability_hotel :=AG ( hotel.Nuplace = NuSfunction_create -> EX (hotel.Nuplace  = NuSpublic_create))
-
-
-
-
-
-
-
-
