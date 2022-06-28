@@ -1,0 +1,14 @@
+**** PROPERTY LIST [ Type, Status, Counter-example Number, Name ] ****
+--------------------------  PROPERTY LIST  -------------------------
+000 :AG ((((bauc.Nuplace = NuSfunction_forward | bauc.Nuplace = NuSfunction_withdrawallEther) | bauc.Nuplace = NuSfunction_withdraw) | bauc.Nuplace = NuSfunction_kill) -> EF (AG (bauc.Nuplace = NuSsending_ether_call -> AF bauc.Nuplace = NuSsubtraction))) 
+  [CTL            True           N/A    Reentrancy_Vulnerability]
+001 :AG ((bauc.Nuplace = NuSfunction_withdraw & bauc.NuVamount > bauc.NuVcredit) -> AF bauc.Nuplace = NuSsubtraction) 
+  [CTL            False          1      Underflow_Vulnerability]
+002 :AG (EF bauc.Nuplace = NuSdelegatecall) 
+  [CTL            True           N/A    delegatecall_Vulnerability]
+003 :EG ((bauc.Nuplace = NuSrequirecondition | bauc.Nuplace = NuSifcondition) -> EX bauc.Nuplace = NuStxorigin) 
+  [CTL            True           N/A    txorigin_Vulnerability]
+004 :AG (bauc.Nuplace = NuSpublic -> EF bauc.Nuplace = NuSselfdestruct) 
+  [CTL            True           N/A    selfdestruct_Vulnerability]
+005 :AG (bauc.Nuplace = NuStxorigin -> AX bauc.Nuplace = NuSsending_ether_transfer) 
+  [CTL            True           N/A    user_spec]

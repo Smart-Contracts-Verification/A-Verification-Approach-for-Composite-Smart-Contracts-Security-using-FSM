@@ -1,0 +1,165 @@
+Trace Description: CTL Counterexample 
+Trace Type: Counterexample 
+  -> State: 1.1 <-
+    NuInteraction = NuI20
+    bauc.NuPkill = TRUE
+    bauc.NuPk1 = FALSE
+    bauc.NuPk2 = FALSE
+    bauc.NuPk3 = FALSE
+    bauc.NuPwithdrawallEther = TRUE
+    bauc.NuPa1 = FALSE
+    bauc.NuPa2 = FALSE
+    bauc.NuPa3 = FALSE
+    bauc.NuPa4 = FALSE
+    bauc.NuPa5 = FALSE
+    bauc.NuPa6 = FALSE
+    bauc.NuPa7 = FALSE
+    bauc.NuPforward = TRUE
+    bauc.NuPf1 = FALSE
+    bauc.NuPf2 = FALSE
+    bauc.NuPf3 = FALSE
+    bauc.NuPf4 = FALSE
+    bauc.NuPf5 = FALSE
+    bauc.NuPf6 = FALSE
+    bauc.NuPwithdraw = TRUE
+    bauc.NuPw1 = FALSE
+    bauc.NuPw2 = FALSE
+    bauc.NuPw3 = FALSE
+    bauc.NuPw4 = FALSE
+    bauc.NuPw5 = FALSE
+    bauc.NuPw6 = FALSE
+    bauc.NuPw7 = FALSE
+    bauc.NuVamount = 0ud3_2
+    bauc.NuVcredit = 0ud3_4
+    bauc.Nuplace = NuSinvoke
+  -> State: 1.2 <-
+    NuInteraction = NuI21
+    bauc.NuPkill = FALSE
+    bauc.NuPwithdrawallEther = FALSE
+    bauc.NuPforward = FALSE
+    bauc.NuPwithdraw = FALSE
+    bauc.NuPw1 = TRUE
+    bauc.Nuplace = NuSfunction_withdraw
+  -> State: 1.3 <-
+    NuInteraction = NuI22
+    bauc.NuPk2 = TRUE
+    bauc.NuPa2 = TRUE
+    bauc.NuPf2 = TRUE
+    bauc.NuPw1 = FALSE
+    bauc.NuPw2 = TRUE
+    bauc.Nuplace = NuSpublic
+  -> State: 1.4 <-
+    bauc.NuPk2 = FALSE
+    bauc.NuPa2 = FALSE
+    bauc.NuPf2 = FALSE
+    bauc.Nuplace = NuSifcondition
+  -> State: 1.5 <-
+    NuInteraction = NuI24
+    bauc.NuPw2 = FALSE
+    bauc.NuPw4 = TRUE
+    bauc.Nuplace = NuScreditEqualGamount
+  -> State: 1.6 <-
+    NuInteraction = NuI25
+    bauc.NuPw4 = FALSE
+    bauc.NuPw5 = TRUE
+    bauc.Nuplace = NuSsending_ether_call
+  -> State: 1.7 <-
+    NuInteraction = NuI26
+    bauc.NuPw5 = FALSE
+    bauc.NuPw6 = TRUE
+    bauc.NuVcredit = 0ud3_2
+    bauc.Nuplace = NuSsubtraction
+  -> State: 1.8 <-
+    NuInteraction = NuI13
+    bauc.NuPkill = TRUE
+    bauc.NuPwithdrawallEther = TRUE
+    bauc.NuPforward = TRUE
+    bauc.NuPwithdraw = TRUE
+    bauc.NuPw6 = FALSE
+    bauc.Nuplace = NuSinvoke
+  -> State: 1.9 <-
+    NuInteraction = NuI14
+    bauc.NuPkill = FALSE
+    bauc.NuPwithdrawallEther = FALSE
+    bauc.NuPforward = FALSE
+    bauc.NuPf1 = TRUE
+    bauc.NuPwithdraw = FALSE
+    bauc.Nuplace = NuSfunction_forward
+  -> State: 1.10 <-
+    NuInteraction = NuI22
+    bauc.NuPk2 = TRUE
+    bauc.NuPa2 = TRUE
+    bauc.NuPf1 = FALSE
+    bauc.NuPf2 = TRUE
+    bauc.NuPw2 = TRUE
+    bauc.Nuplace = NuSpublic
+  -> State: 1.11 <-
+    bauc.NuPk2 = FALSE
+    bauc.NuPa2 = FALSE
+    bauc.NuPf2 = FALSE
+    bauc.Nuplace = NuSifcondition
+  -> State: 1.12 <-
+    NuInteraction = NuI24
+    bauc.NuPw2 = FALSE
+    bauc.NuPw4 = TRUE
+    bauc.Nuplace = NuScreditEqualGamount
+  -> State: 1.13 <-
+    NuInteraction = NuI25
+    bauc.NuPw4 = FALSE
+    bauc.NuPw5 = TRUE
+    bauc.Nuplace = NuSsending_ether_call
+  -> State: 1.14 <-
+    NuInteraction = NuI26
+    bauc.NuPw5 = FALSE
+    bauc.NuPw6 = TRUE
+    bauc.NuVcredit = 0ud3_0
+    bauc.Nuplace = NuSsubtraction
+  -> State: 1.15 <-
+    NuInteraction = NuI20
+    bauc.NuPkill = TRUE
+    bauc.NuPwithdrawallEther = TRUE
+    bauc.NuPforward = TRUE
+    bauc.NuPwithdraw = TRUE
+    bauc.NuPw6 = FALSE
+    bauc.Nuplace = NuSinvoke
+  -- Loop starts here
+  -> State: 1.16 <-
+    NuInteraction = NuI21
+    bauc.NuPkill = FALSE
+    bauc.NuPwithdrawallEther = FALSE
+    bauc.NuPforward = FALSE
+    bauc.NuPwithdraw = FALSE
+    bauc.NuPw1 = TRUE
+    bauc.Nuplace = NuSfunction_withdraw
+  -> State: 1.17 <-
+    NuInteraction = NuI3
+    bauc.NuPk2 = TRUE
+    bauc.NuPa2 = TRUE
+    bauc.NuPf2 = TRUE
+    bauc.NuPw1 = FALSE
+    bauc.NuPw2 = TRUE
+    bauc.Nuplace = NuSpublic
+  -> State: 1.18 <-
+    NuInteraction = NuI4
+    bauc.NuPk2 = FALSE
+    bauc.NuPk3 = TRUE
+    bauc.NuPa2 = FALSE
+    bauc.NuPf2 = FALSE
+    bauc.NuPw2 = FALSE
+    bauc.Nuplace = NuSselfdestruct
+  -> State: 1.19 <-
+    NuInteraction = NuI20
+    bauc.NuPkill = TRUE
+    bauc.NuPk3 = FALSE
+    bauc.NuPwithdrawallEther = TRUE
+    bauc.NuPforward = TRUE
+    bauc.NuPwithdraw = TRUE
+    bauc.Nuplace = NuSinvoke
+  -> State: 1.20 <-
+    NuInteraction = NuI21
+    bauc.NuPkill = FALSE
+    bauc.NuPwithdrawallEther = FALSE
+    bauc.NuPforward = FALSE
+    bauc.NuPwithdraw = FALSE
+    bauc.NuPw1 = TRUE
+    bauc.Nuplace = NuSfunction_withdraw
