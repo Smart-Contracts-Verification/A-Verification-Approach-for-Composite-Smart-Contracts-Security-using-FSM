@@ -342,67 +342,18 @@ MODULE main
 
 
 
---***Spec_2 check overflow vulnerability***@**
-	CTLSPEC NAME Overflow_Vulnerability :=AG ((flight.Nuplace = NuSfunction_create & flight.NuVcounter +0ud3_1 < 0ud3_1) -> AF flight.Nuplace = NuSaddition_counter_1)   
-	
 
---***Spec_6 check SELFDESTRUCT vulnerability***@**
-	CTLSPEC NAME selfdestruct_Vulnerability0 := AG( flight.Nuplace = NuSpublic_create  -> AF (flight.Nuplace =NuSSelfdestruct))
-	CTLSPEC NAME selfdestruct_Vulnerability1 := AG( flight.Nuplace = NuSpublic_kill  -> AF (flight.Nuplace =NuSSelfdestruct))
-	CTLSPEC NAME selfdestruct_Vulnerability2 := AG( flight.Nuplace = NuSpublic_get -> AF (flight.Nuplace =NuSSelfdestruct))
-	
---***Spec_8 check Ether lock vulnerability***@**
-	CTLSPEC NAME Etherlock_Vulnerability :=AG (flight.Nuplace = NuSfunction_fallback -> AG(flight.Nuplace = NuSexternal_fallback -> AX(flight.Nuplace = NuSpayable_fallback))) & AG (EF (!(flight.Nuplace = NuSsending_Ether_transfer) | !(flight.Nuplace = NuSsending_Ether_call) |!(flight.Nuplace = NuSsending_Ether_send)))
-
-
-
---***Spec_11 check Function Default Visibility vulnerability***@**
-	CTLSPEC NAME Function_Default_Visibility_Vulnerabilityd :=AG ( flight.Nuplace = NuSfunction_kill -> EX (flight.Nuplace  = NuSpublic_kill))
-
-
---***Spec_2 check overflow vulnerability***@**
-	CTLSPEC NAME Overflow_Vulnerabilityd :=AG ((flight.Nuplace = NuSfunction_create & flight.NuVcounter +0ud3_1 < 0ud3_1) -> AF flight.Nuplace = NuSaddition_counter_1)   
-	
-
---***Spec_6 check SELFDESTRUCT vulnerability***@**
-	CTLSPEC NAME selfdestruct_Vulnerability0d := AG( flight.Nuplace = NuSpublic_create  -> AF (flight.Nuplace =NuSSelfdestruct))
-	CTLSPEC NAME selfdestruct_Vulnerability1d := AG( flight.Nuplace = NuSpublic_kill  -> AF (flight.Nuplace =NuSSelfdestruct))
-	CTLSPEC NAME selfdestruct_Vulnerability2d := AG( flight.Nuplace = NuSpublic_get -> AF (flight.Nuplace =NuSSelfdestruct))
-	
---***Spec_8 check Ether lock vulnerability***@**
-	CTLSPEC NAME Etherlock_Vulnerabilityd :=AG (flight.Nuplace = NuSfunction_fallback -> AG(flight.Nuplace = NuSexternal_fallback -> AX(flight.Nuplace = NuSpayable_fallback))) & AG (EF (!(flight.Nuplace = NuSsending_Ether_transfer) | !(flight.Nuplace = NuSsending_Ether_call) |!(flight.Nuplace = NuSsending_Ether_send)))
-
-
-
---***Spec_11 check Function Default Visibility vulnerability***@**
-	CTLSPEC NAME Function_Default_Visibility_Vulnerabilitydf :=AG ( flight.Nuplace = NuSfunction_kill -> EX (flight.Nuplace  = NuSpublic_kill))
-
-
-
-
-
-
-
---***Spec_11 check Function Default Visibility vulnerability***@**
+--***Spec_1 check Function Default Visibility vulnerability***@**
 	CTLSPEC NAME Function_Default_Visibility_Vulnerabilitydz :=AG ( flight.Nuplace = NuSfunction_kill -> EX (flight.Nuplace  = NuSpublic_kill))
 
-
---***Spec_2 check overflow vulnerability***@**
-	CTLSPEC NAME Overflow_Vulnerabilitydz :=AG ((flight.Nuplace = NuSfunction_create & flight.NuVcounter +0ud3_1 < 0ud3_1) -> AF flight.Nuplace = NuSaddition_counter_1)   
-	
-
---***Spec_6 check SELFDESTRUCT vulnerability***@**
+--***Spec_2 check SELFDESTRUCT vulnerability***@**
 	CTLSPEC NAME selfdestruct_Vulnerability0dz := AG( flight.Nuplace = NuSpublic_create  -> AF (flight.Nuplace =NuSSelfdestruct))
 	CTLSPEC NAME selfdestruct_Vulnerability1dz := AG( flight.Nuplace = NuSpublic_kill  -> AF (flight.Nuplace =NuSSelfdestruct))
 	CTLSPEC NAME selfdestruct_Vulnerability2dz := AG( flight.Nuplace = NuSpublic_get -> AF (flight.Nuplace =NuSSelfdestruct))
+--***Spec_3 check overflow vulnerability***@**
+	CTLSPEC NAME Overflow_Vulnerabilitydz :=AG ((flight.Nuplace = NuSfunction_create & flight.NuVcounter +0ud3_1 < 0ud3_1) -> AF flight.Nuplace = NuSaddition_counter_1)   
 	
---***Spec_8 check Ether lock vulnerability***@**
+--***Spec_4 check Ether lock vulnerability***@**
 	CTLSPEC NAME Etherlock_Vulnerabilitydz :=AG (flight.Nuplace = NuSfunction_fallback -> AG(flight.Nuplace = NuSexternal_fallback -> AX(flight.Nuplace = NuSpayable_fallback))) & AG (EF (!(flight.Nuplace = NuSsending_Ether_transfer) | !(flight.Nuplace = NuSsending_Ether_call) |!(flight.Nuplace = NuSsending_Ether_send)))
-
-
-
---***Spec_11 check Function Default Visibility vulnerability***@**
-	CTLSPEC NAME Function_Default_Visibility_Vulnerabilitydfz :=AG ( flight.Nuplace = NuSfunction_kill -> EX (flight.Nuplace  = NuSpublic_kill))
-
 
 
