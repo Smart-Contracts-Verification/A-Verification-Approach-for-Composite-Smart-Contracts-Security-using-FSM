@@ -1,0 +1,93 @@
+Trace Description: CTL Counterexample 
+Trace Type: Counterexample 
+  -> State: 1.1 <-
+    NuInteraction = NuI4
+    bauc.NuPdonate = TRUE
+    bauc.NuPcreditPlusamount1 = FALSE
+    bauc.NuPd1 = FALSE
+    bauc.NuPqueryCredit = TRUE
+    bauc.NuPq1 = FALSE
+    bauc.NuPq2 = FALSE
+    bauc.NuPwithdraw = TRUE
+    bauc.NuPw1 = FALSE
+    bauc.NuPw2 = FALSE
+    bauc.NuPw3 = FALSE
+    bauc.NuPw4 = FALSE
+    bauc.NuPw5 = FALSE
+    bauc.NuPw6 = FALSE
+    bauc.NuPcreditMinusamount = FALSE
+    bauc.NuVcredit = 0ud3_5
+    bauc.NuVamount1 = 0ud3_5
+    bauc.NuVamount = 0ud3_3
+    bauc.Nuplace = NuSinvoke
+  -> State: 1.2 <-
+    NuInteraction = NuI5
+    bauc.NuPdonate = FALSE
+    bauc.NuPqueryCredit = FALSE
+    bauc.NuPq1 = TRUE
+    bauc.NuPwithdraw = FALSE
+    bauc.Nuplace = NuSfunctionqueryCredit
+  -> State: 1.3 <-
+    NuInteraction = NuI6
+    bauc.NuPq1 = FALSE
+    bauc.NuPq2 = TRUE
+    bauc.Nuplace = NuSreturn
+  -> State: 1.4 <-
+    NuInteraction = NuI1
+    bauc.NuPdonate = TRUE
+    bauc.NuPqueryCredit = TRUE
+    bauc.NuPq2 = FALSE
+    bauc.NuPwithdraw = TRUE
+    bauc.Nuplace = NuSinvoke
+  -> State: 1.5 <-
+    NuInteraction = NuI2
+    bauc.NuPdonate = FALSE
+    bauc.NuPcreditPlusamount1 = TRUE
+    bauc.NuPqueryCredit = FALSE
+    bauc.NuPwithdraw = FALSE
+    bauc.Nuplace = NuSfunctiondonate
+  -> State: 1.6 <-
+    NuInteraction = NuI3
+    bauc.NuPcreditPlusamount1 = FALSE
+    bauc.NuPd1 = TRUE
+    bauc.NuVcredit = 0ud3_2
+    bauc.Nuplace = NuSaddition
+  -> State: 1.7 <-
+    NuInteraction = NuI7
+    bauc.NuPdonate = TRUE
+    bauc.NuPd1 = FALSE
+    bauc.NuPqueryCredit = TRUE
+    bauc.NuPwithdraw = TRUE
+    bauc.Nuplace = NuSinvoke
+  -- Loop starts here
+  -> State: 1.8 <-
+    NuInteraction = NuI9
+    bauc.NuPdonate = FALSE
+    bauc.NuPqueryCredit = FALSE
+    bauc.NuPwithdraw = FALSE
+    bauc.NuPw1 = TRUE
+    bauc.Nuplace = NuSfunctionwithdraw
+  -> State: 1.9 <-
+    NuInteraction = NuI11
+    bauc.NuPw1 = FALSE
+    bauc.NuPw3 = TRUE
+    bauc.Nuplace = NuSifcondition
+  -> State: 1.10 <-
+    NuInteraction = NuI14
+    bauc.NuPw3 = FALSE
+    bauc.NuPw6 = TRUE
+    bauc.Nuplace = NuSamount_not_availble
+  -> State: 1.11 <-
+    NuInteraction = NuI7
+    bauc.NuPdonate = TRUE
+    bauc.NuPqueryCredit = TRUE
+    bauc.NuPwithdraw = TRUE
+    bauc.NuPw6 = FALSE
+    bauc.Nuplace = NuSinvoke
+  -> State: 1.12 <-
+    NuInteraction = NuI9
+    bauc.NuPdonate = FALSE
+    bauc.NuPqueryCredit = FALSE
+    bauc.NuPwithdraw = FALSE
+    bauc.NuPw1 = TRUE
+    bauc.Nuplace = NuSfunctionwithdraw

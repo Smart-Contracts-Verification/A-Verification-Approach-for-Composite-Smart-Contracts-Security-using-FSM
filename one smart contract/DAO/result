@@ -1,0 +1,8 @@
+**** PROPERTY LIST [ Type, Status, Counter-example Number, Name ] ****
+--------------------------  PROPERTY LIST  -------------------------
+000 :AG (((bauc.Nuplace = NuSfunctiondonate | bauc.Nuplace = NuSfunctionwithdraw) | bauc.Nuplace = NuSfunctionqueryCredit) -> EF (AG (bauc.Nuplace = NuSsending_ether_call -> AF bauc.Nuplace = NuSsubtraction))) 
+  [CTL            True           N/A    Reentrancy_Vulnerability]
+001 :AG ((bauc.Nuplace = NuSfunctiondonate & bauc.NuVcredit < bauc.NuVamount1) -> AF bauc.Nuplace = NuSaddition) 
+  [CTL            True           N/A    Overflow_Vulnerability]
+002 :AG ((bauc.Nuplace = NuSfunctionwithdraw & bauc.NuVamount > bauc.NuVcredit) -> AF bauc.Nuplace = NuSsubtraction) 
+  [CTL            False          1      Underflow_Vulnerability]
