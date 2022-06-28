@@ -1,0 +1,77 @@
+Trace Description: CTL Counterexample 
+Trace Type: Counterexample 
+  -> State: 2.1 <-
+    NuInteraction = NuI1
+    bauc.NuPadd = TRUE
+    bauc.NuPsub = TRUE
+    bauc.NuPaPlusb = FALSE
+    bauc.NuPaPlusb1 = FALSE
+    bauc.NuPaPlusb2 = FALSE
+    bauc.NuPaPlusb3 = FALSE
+    bauc.NuPaPlusb4 = FALSE
+    bauc.NuPaPlusb5 = FALSE
+    bauc.NuPaMinusb = FALSE
+    bauc.NuPaMinusb1 = FALSE
+    bauc.NuPaMinusb2 = FALSE
+    bauc.NuPaMinusb3 = FALSE
+    bauc.NuPaMinusb4 = FALSE
+    bauc.NuPaMinusb5 = FALSE
+    bauc.NuVc = 0ud3_0
+    bauc.NuVa = 0ud3_2
+    bauc.NuVb = 0ud3_3
+    bauc.Nuplace = NuSinvoke
+  -> State: 2.2 <-
+    NuInteraction = NuI9
+    bauc.NuPadd = FALSE
+    bauc.NuPsub = FALSE
+    bauc.NuPaPlusb = TRUE
+    bauc.Nuplace = NuSfunction_add
+  -> State: 2.3 <-
+    NuInteraction = NuI7
+    bauc.NuPaPlusb = FALSE
+    bauc.NuPaPlusb1 = TRUE
+    bauc.NuPaMinusb4 = TRUE
+    bauc.Nuplace = NuSifcondition
+  -> State: 2.4 <-
+    NuInteraction = NuI8
+    bauc.NuPaPlusb1 = FALSE
+    bauc.NuPaMinusb4 = FALSE
+    bauc.NuPaMinusb5 = TRUE
+    bauc.Nuplace = NuSs2
+  -> State: 2.5 <-
+    NuInteraction = NuI2
+    bauc.NuPadd = TRUE
+    bauc.NuPsub = TRUE
+    bauc.NuPaMinusb5 = FALSE
+    bauc.Nuplace = NuSinvoke
+  -- Loop starts here
+  -> State: 2.6 <-
+    NuInteraction = NuI3
+    bauc.NuPadd = FALSE
+    bauc.NuPsub = FALSE
+    bauc.NuPaMinusb = TRUE
+    bauc.Nuplace = NuSfunction_sub
+  -> State: 2.7 <-
+    NuInteraction = NuI7
+    bauc.NuPaPlusb1 = TRUE
+    bauc.NuPaMinusb = FALSE
+    bauc.NuPaMinusb4 = TRUE
+    bauc.Nuplace = NuSifcondition
+  -> State: 2.8 <-
+    NuInteraction = NuI8
+    bauc.NuPaPlusb1 = FALSE
+    bauc.NuPaMinusb4 = FALSE
+    bauc.NuPaMinusb5 = TRUE
+    bauc.Nuplace = NuSs2
+  -> State: 2.9 <-
+    NuInteraction = NuI2
+    bauc.NuPadd = TRUE
+    bauc.NuPsub = TRUE
+    bauc.NuPaMinusb5 = FALSE
+    bauc.Nuplace = NuSinvoke
+  -> State: 2.10 <-
+    NuInteraction = NuI3
+    bauc.NuPadd = FALSE
+    bauc.NuPsub = FALSE
+    bauc.NuPaMinusb = TRUE
+    bauc.Nuplace = NuSfunction_sub
