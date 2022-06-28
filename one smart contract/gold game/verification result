@@ -1,0 +1,8 @@
+**** PROPERTY LIST [ Type, Status, Counter-example Number, Name ] ****
+--------------------------  PROPERTY LIST  -------------------------
+000 :EG ((bauc.Nuplace = NuSrequirecondition | bauc.Nuplace = NuSifcondition) -> EX bauc.Nuplace = NuSaddressEqualtxorigin) 
+  [CTL            True           N/A    txorigin_Vulnerability]
+001 :AG (bauc.Nuplace = NuSaddressEqualtxorigin -> AX bauc.Nuplace = NuSsending_Ether_transfer) 
+  [CTL            False          1      user_spec]
+002 :(AG (bauc.Nuplace = NuSfallback_Function -> AG (bauc.Nuplace = NuSexternal -> AX bauc.Nuplace = NuSpayable)) & AG !(bauc.Nuplace = NuSsending_Ether_transfer)) 
+  [CTL            False          2      Etherlock_Vulnerability]
