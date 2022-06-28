@@ -231,4 +231,4 @@ CTLSPEC NAME txorigin_Vulnerability := EG(((bauc.Nuplace  = NuSrequirecondition)
 CTLSPEC NAME user_spec :=AG(bauc.Nuplace = NuSaddressEqualtxorigin -> AX (bauc.Nuplace= NuSsending_Ether_transfer))
 
 --Spec_8 check Ether lock vulnerability
-CTLSPEC NAME Etherlock_Vulnerability :=AG (bauc.Nuplace = NuSfallback_Function -> AG(bauc.Nuplace = NuSexternal -> AX(bauc.Nuplace = NuSpayable))) & AG !(bauc.Nuplace = NuSsending_Ether_transfer))
+CTLSPEC NAME Etherlock_Vulnerability :=AG (bauc.Nuplace = NuSfallback_Function -> AG(bauc.Nuplace = NuSexternal -> AX(bauc.Nuplace = NuSpayable))) & AG !(bauc.Nuplace = NuSsending_Ether_transfer)
