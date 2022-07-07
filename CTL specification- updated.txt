@@ -1,5 +1,5 @@
-// Please change the state names with the ones in your models
-// CTL formulae for "standard" properties
+# Please change the state names with the ones in your models
+# CTL formulae for "standard" properties
 
 
 --***Spec_1 check reentrancy vulnerability*** @**
