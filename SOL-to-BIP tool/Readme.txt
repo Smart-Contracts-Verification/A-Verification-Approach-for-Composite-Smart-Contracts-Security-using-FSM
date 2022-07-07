@@ -1,5 +1,7 @@
-SOL-to-BIP tool -version 0.1
-This C# tool dynamically models the Solidity Samrt Sontarcts from Etherem blockchain to BIP models.
+#SOL-to-BIP tool -version 0.1
+
+#This program utilized Object-oriented language C# 
+#to develop a program that models single and composite smart contracts written in Solidity to the BIP language
 
 
 Before using this tool, please follow the instructions:
