@@ -10,7 +10,7 @@ We utilize two types of security verification:
 
 2. **User-Defined Properties**: In the second type, and to enhance the efficiency of the first type of verification, we provide specific properties to be verified. These properties consist of user-defined security properties based on the context of the smart contract, written in CTL.
 
-Finally, we use the nuXmv symbolic model checker to verify the model against all properties. This approach is validated using a different set of Solidity smart contracts.
+3. **Verification Stage**: Finally, we use the **nuXmv symbolic model checker** to verify the model against all properties. This approach is validated using a different set of Solidity smart contracts.
 
 __**Note**:__ You can try the SOL-To-BIP with our user-friendly interface on the website version: [www.verifysolidity.com](http://www.verifysolidity.com).
 
