@@ -14,7 +14,19 @@ We utilize two types of security verification:
 
 __**Note**:__ You can try the SOL-To-BIP with our user-friendly interface on the website version: [www.verifysolidity.com](http://www.verifysolidity.com).
 
+## Getting Started
 
+### Prerequisites
+
+- Unix-based operating system (e.g. Debian, Arch, Mac OS)
+- Ethereum testnet/ Ganache or Main RPC - You can get one in any of the providers of this list
+    - [Chainstack](https://chainstack.com/)
+    - [Ankr](https://ankr.com/)
+    - [QuickNode](https://quicknode.com/)
+    - [Alchemy](https://www.alchemy.com/)
+    - [Infura](https://www.infura.io/)
+- [BIP toolset](https://www-verimag.imag.fr/-BIP-Tools-93-?lang=en)
+- nuXmv Symbolic Model Checker V2.x.x [nuXmv](https://nuxmv.fbk.eu/)
 # __Version__
 
 Version: V1.0.0
