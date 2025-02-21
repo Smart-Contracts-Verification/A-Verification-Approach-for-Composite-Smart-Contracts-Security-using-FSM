@@ -12,9 +12,8 @@ We utilize two types of security verification:
 
 3. **Verification Stage**: Finally, we use the **nuXmv symbolic model checker** to verify the model against all properties. This approach is validated using a different set of Solidity smart contracts.
 
-__**Note**:__ You can try the SOL-To-BIP with our user-friendly interface on the website version: [www.verifysolidity.com](http://www.verifysolidity.com).
 
-## Getting Started
+
 
 ### Prerequisites
 
@@ -27,6 +26,26 @@ __**Note**:__ You can try the SOL-To-BIP with our user-friendly interface on the
     - [Infura](https://www.infura.io/)
 - [BIP toolset](https://www-verimag.imag.fr/-BIP-Tools-93-?lang=en)
 - nuXmv Symbolic Model Checker V2.x.x [nuXmv](https://nuxmv.fbk.eu/)
+
+  ### Repository Structure
+1. **SOL-To-Bip-UI-master**: 
+   - This directory contains the source code for the tool itself. It includes all functionalities necessary for converting Solidity smart contracts into **BIP** (Behavioral Interaction Process) language and other verification components.
+
+__**Note**:__ You can try the SOL-To-BIP with our user-friendly interface on the website version: [www.verifysolidity.com](http://www.verifysolidity.com).
+
+2. **Composite Smart Contract**: 
+   - This folder includes examples of composite smart contracts. Each example features:
+     - The Solidity source code.
+     - Transformation models into **BIP** and **SMV** (Symbolic Model Verification).
+     - Verification results that demonstrate how these contracts adhere to specified properties.
+     - **CTL** (Computation Tree Logic) formula properties that are used for verification.
+
+3. **One Smart Contract**: 
+   - Similar to the composite smart contracts, this directory provides examples specifically for single smart contracts. Each example is accompanied by:
+     - The Solidity source code.
+     - Transformation models into BIP and SMV.
+     - Verification results and CTL formula properties.
+  
 # __Version__
 
 Version: V1.0.0
